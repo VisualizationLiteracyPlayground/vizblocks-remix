@@ -18,11 +18,15 @@ export default function About() {
         alignItems: 'center',
       }}
     >
+      {/* dummy div for layout */}
       <Box />
 
-      <Typography variant='h4' component='h1' gutterBottom>
-        Login page
-      </Typography>
+      <Box>
+        {/* form goes here */}
+        <Typography variant='h4' component='h1' gutterBottom>
+          Login page
+        </Typography>
+      </Box>
 
       <Footer />
     </Box>

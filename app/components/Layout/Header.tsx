@@ -18,8 +18,8 @@ import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 
-import Brightness4Icon from '@mui/icons-material/Brightness4'
-import Brightness7Icon from '@mui/icons-material/Brightness7'
+import WbSunnyIcon from '@mui/icons-material/WbSunny'
+import ModeNightIcon from '@mui/icons-material/ModeNight'
 
 const settings = [
   { name: 'Profile', to: '/profile' },
@@ -56,7 +56,10 @@ export default function Header({ pathname }: { pathname?: string }) {
     <>
       <CssBaseline />
       <ElevationScroll>
-        <AppBar position='fixed' sx={{ px: '0.25rem', zIndex: theme => theme.zIndex.drawer + 1 }}>
+        <AppBar
+          position='fixed'
+          sx={{ px: '0.25rem', zIndex: theme => theme.zIndex.drawer + 1, bgcolor: `${mode === 'light' ? 'white' : 'black'}` }}
+        >
           <Container maxWidth='lg'>
             <Toolbar disableGutters sx={{ py: '0.25rem' }}>
               <Button color='inherit' component={Link} to='/' prefetch='intent' sx={{ backgroundColor: 'transparent !important' }}>
@@ -66,7 +69,7 @@ export default function Header({ pathname }: { pathname?: string }) {
               <Box sx={{ flexGrow: 1 }} />
 
               <IconButton sx={{ mx: 1 }} onClick={toggleColorMode} color='inherit'>
-                {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                {mode === 'dark' ? <ModeNightIcon /> : <WbSunnyIcon />}
               </IconButton>
 
               <Box sx={{ flexGrow: 0 }}>
@@ -77,7 +80,7 @@ export default function Header({ pathname }: { pathname?: string }) {
                         Remy
                       </Typography>
                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt='Remy Sharp' />
+                        <Avatar alt='Remy Sharp' sx={{ bgcolor: '#6cddaa' }} />
                       </IconButton>
                     </Box>
                   </Tooltip>
@@ -109,7 +112,7 @@ export default function Header({ pathname }: { pathname?: string }) {
                   {settings.map(setting => {
                     const { name, to } = setting
                     return (
-                      <MenuItem key={name} onClick={handleCloseUserMenu}>
+                      <MenuItem key={name} onClick={handleCloseUserMenu} sx={{ mx: 1 }}>
                         <Typography textAlign='center'>{name}</Typography>
                       </MenuItem>
                     )

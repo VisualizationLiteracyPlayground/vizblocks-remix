@@ -21,6 +21,7 @@
     "@remix-run/serve": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "recharts": "^2.1.9",
     "remix": "latest"
   },
   "devDependencies": {

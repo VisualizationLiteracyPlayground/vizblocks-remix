@@ -13,13 +13,10 @@ const getDesignTokens = (mode: PaletteMode) => ({
     mode,
     // common palette values
     primary: {
-      main: '#ffffff',
+      main: '#6cddaa',
     },
     secondary: {
-      main: '#6cddaa',
-    },
-    green: {
-      main: '#6cddaa',
+      main: '#fdeecc',
     },
     ...(mode === ColorMode.LIGHT
       ? {
