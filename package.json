@@ -1,6 +1,6 @@
 {
-  "name": "remix-with-typescript",
-  "version": "5.0.0",
+  "name": "vizblocks",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "remix build",

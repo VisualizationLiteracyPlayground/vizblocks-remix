@@ -8,16 +8,16 @@ const dataUri = `url("data:image/svg+xml,${svgString}")`
 
 export default function Footer() {
   return (
-    <footer>
+    <>
       <Box
         sx={{
           background: dataUri,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           height: '100px',
-          width: ' 100vw',
+          width: ' 100%',
         }}
       />
-    </footer>
+    </>
   )
 }

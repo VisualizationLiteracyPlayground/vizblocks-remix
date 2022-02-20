@@ -1,15 +1,17 @@
 import * as React from 'react'
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
 import Footer from './Footer'
 import Header from './Header'
+import { useLocation } from 'remix'
+
+import Box from '@mui/material/Box'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation()
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <Header />
-      <Box sx={{ flexGrow: 1 }}>{children}</Box>
-      <Footer />
-    </div>
+    <Box style={{ display: 'flex' }}>
+      <Header pathname={pathname} />
+      {children}
+    </Box>
   )
 }

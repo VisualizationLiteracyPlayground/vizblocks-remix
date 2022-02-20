@@ -18,7 +18,9 @@ const getDesignTokens = (mode: PaletteMode) => ({
     secondary: {
       main: '#6cddaa',
     },
-
+    green: {
+      main: '#6cddaa',
+    },
     ...(mode === ColorMode.LIGHT
       ? {
           // palette values for light mode

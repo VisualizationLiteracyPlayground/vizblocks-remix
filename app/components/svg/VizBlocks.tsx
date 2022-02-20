@@ -1,6 +1,8 @@
 import * as React from 'react'
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+
 import { BBlockIcon } from './BBlock'
 
 function VizBlocks() {
@@ -9,7 +11,9 @@ function VizBlocks() {
       <Typography variant='h4' fontWeight='bold' sx={{ mr: '7px', fontSize: { md: '3rem' } }}>
         Viz
       </Typography>
+
       <BBlockIcon />
+
       <Typography variant='h4' fontWeight='bold' sx={{ fontSize: { md: '3rem' } }}>
         locks
       </Typography>

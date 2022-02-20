@@ -3,10 +3,12 @@ import { useTheme } from '~/utils/theme'
 import useWindowSize from '~/hooks/useWindowSize'
 
 function BBlockIcon() {
-  const { width: windowWidth = 0 } = useWindowSize()
   const { theme } = useTheme()
+  const breakpoint = theme.breakpoints.values.md
 
-  const isMobile = windowWidth < theme.breakpoints.values.md
+  const { width: windowWidth = breakpoint } = useWindowSize()
+  const isMobile = windowWidth < breakpoint
+
   const height = isMobile ? 25 : 35
   const width = (75 / 109) * height
 
