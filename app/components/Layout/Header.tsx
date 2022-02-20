@@ -60,7 +60,7 @@ export default function Header({ pathname }: { pathname?: string }) {
           position='fixed'
           sx={{ px: '0.25rem', zIndex: theme => theme.zIndex.drawer + 1, bgcolor: `${mode === 'light' ? 'white' : 'black'}` }}
         >
-          <Container maxWidth='lg'>
+          <Container maxWidth={false}>
             <Toolbar disableGutters sx={{ py: '0.25rem' }}>
               <Button color='inherit' component={Link} to='/' prefetch='intent' sx={{ backgroundColor: 'transparent !important' }}>
                 <VizBlocks />

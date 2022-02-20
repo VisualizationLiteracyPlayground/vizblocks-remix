@@ -25,13 +25,13 @@ export default function Hero() {
             </Typography>
           </Box>
           <Typography variant='h5' sx={{ paddingTop: '1rem', paddingBottom: '2rem', color: `${mode === 'dark' ? 'black' : 'white'}` }}>
-            VizBlocks is your friendly companion to improve data literacy.
+            VizBlocks is your friendly companion to improve data literacy for children.
             <br />
             <br />
             What will you create?
           </Typography>
 
-          <Button variant='contained' size='large' component={Link} to='/login' prefetch='intent' color='secondary'>
+          <Button variant='contained' size='large' component={Link} to='/login' prefetch='intent' color='primary'>
             <Typography variant='h6' fontWeight='700'>
               Get Started
             </Typography>
@@ -41,11 +41,12 @@ export default function Hero() {
         <Box
           sx={{
             display: { xs: 'none', md: 'block' },
-            height: '640px',
+            height: '700px',
             width: '50%',
             background: `url(${mode === 'dark' ? heroImage : heroDarkImage})`,
+            backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
+            backgroundSize: 'contain',
           }}
         />
       </Container>

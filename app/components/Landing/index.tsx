@@ -1,6 +1,11 @@
-import { Box } from '@mui/material'
 import * as React from 'react'
+import Box from '@mui/material/Box'
+
 import Hero from './Hero'
+import WhyVizBlocks from './WhyVizBlocks'
+import Features from './Features'
+import Banner from './Banner'
+import Credits from './Credits'
 import Footer from '../Layout/Footer'
 
 export default function Landing() {
@@ -16,9 +21,10 @@ export default function Landing() {
       }}
     >
       <Hero />
-      <Hero />
-      <Hero />
-
+      <WhyVizBlocks />
+      <Features />
+      <Banner />
+      <Credits />
       <Footer />
     </Box>
   )
