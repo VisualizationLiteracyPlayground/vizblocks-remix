@@ -18,6 +18,9 @@ export default function Credits() {
         <Typography variant='h6' fontWeight='700' sx={{ letterSpacing: '3px' }}>
           Credits
         </Typography>
+        <Typography variant='h6' fontWeight='700' sx={{ letterSpacing: '3px' }}>
+          to be filled
+        </Typography>
       </Container>
     </Box>
   )

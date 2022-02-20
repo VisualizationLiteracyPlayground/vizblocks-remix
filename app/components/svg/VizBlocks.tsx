@@ -9,13 +9,13 @@ function VizBlocks() {
   return (
     <Box sx={{ display: 'inline-flex', alignItems: 'baseline' }}>
       <Typography variant='h4' fontWeight='bold' sx={{ mr: '7px', fontSize: { md: '3rem' } }}>
-        Viz
+        VIZ
       </Typography>
 
       <BBlockIcon />
 
       <Typography variant='h4' fontWeight='bold' sx={{ fontSize: { md: '3rem' } }}>
-        locks
+        LOCKS
       </Typography>
     </Box>
   )

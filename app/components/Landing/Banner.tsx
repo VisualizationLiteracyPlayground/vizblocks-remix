@@ -20,7 +20,7 @@ export default function Banner() {
     >
       <Container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '2rem' }}>
         <Box sx={{ padding: '1rem', textAlign: 'center' }}>
-          <Typography variant='h3' fontWeight='700' sx={{ letterSpacing: '3px' }}>
+          <Typography variant='h3' fontWeight='700' sx={{ letterSpacing: '5px' }}>
             Learn. Create. Visualise.
           </Typography>
           <Typography variant='h5' fontWeight='700' sx={{ letterSpacing: '3px' }}>
