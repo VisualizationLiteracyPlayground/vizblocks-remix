@@ -7,10 +7,22 @@ import Grid from '@mui/material/Grid'
 import whyVizblocksImage from '~/../../public/images/why-vizblocks.png'
 
 const TEXT = [
-  { title: 'Get started in minutes', subtitle: 'No software download required, just create an account and start visualising!' },
-  { title: 'Share and learn together', subtitle: 'bla bla bla' },
-  { title: 'Simple & intuitive user interface', subtitle: 'bla bla bla' },
-  { title: 'A bridge towards professional tools', subtitle: 'bla bla bla' },
+  {
+    title: 'Get started in minutes',
+    subtitle: 'Dive quickly into the world of visualization. No software download required, just create an account and start visualising!',
+  },
+  {
+    title: 'Share and learn together',
+    subtitle: 'Share your work with friends and learn with each other. Sharing is caring and makes learning more fun.',
+  },
+  {
+    title: 'Simple & intuitive user interface',
+    subtitle: 'No need to worry about complex code, the user interface provides all the basics functions you need to get started.',
+  },
+  {
+    title: 'A bridge towards professional tools',
+    subtitle: 'Increase your proficiency of data visualizations and level up yourself towards commercial platforms. ',
+  },
 ]
 
 export default function WhyVizBlocks() {

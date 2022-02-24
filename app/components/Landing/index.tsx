@@ -11,13 +11,13 @@ import Footer from '../Layout/Footer'
 export default function Landing() {
   return (
     <Box
-      px={{
+      sx={{
         display: 'flex',
         flexDirection: 'column',
         height: '100vh',
         width: '100%',
         flexGrow: 1,
-        paddingTop: '75px',
+        paddingTop: '60px',
       }}
     >
       <Hero />
