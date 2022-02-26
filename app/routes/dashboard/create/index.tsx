@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Box from '@mui/material/Box'
 import BuildGraphStepper from '~/components/BuildGraphStepper'
 import LineChartTemplate from '~/components/LineChartTemplate'
 
@@ -6,8 +7,8 @@ function Create() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <BuildGraphStepper />
-      <div
-        style={{
+      <Box
+        sx={{
           height: '75vh',
           backgroundColor: 'white',
           padding: '48px',
@@ -16,7 +17,7 @@ function Create() {
         }}
       >
         <LineChartTemplate />
-      </div>
+      </Box>
     </div>
   )
 }
