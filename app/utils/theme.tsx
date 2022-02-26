@@ -21,11 +21,6 @@ const getDesignTokens = (mode: PaletteMode) => ({
     ...(mode === ColorMode.LIGHT
       ? {
           // palette values for light mode
-          // background: {
-          //   default: deepOrange[900],
-          //   paper: deepOrange[900],
-          // },
-          // divider: amber[200],
           text: {
             primary: '#000',
           },

@@ -5,14 +5,16 @@ import Step from '@mui/material/Step'
 import StepButton from '@mui/material/StepButton'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import { useTheme } from '~/utils/theme'
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad']
+const steps = ['Input Data', 'Adjust Parameters', 'Save Graph']
 
 export default function BuildGraphStepper() {
   const [activeStep, setActiveStep] = React.useState(0)
   const [completed, setCompleted] = React.useState<{
     [k: number]: boolean
   }>({})
+  const { mode } = useTheme()
 
   const totalSteps = () => {
     return steps.length
@@ -61,7 +63,16 @@ export default function BuildGraphStepper() {
   }
 
   return (
-    <Box sx={{ width: '100%', py: 5 }}>
+    <Box
+      sx={{
+        width: '100%',
+        p: 5,
+        my: 2,
+        bgcolor: mode === 'light' ? 'white' : 'black',
+        borderRadius: '10px',
+        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+      }}
+    >
       <Stepper nonLinear activeStep={activeStep}>
         {steps.map((label, index) => (
           <Step key={label} completed={completed[index]}>
@@ -82,7 +93,6 @@ export default function BuildGraphStepper() {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button color='inherit' disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
                 Back

@@ -30,7 +30,6 @@ export default function Dashboard() {
             width: drawerWidth,
             boxSizing: 'border-box',
             paddingTop: '1rem',
-            background: 'rgba(108, 221, 170, 0.2)',
           },
         }}
       >
@@ -40,7 +39,7 @@ export default function Dashboard() {
         </Box>
       </Drawer>
 
-      <Box sx={{ flexGrow: 1, p: 3 }}>
+      <Box sx={{ flexGrow: 1, p: 3, bgcolor: 'rgba(108, 221, 170, 0.2)', height: '100vh' }}>
         <Toolbar />
         <Outlet />
       </Box>
