@@ -32,7 +32,7 @@ export default function Login() {
         </Typography>
         <Form>
           <input type='hidden' name='redirectTo' value={searchParams.get('redirectTo') ?? undefined} />
-          <fieldset>
+          {/* <fieldset>
             <legend className='sr-only'>Login or Register?</legend>
             <label>
               <input type='radio' name='loginType' value='login' defaultChecked /> Login
@@ -40,7 +40,7 @@ export default function Login() {
             <label>
               <input type='radio' name='loginType' value='register' /> Register
             </label>
-          </fieldset>
+          </fieldset> */}
           <div>
             <label htmlFor='username-input'>Username</label>
             <input type='text' id='username-input' name='username' />

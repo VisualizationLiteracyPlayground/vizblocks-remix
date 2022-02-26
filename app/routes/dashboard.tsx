@@ -30,22 +30,12 @@ export default function Dashboard() {
             width: drawerWidth,
             boxSizing: 'border-box',
             paddingTop: '1rem',
-            background: theme => theme.palette.secondary.light,
+            background: 'rgba(108, 221, 170, 0.2)',
           },
         }}
       >
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <CollapsibleMenu />
-          <Divider />
           <CollapsibleMenu />
         </Box>
       </Drawer>

@@ -1,30 +1,33 @@
 import * as React from 'react'
+import { Link } from 'remix'
 
 import Box from '@mui/material/Box'
-import { styled, ThemeProvider, createTheme } from '@mui/material/styles'
 import Divider from '@mui/material/Divider'
-import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import Paper from '@mui/material/Paper'
-import IconButton from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
-import ArrowRight from '@mui/icons-material/ArrowRight'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
+
 import Home from '@mui/icons-material/Home'
-import Settings from '@mui/icons-material/Settings'
-import People from '@mui/icons-material/People'
-import PermMedia from '@mui/icons-material/PermMedia'
-import Dns from '@mui/icons-material/Dns'
-import Public from '@mui/icons-material/Public'
+import ShowChartIcon from '@mui/icons-material/ShowChart'
+import BarChartIcon from '@mui/icons-material/BarChart'
+import PieChartIcon from '@mui/icons-material/PieChart'
+import ScatterPlotIcon from '@mui/icons-material/ScatterPlot'
+import BlurLinearIcon from '@mui/icons-material/BlurLinear'
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
+import StackedBarChartIcon from '@mui/icons-material/StackedBarChart'
+import GradientIcon from '@mui/icons-material/Gradient'
 
 const data = [
-  { icon: <People />, label: 'Authentication' },
-  { icon: <Dns />, label: 'Database' },
-  { icon: <PermMedia />, label: 'Storage' },
-  { icon: <Public />, label: 'Hosting' },
+  { icon: <ShowChartIcon />, label: 'Line Chart', to: '/dashboard/create' },
+  { icon: <BarChartIcon />, label: 'Bar Chart', to: '/dashboard/create' },
+  { icon: <PieChartIcon />, label: 'Pie Chart', to: '/dashboard/create' },
+  { icon: <ScatterPlotIcon />, label: 'Scatter Plot', to: '/dashboard/create' },
+  { icon: <BlurLinearIcon />, label: 'Dot Plot', to: '/dashboard/create' },
+  { icon: <InsertPhotoIcon />, label: 'Pictograph', to: '/dashboard/create' },
+  { icon: <StackedBarChartIcon />, label: 'Histogram', to: '/dashboard/create' },
+  { icon: <GradientIcon />, label: 'Heat Map', to: '/dashboard/create' },
 ]
 
 export default function CollapsibleMenu() {
@@ -33,10 +36,26 @@ export default function CollapsibleMenu() {
   return (
     <Box
       sx={{
-        bgcolor: open ? 'rgba(71, 98, 130, 0.2)' : null,
+        bgcolor: open ? 'inherit' : null,
         pb: open ? 2 : 0,
       }}
     >
+      <ListItem component='div' disablePadding>
+        <ListItemButton sx={{ height: 56 }} component={Link} to='/dashboard' prefetch='intent'>
+          <ListItemIcon>
+            <Home sx={{ color: theme => theme.palette.text.primary }} />
+          </ListItemIcon>
+          <ListItemText
+            primary='Home'
+            primaryTypographyProps={{
+              color: theme => theme.palette.text.primary,
+              fontWeight: 'medium',
+              variant: 'body2',
+            }}
+          />
+        </ListItemButton>
+      </ListItem>
+      <Divider />
       <ListItemButton
         alignItems='flex-start'
         onClick={() => setOpen(!open)}
@@ -48,19 +67,19 @@ export default function CollapsibleMenu() {
         }}
       >
         <ListItemText
-          primary='Build'
+          primary='Create'
           primaryTypographyProps={{
             fontSize: 15,
             fontWeight: 'medium',
             lineHeight: '20px',
             mb: '2px',
           }}
-          secondary='Authentication, Firestore Database, Realtime Database, Storage, Hosting, Functions, and Machine Learning'
+          secondary='Line Chart, Bar Chart, Pie Chart, Scatter Plot, Dot Plot, Pictograph, Historygram, Heat Map'
           secondaryTypographyProps={{
             noWrap: true,
             fontSize: 12,
             lineHeight: '16px',
-            color: open ? 'rgba(0,0,0,0)' : '#0000007f',
+            color: open ? 'rgba(0,0,0,0)' : theme => theme.palette.text.primary,
           }}
           sx={{ my: 0 }}
         />
@@ -75,11 +94,12 @@ export default function CollapsibleMenu() {
       </ListItemButton>
       {open &&
         data.map(item => (
-          <ListItemButton key={item.label} sx={{ py: 1, minHeight: 32 }}>
+          <ListItemButton key={item.label} sx={{ py: 1, minHeight: 32 }} component={Link} to={item.to}>
             <ListItemIcon sx={{ color: 'inherit' }}>{item.icon}</ListItemIcon>
             <ListItemText primary={item.label} primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }} />
           </ListItemButton>
         ))}
+      <Divider />
     </Box>
   )
 }
