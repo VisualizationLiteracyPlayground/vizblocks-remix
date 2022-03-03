@@ -2,12 +2,13 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
+import Typography from '@mui/material/Typography'
 
 import InputData from './InputData'
+import AdjustParameters from './AdjustParameters'
 
 import { useTheme } from '~/utils/theme'
 import { useGraphData } from '~/utils/graphDataContext'
-import { Typography } from '@mui/material'
 
 export default function BuildGraphStepper() {
   const [activeStep, setActiveStep] = React.useState(-1)
@@ -29,15 +30,15 @@ export default function BuildGraphStepper() {
   const steps = [
     {
       label: 'Input Data',
-      modal: <InputData label='1. Input Data' columns={columnTemplate} isActive={isActive(0)} setActive={handleActive(0)} />,
+      modal: <InputData label='1. Input Data' columns={columnTemplate} setActive={handleActive(0)} />,
     },
     {
       label: 'Adjust Parameters',
-      modal: <InputData label='2. Adjust Parameters' columns={columnTemplate} isActive={isActive(1)} setActive={handleActive(1)} />,
+      modal: <AdjustParameters label='2. Adjust Parameters' columns={columnTemplate} setActive={handleActive(1)} />,
     },
     {
       label: 'Save Graph',
-      modal: <InputData label='3. Save Graph' columns={columnTemplate} isActive={isActive(2)} setActive={handleActive(2)} />,
+      modal: <InputData label='3. Save Graph' columns={columnTemplate} setActive={handleActive(2)} />,
     },
   ]
 
@@ -66,10 +67,9 @@ export default function BuildGraphStepper() {
                   return mode === 'light' ? theme.palette.secondary.light : theme.palette.secondary.dark
                 }
               },
-
-              // [`& .MuiStepLabel-label`]: {
-              //   fontSize: '1rem',
-              // },
+              [`& .MuiButton-root`]: {
+                color: theme => (isActive(index) ? theme.palette.primary.contrastText : theme.palette.secondary.contrastText),
+              },
             }}
           >
             {step.modal}

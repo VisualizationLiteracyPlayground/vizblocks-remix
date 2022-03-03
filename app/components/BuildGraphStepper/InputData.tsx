@@ -9,11 +9,11 @@ import { useGraphData } from '~/utils/graphDataContext'
 interface InputDataProps {
   label?: string
   columns: GridColumns
-  isActive: boolean
   setActive: () => void
 }
 
-const InputData = ({ label = 'Open Modal', columns, isActive, setActive }: InputDataProps) => {
+// TODO: abstract modal from content, e.g. DataGrid, Form, Save menu
+const InputData = ({ label = 'Open Modal', columns, setActive }: InputDataProps) => {
   // Modal
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => {
@@ -50,11 +50,7 @@ const InputData = ({ label = 'Open Modal', columns, isActive, setActive }: Input
 
   return (
     <div>
-      <Button
-        onClick={handleOpen}
-        disableTouchRipple
-        sx={{ color: theme => (isActive ? theme.palette.primary.contrastText : theme.palette.secondary.contrastText), p: 3 }}
-      >
+      <Button onClick={handleOpen} disableTouchRipple sx={{ p: 3 }}>
         {label}
       </Button>
 
