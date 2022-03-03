@@ -2,28 +2,15 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
 import { DataGrid, GridCellEditCommitParams, GridColumns, GridRowsProp, GridSelectionModel } from '@mui/x-data-grid'
 import { useGraphData } from '~/utils/graphDataContext'
 
-interface InputDataProps {
-  label?: string
-  columns: GridColumns
-  setActive: () => void
-}
+interface InputDataProps {}
 
 // TODO: abstract modal from content, e.g. DataGrid, Form, Save menu
-const InputData = ({ label = 'Open Modal', columns, setActive }: InputDataProps) => {
-  // Modal
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = () => {
-    setActive()
-    setOpen(true)
-  }
-  const handleClose = () => setOpen(false)
-
+const InputData = ({}: InputDataProps) => {
   // DataGrid
-  const { data, setData } = useGraphData()
+  const { data, setData, columnTemplate } = useGraphData()
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([])
 
   const handleCellEditCommit = React.useCallback((params: GridCellEditCommitParams) => {
@@ -49,43 +36,23 @@ const InputData = ({ label = 'Open Modal', columns, setActive }: InputDataProps)
   }
 
   return (
-    <div>
-      <Button onClick={handleOpen} disableTouchRipple sx={{ p: 3 }}>
-        {label}
-      </Button>
-
-      <Modal open={open} onClose={handleClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 600,
-            bgcolor: 'background.paper',
-            borderRadius: '10px',
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography id='modal-modal-title' variant='h6' component='h2'>
-            Input data
-          </Typography>
-          <Button onClick={handleAddRow}>Add</Button>
-          <Button onClick={handleDeleteRow}>Delete</Button>
-          <Box sx={{ height: 400, width: 1 }}>
-            <DataGrid
-              rows={data}
-              columns={columns}
-              onCellEditCommit={handleCellEditCommit}
-              hideFooter
-              checkboxSelection
-              onSelectionModelChange={handleSelectionModel}
-            />
-          </Box>
-        </Box>
-      </Modal>
-    </div>
+    <>
+      <Typography id='modal-modal-title' variant='h6' component='h2'>
+        Input data
+      </Typography>
+      <Button onClick={handleAddRow}>Add</Button>
+      <Button onClick={handleDeleteRow}>Delete</Button>
+      <Box sx={{ height: 400, width: 1 }}>
+        <DataGrid
+          rows={data}
+          columns={columnTemplate}
+          onCellEditCommit={handleCellEditCommit}
+          hideFooter
+          checkboxSelection
+          onSelectionModelChange={handleSelectionModel}
+        />
+      </Box>
+    </>
   )
 }
 

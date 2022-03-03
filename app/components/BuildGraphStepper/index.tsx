@@ -4,8 +4,10 @@ import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
 import Typography from '@mui/material/Typography'
 
+import InputModal from './InputModal'
 import InputData from './InputData'
 import AdjustParameters from './AdjustParameters'
+import SaveGraph from './SaveGraph'
 
 import { useTheme } from '~/utils/theme'
 import { useGraphData } from '~/utils/graphDataContext'
@@ -30,15 +32,15 @@ export default function BuildGraphStepper() {
   const steps = [
     {
       label: 'Input Data',
-      modal: <InputData label='1. Input Data' columns={columnTemplate} setActive={handleActive(0)} />,
+      modalContent: <InputData />,
     },
     {
       label: 'Adjust Parameters',
-      modal: <AdjustParameters label='2. Adjust Parameters' columns={columnTemplate} setActive={handleActive(1)} />,
+      modalContent: <AdjustParameters />,
     },
     {
       label: 'Save Graph',
-      modal: <InputData label='3. Save Graph' columns={columnTemplate} setActive={handleActive(2)} />,
+      modalContent: <SaveGraph />,
     },
   ]
 
@@ -72,7 +74,9 @@ export default function BuildGraphStepper() {
               },
             }}
           >
-            {step.modal}
+            <InputModal label={`${index + 1}. ${step.label}`} setActive={handleActive(index)}>
+              {step.modalContent}
+            </InputModal>
           </Step>
         ))}
       </Stepper>
