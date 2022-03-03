@@ -9,6 +9,8 @@ Download the example [or clone the repo](https://github.com/mui/material-ui):
 ```sh
 curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/remix-with-typescript
 cd remix-with-typescript
+
+docker run --name postgresql-container -p 5432:5432 -e POSTGRES_PASSWORD=vizblocks123 -d postgres
 ```
 
 Install it and run:

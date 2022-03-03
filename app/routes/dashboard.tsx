@@ -16,6 +16,8 @@ import MailIcon from '@mui/icons-material/Mail'
 
 import CollapsibleMenu from '~/components/CollapsibleMenu'
 
+import { GraphDataProvider } from '~/utils/graphDataContext'
+
 const drawerWidth = 240
 
 export default function Dashboard() {
@@ -41,7 +43,9 @@ export default function Dashboard() {
 
       <Box sx={{ flexGrow: 1, p: 3, bgcolor: 'rgba(108, 221, 170, 0.2)', height: '100vh' }}>
         <Toolbar />
-        <Outlet />
+        <GraphDataProvider>
+          <Outlet />
+        </GraphDataProvider>
       </Box>
     </>
   )

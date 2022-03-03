@@ -2,8 +2,11 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import BuildGraphStepper from '~/components/BuildGraphStepper'
 import LineChartTemplate from '~/components/LineChartTemplate'
+import { useGraphData } from '~/utils/graphDataContext'
 
 function Create() {
+  const [data] = useGraphData()
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <BuildGraphStepper />
@@ -16,7 +19,7 @@ function Create() {
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         }}
       >
-        <LineChartTemplate />
+        <LineChartTemplate data={data} />
       </Box>
     </div>
   )

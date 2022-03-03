@@ -3,43 +3,13 @@ import { Typography } from '@mui/material'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 type Data = {
+  id?: number
   xval: number | string
   yval: number
 }
 
-const mockData: Data[] = [
-  {
-    xval: 'Page A',
-    yval: 4000,
-  },
-  {
-    xval: 'Page B',
-    yval: 3000,
-  },
-  {
-    xval: 'Page C',
-    yval: 2000,
-  },
-  {
-    xval: 'Page D',
-    yval: 2780,
-  },
-  {
-    xval: 'Page E',
-    yval: 1890,
-  },
-  {
-    xval: 'Page F',
-    yval: 2390,
-  },
-  {
-    xval: 'Page G',
-    yval: 3490,
-  },
-]
-
 interface LineChartTemplateProps {
-  data: Data[]
+  data: any[]
   title?: string
   xlabel?: string
   ylabel?: string
@@ -49,7 +19,7 @@ interface LineChartTemplateProps {
 // set ResponsiveContainer width=99% to respond to window size changes
 // see https://github.com/recharts/recharts/issues/172#issuecomment-307858843
 export default function LineChartTemplate({
-  data = mockData,
+  data,
   title = 'Title',
   xlabel = 'X-Axis',
   ylabel = 'Y-Axis',

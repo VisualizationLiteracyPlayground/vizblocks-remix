@@ -8,12 +8,12 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '~/utils/theme'
 
-import InputModal from './InputModal'
+import InputData from './InputData'
 
 const steps = [
-  { label: 'Input Data', modal: <InputModal label='1. Input Data' /> },
-  { label: 'Adjust Parameters', modal: <InputModal label='2. Adjust Parameters' /> },
-  { label: 'Save Graph', modal: <InputModal label='3. Save Graph' /> },
+  { label: 'Input Data', modal: <InputData label='1. Input Data' /> },
+  { label: 'Adjust Parameters', modal: <InputData label='2. Adjust Parameters' /> },
+  { label: 'Save Graph', modal: <InputData label='3. Save Graph' /> },
 ]
 
 export default function BuildGraphStepper() {
@@ -40,7 +40,6 @@ export default function BuildGraphStepper() {
           <Step
             key={step.label}
             sx={{
-              p: 3,
               borderRadius: '10px',
               boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
               bgcolor: theme => (mode === 'light' ? theme.palette.primary.main : theme.palette.primary.dark),

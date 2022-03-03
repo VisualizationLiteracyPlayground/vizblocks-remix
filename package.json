@@ -20,6 +20,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "^5.4.2",
     "@mui/material": "latest",
+    "@mui/x-data-grid": "^5.5.1",
     "@prisma/client": "^3.10.0",
     "@remix-run/react": "latest",
     "@remix-run/serve": "latest",
