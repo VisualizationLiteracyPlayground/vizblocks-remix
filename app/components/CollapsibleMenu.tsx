@@ -20,14 +20,14 @@ import StackedBarChartIcon from '@mui/icons-material/StackedBarChart'
 import GradientIcon from '@mui/icons-material/Gradient'
 
 const data = [
-  { icon: <ShowChartIcon />, label: 'Line Chart', to: '/dashboard/create' },
-  { icon: <BarChartIcon />, label: 'Bar Chart', to: '/dashboard/create' },
-  { icon: <PieChartIcon />, label: 'Pie Chart', to: '/dashboard/create' },
-  { icon: <ScatterPlotIcon />, label: 'Scatter Plot', to: '/dashboard/create' },
-  { icon: <BlurLinearIcon />, label: 'Dot Plot', to: '/dashboard/create' },
-  { icon: <InsertPhotoIcon />, label: 'Pictograph', to: '/dashboard/create' },
-  { icon: <StackedBarChartIcon />, label: 'Histogram', to: '/dashboard/create' },
-  { icon: <GradientIcon />, label: 'Heat Map', to: '/dashboard/create' },
+  { icon: <ShowChartIcon />, label: 'Line Chart', to: '/dashboard/create/linechart' },
+  { icon: <BarChartIcon />, label: 'Bar Chart', to: '/dashboard/create/barchart' },
+  { icon: <PieChartIcon />, label: 'Pie Chart', to: '/dashboard/create/piechart' },
+  { icon: <ScatterPlotIcon />, label: 'Scatter Plot', to: '/dashboard/create/scatterplot' },
+  { icon: <BlurLinearIcon />, label: 'Dot Plot', to: '/dashboard/create/dotplot' },
+  { icon: <InsertPhotoIcon />, label: 'Pictograph', to: '/dashboard/create/pictograph' },
+  { icon: <StackedBarChartIcon />, label: 'Histogram', to: '/dashboard/histogram' },
+  { icon: <GradientIcon />, label: 'Heat Map', to: '/dashboard/create/heatmap' },
 ]
 
 export default function CollapsibleMenu() {

@@ -1,13 +1,19 @@
 import * as React from 'react'
-import { GridRowsProp } from '@mui/x-data-grid'
+import { GridColumns, GridRowsProp } from '@mui/x-data-grid'
 
-type GraphContextType = [GridRowsProp, React.Dispatch<React.SetStateAction<GridRowsProp>>]
+interface GraphContextType {
+  data: GridRowsProp
+  setData: React.Dispatch<React.SetStateAction<GridRowsProp>>
+  columnTemplate: GridColumns
+  setColumnTemplate: React.Dispatch<React.SetStateAction<GridColumns>>
+}
 const GraphDataContext = React.createContext<GraphContextType | undefined>(undefined)
 
 function GraphDataProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = React.useState<GridRowsProp>([])
+  const [columnTemplate, setColumnTemplate] = React.useState<GridColumns>([])
 
-  return <GraphDataContext.Provider value={[data, setData]}>{children}</GraphDataContext.Provider>
+  return <GraphDataContext.Provider value={{ data, setData, columnTemplate, setColumnTemplate }}>{children}</GraphDataContext.Provider>
 }
 
 function useGraphData() {

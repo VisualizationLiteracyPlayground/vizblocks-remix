@@ -2,14 +2,8 @@ import * as React from 'react'
 import { Typography } from '@mui/material'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
-type Data = {
-  id?: number
-  xval: number | string
-  yval: number
-}
-
 interface LineChartTemplateProps {
-  data: any[]
+  data: any
   title?: string
   xlabel?: string
   ylabel?: string

@@ -4,6 +4,7 @@ import { withEmotionCache } from '@emotion/react'
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material'
 import { useTheme, ThemeProvider } from './utils/theme'
 import { useClientStyle } from './utils/clientStyleContext'
+import { GraphDataProvider } from '~/utils/graphDataContext'
 import Layout from './components/Layout'
 
 interface DocumentProps {
@@ -65,7 +66,9 @@ export default function App() {
     <ThemeProvider>
       <Document>
         <Layout>
-          <Outlet />
+          <GraphDataProvider>
+            <Outlet />
+          </GraphDataProvider>
         </Layout>
       </Document>
     </ThemeProvider>
