@@ -43,7 +43,7 @@ const InputModal = ({ label = 'Open Modal', setActive, children }: InputModalPro
           {children}
 
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-            <Button variant='outlined' sx={{ m: 1, minWidth: '100px' }} onClick={handleClose}>
+            <Button sx={{ m: 1, minWidth: '100px' }} onClick={handleClose}>
               Close
             </Button>
           </Box>
