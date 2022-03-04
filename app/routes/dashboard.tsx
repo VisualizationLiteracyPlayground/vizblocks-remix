@@ -41,7 +41,7 @@ export default function Dashboard() {
         </Box>
       </Drawer>
 
-      <Box sx={{ flexGrow: 1, p: 3, bgcolor: 'rgba(108, 221, 170, 0.2)', height: '100vh' }}>
+      <Box sx={{ flexGrow: 1, p: 3, bgcolor: 'rgba(108, 221, 170, 0.2)', height: '100%' }}>
         <Toolbar />
         <Outlet />
       </Box>

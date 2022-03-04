@@ -2,6 +2,7 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import RuleIcon from '@mui/icons-material/Rule'
 import { useGraphData } from '~/utils/graphDataContext'
 
 interface SaveGraphProps {}
@@ -43,21 +44,26 @@ const SaveGraph = ({}: SaveGraphProps) => {
 
   return (
     <>
-      {data.length > 0 ? (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', m: 1 }}>
-          <Typography id='modal-modal-title' variant='h6' component='h2' sx={{ mb: 2 }}>
-            You can save and download the plot as a csv file!
-          </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', m: 1 }}>
+        {data.length > 0 ? (
+          <>
+            <Typography id='modal-modal-title' variant='h6' component='h2' sx={{ mb: 2 }}>
+              You can save and download the plot as a csv file!
+            </Typography>
 
-          <Button variant='contained' disableElevation size='large' onClick={handleDownloadCsv}>
-            Click here to download
-          </Button>
-        </Box>
-      ) : (
-        <Typography id='modal-modal-title' variant='h6' component='h2'>
-          Please input some data first!
-        </Typography>
-      )}
+            <Button variant='contained' disableElevation size='large' onClick={handleDownloadCsv}>
+              Click here to download
+            </Button>
+          </>
+        ) : (
+          <>
+            <Typography id='modal-modal-title' variant='h6' component='h2'>
+              Please input some data first!
+            </Typography>
+            <RuleIcon fontSize='large' sx={{ m: 1 }} />
+          </>
+        )}
+      </Box>
     </>
   )
 }
