@@ -27,8 +27,10 @@
     "bcryptjs": "^2.4.3",
     "react": "latest",
     "react-dom": "latest",
+    "react-hot-toast": "^2.2.0",
     "recharts": "^2.1.9",
-    "remix": "latest"
+    "remix": "latest",
+    "xlsx": "^0.18.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",

@@ -3,12 +3,14 @@ import LineChartTemplate from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
 import { GridColumns, GridRowsProp } from '@mui/x-data-grid'
 
+// define template for column headers
+// https://mui.com/components/data-grid/columns/#column-definitions
 const columns: GridColumns = [
-  // { field: 'id', headerName: '#', editable: false },
   { field: 'xval', headerName: 'X Values', width: 180, editable: true },
   { field: 'yval', headerName: 'Y Values', width: 180, type: 'number', editable: true },
 ]
 
+// initial values for rows based on column template defined above
 const initialRows: GridRowsProp = [
   {
     id: 1,
@@ -48,7 +50,8 @@ const initialRows: GridRowsProp = [
 ]
 
 function LineChart() {
-  const { data, setData, setColumnTemplate } = useGraphData()
+  const { data, setData, setColumnTemplate, parameters } = useGraphData()
+  const { title, xlabel, ylabel, name } = parameters
 
   React.useEffect(() => {
     setColumnTemplate(columns)
@@ -57,7 +60,7 @@ function LineChart() {
 
   return (
     <>
-      <LineChartTemplate data={data} />
+      <LineChartTemplate data={data} title={title} xlabel={xlabel} ylabel={ylabel} name={name} />
     </>
   )
 }

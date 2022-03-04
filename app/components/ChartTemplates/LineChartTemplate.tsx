@@ -12,13 +12,7 @@ interface LineChartTemplateProps {
 
 // set ResponsiveContainer width=99% to respond to window size changes
 // see https://github.com/recharts/recharts/issues/172#issuecomment-307858843
-export default function LineChartTemplate({
-  data,
-  title = 'Title',
-  xlabel = 'X-Axis',
-  ylabel = 'Y-Axis',
-  name = 'Line Legend',
-}: LineChartTemplateProps) {
+export default function LineChartTemplate({ data, title, xlabel, ylabel, name }: LineChartTemplateProps) {
   return (
     <>
       <Typography variant='h6' sx={{ textAlign: 'center' }}>
@@ -38,9 +32,10 @@ export default function LineChartTemplate({
         >
           <CartesianGrid strokeDasharray='3 3' />
           <XAxis dataKey='xval' label={{ value: xlabel, position: 'bottom' }} scale='band' />
-          <YAxis label={{ value: ylabel, angle: -90, position: 'left' }} />
+          <YAxis label={{ value: ylabel, angle: -90, position: 'left' }} domain={[1000, 'auto']} />
           <Tooltip />
-          <Legend verticalAlign='middle' align='right' height={36} />
+          {/* For multiple lines in the future */}
+          {/* <Legend verticalAlign='middle' align='right' height={36} /> */}
           <Line type='monotone' dataKey='yval' name={name} stroke='#82ca9d' activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>

@@ -5,6 +5,7 @@ import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material'
 import { useTheme, ThemeProvider } from './utils/theme'
 import { useClientStyle } from './utils/clientStyleContext'
 import { GraphDataProvider } from '~/utils/graphDataContext'
+import { Toaster } from 'react-hot-toast'
 import Layout from './components/Layout'
 
 interface DocumentProps {
@@ -52,6 +53,7 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
       <body>
         {children}
         <ScrollRestoration />
+        <Toaster />
         <Scripts />
         {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
