@@ -3,7 +3,7 @@ import { Typography } from '@mui/material'
 import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts'
 import { useTheme } from '~/utils/theme'
 
-interface LineChartTemplateProps {
+interface PieChartTemplateProps {
   data: any
   title?: string
   xlabel?: string
@@ -15,7 +15,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 
 // set ResponsiveContainer width=99% to respond to window size changes
 // see https://github.com/recharts/recharts/issues/172#issuecomment-307858843
-export function PieChartTemplate({ data, title, xlabel, ylabel, name }: LineChartTemplateProps) {
+export function PieChartTemplate({ data, title, xlabel, ylabel, name }: PieChartTemplateProps) {
   const { mode } = useTheme()
 
   return (
@@ -45,7 +45,7 @@ export function PieChartTemplate({ data, title, xlabel, ylabel, name }: LineChar
             fill='#82ca9d'
             label
           >
-            {data.map((_, index) => (
+            {data.map((_: any, index: number) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
