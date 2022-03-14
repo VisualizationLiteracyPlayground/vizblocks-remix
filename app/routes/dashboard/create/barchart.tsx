@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { LineChartTemplate } from '~/components/ChartTemplates'
+import { BarChartTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
 import { GridColumns, GridRowsProp } from '@mui/x-data-grid'
 
@@ -49,7 +49,7 @@ const initialRows: GridRowsProp = [
   },
 ]
 
-function LineChart() {
+function BarChart() {
   const { data, setData, setColumnTemplate, parameters } = useGraphData()
   const { title, xlabel, ylabel, name } = parameters
 
@@ -60,9 +60,9 @@ function LineChart() {
 
   return (
     <>
-      <LineChartTemplate data={data} title={title} xlabel={xlabel} ylabel={ylabel} name={name} />
+      <BarChartTemplate data={data} title={title} xlabel={xlabel} ylabel={ylabel} name={name} />
     </>
   )
 }
 
-export default LineChart
+export default BarChart

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { Typography } from '@mui/material'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { useTheme } from '~/utils/theme'
 
-interface LineChartTemplateProps {
+interface BarChartTemplateProps {
   data: any
   title?: string
   xlabel?: string
@@ -13,7 +13,7 @@ interface LineChartTemplateProps {
 
 // set ResponsiveContainer width=99% to respond to window size changes
 // see https://github.com/recharts/recharts/issues/172#issuecomment-307858843
-export function LineChartTemplate({ data, title, xlabel, ylabel, name }: LineChartTemplateProps) {
+export function BarChartTemplate({ data, title, xlabel, ylabel, name }: BarChartTemplateProps) {
   const { mode } = useTheme()
 
   return (
@@ -22,7 +22,7 @@ export function LineChartTemplate({ data, title, xlabel, ylabel, name }: LineCha
         {title}
       </Typography>
       <ResponsiveContainer width='99%' height='100%'>
-        <LineChart
+        <BarChart
           width={500}
           height={300}
           data={data}
@@ -40,10 +40,8 @@ export function LineChartTemplate({ data, title, xlabel, ylabel, name }: LineCha
             domain={[1000, 'auto']}
           />
           <Tooltip labelStyle={{ color: 'black' }} />
-          {/* For multiple lines in the future */}
-          {/* <Legend verticalAlign='middle' align='right' height={36} /> */}
-          <Line type='monotone' dataKey='yval' name={name} stroke='#82ca9d' activeDot={{ r: 8 }} />
-        </LineChart>
+          <Bar type='monotone' dataKey='yval' name={name} fill='#82ca9d' />
+        </BarChart>
       </ResponsiveContainer>
     </>
   )

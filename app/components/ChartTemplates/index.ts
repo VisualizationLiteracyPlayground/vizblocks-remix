@@ -1,1 +1,2 @@
-export { default } from './LineChartTemplate'
+export * from './LineChartTemplate'
+export * from './BarChartTemplate'
