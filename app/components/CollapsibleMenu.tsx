@@ -26,7 +26,7 @@ const data = [
   { icon: <ScatterPlotIcon />, label: 'Scatter Plot', to: '/dashboard/create/scatterplot' },
   { icon: <BlurLinearIcon />, label: 'Dot Plot', to: '/dashboard/create/dotplot' },
   { icon: <InsertPhotoIcon />, label: 'Pictograph', to: '/dashboard/create/pictograph' },
-  { icon: <StackedBarChartIcon />, label: 'Histogram', to: '/dashboard/histogram' },
+  { icon: <StackedBarChartIcon />, label: 'Histogram', to: '/dashboard/create/histogram' },
   { icon: <GradientIcon />, label: 'Heat Map', to: '/dashboard/create/heatmap' },
 ]
 

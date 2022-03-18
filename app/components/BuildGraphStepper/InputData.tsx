@@ -3,7 +3,18 @@ import * as XLSX from 'xlsx'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import { DataGrid, GridCellEditCommitParams, GridSelectionModel } from '@mui/x-data-grid'
+import {
+  DataGrid,
+  GridCellEditCommitParams,
+  GridSelectionModel,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarExport,
+  GridToolbarDensitySelector,
+} from '@mui/x-data-grid'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { useGraphData } from '~/utils/graphDataContext'
 import toast from 'react-hot-toast'
 import { typography } from '@mui/system'
@@ -87,6 +98,23 @@ const InputData = ({}: InputDataProps) => {
     return true
   }
 
+  const CustomToolBar = () => {
+    return (
+      <GridToolbarContainer>
+        <Button onClick={handleAddRow} sx={{ fontSize: '13px' }} startIcon={<AddCircleIcon />}>
+          Add
+        </Button>
+        <Button onClick={handleDeleteRow} sx={{ fontSize: '13px' }} startIcon={<DeleteIcon />}>
+          Delete
+        </Button>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+        {/* <GridToolbarExport /> */}
+      </GridToolbarContainer>
+    )
+  }
+
   return (
     <>
       <Typography id='modal-modal-title' variant='h6' component='h2'>
@@ -99,9 +127,6 @@ const InputData = ({}: InputDataProps) => {
         </Typography>
       )}
 
-      <Button onClick={handleAddRow}>Add</Button>
-      <Button onClick={handleDeleteRow}>Delete</Button>
-
       <Box sx={{ height: 400, width: 1, [`& .MuiCheckbox-root`]: { color: 'inherit' } }}>
         <DataGrid
           rows={rows}
@@ -110,6 +135,9 @@ const InputData = ({}: InputDataProps) => {
           hideFooter
           checkboxSelection
           onSelectionModelChange={handleSelectionModel}
+          components={{
+            Toolbar: CustomToolBar,
+          }}
         />
       </Box>
 
