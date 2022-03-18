@@ -11,17 +11,14 @@ interface DotPlotTemplateProps {
   name?: string
 }
 
-interface DotsProps {
-  height: number
-  width: number
-  fill: string
-  x: number
-  y: number
-  yval: number
-}
-
-const Dots: React.FC<DotsProps> = ({ x, y, yval, height, width, fill }, props) => {
-  // console.log(props)
+const Dots: React.FC<any> = (props: any) => {
+  // console.log(props) to see all the props related to <Bar />
+  const { x, y, yval, height, width, fill } = props
+  // y is the top most value, y + height = 0
+  // e.g. when yval = 3, we want to display 3 dots
+  // >>> height of dot 3 = y + (height / 3) * 0
+  // >>> height of dot 2 = y + (height / 3) * 1
+  // >>> height of dot 1 = y + (height / 3) * 2
   const DOTS_CY_VALUE = new Array(yval).fill(0).map((_, index) => y + (height / yval) * index)
 
   return (

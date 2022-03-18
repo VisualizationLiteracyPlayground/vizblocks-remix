@@ -11,14 +11,13 @@ const columns: GridColumns = [
 ]
 
 // initial values for rows based on column template defined above
-// TODO: add z-axis to template
 const initialData: GridRowsProp = [
-  { id: 1, xval: 100, yval: 200, zval: 200 },
-  { id: 2, xval: 120, yval: 100, zval: 260 },
-  { id: 3, xval: 170, yval: 300, zval: 400 },
-  { id: 4, xval: 140, yval: 250, zval: 280 },
-  { id: 5, xval: 150, yval: 400, zval: 500 },
-  { id: 6, xval: 110, yval: 280, zval: 200 },
+  { id: 1, xval: 100, yval: 200 },
+  { id: 2, xval: 120, yval: 100 },
+  { id: 3, xval: 170, yval: 300 },
+  { id: 4, xval: 140, yval: 250 },
+  { id: 5, xval: 150, yval: 400 },
+  { id: 6, xval: 110, yval: 280 },
 ]
 function BarChart() {
   const { data, setData, setColumnTemplate, parameters } = useGraphData()

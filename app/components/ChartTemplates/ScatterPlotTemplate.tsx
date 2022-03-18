@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Typography } from '@mui/material'
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ZAxis } from 'recharts'
 import { useTheme } from '~/utils/theme'
 
 interface ScatterPlotTemplateProps {
@@ -35,6 +35,8 @@ export function ScatterPlotTemplate({ data, title, xlabel, ylabel, name }: Scatt
           <CartesianGrid />
           <XAxis dataKey='xval' label={{ value: xlabel, position: 'bottom', fill: mode === 'light' ? '#000' : '#fff' }} />
           <YAxis dataKey='yval' label={{ value: ylabel, angle: -90, position: 'left', fill: mode === 'light' ? '#000' : '#fff' }} />
+          {/* Dot Size https://stackoverflow.com/questions/68437581/how-to-customize-recharts-scatter-circle-size */}
+          <ZAxis range={[250, 250]} />
           <Tooltip labelStyle={{ color: 'black' }} cursor={{ strokeDasharray: '3 3' }} />
           <Scatter name={name} data={data} fill='#82ca9d' />
         </ScatterChart>

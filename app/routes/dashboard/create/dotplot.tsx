@@ -12,36 +12,12 @@ const columns: GridColumns = [
 
 // initial values for rows based on column template defined above
 const initialRows: GridRowsProp = [
-  {
-    id: 1,
-    xval: 'Page A',
-    yval: 2,
-  },
-  {
-    id: 2,
-    xval: 'Page B',
-    yval: 5,
-  },
-  {
-    id: 3,
-    xval: 'Page C',
-    yval: 3,
-  },
-  {
-    id: 4,
-    xval: 'Page D',
-    yval: 8,
-  },
-  {
-    id: 5,
-    xval: 'Page E',
-    yval: 7,
-  },
-  {
-    id: 6,
-    xval: 'Page F',
-    yval: 2,
-  },
+  { id: 1, xval: 'Page A', yval: 2 },
+  { id: 2, xval: 'Page B', yval: 5 },
+  { id: 3, xval: 'Page C', yval: 3 },
+  { id: 4, xval: 'Page D', yval: 8 },
+  { id: 5, xval: 'Page E', yval: 7 },
+  { id: 6, xval: 'Page F', yval: 2 },
 ]
 
 function BarChart() {
