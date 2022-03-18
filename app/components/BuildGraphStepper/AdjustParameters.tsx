@@ -5,6 +5,18 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '~/utils/theme'
 import { useGraphData } from '~/utils/graphDataContext'
+import { useLocation } from 'remix'
+
+enum GRAPH_TYPES {
+  linechart = 'linechart',
+  barchart = 'barchart',
+  piechart = 'piechart',
+  scatterplot = 'scatterplot',
+  dotplot = 'dotplot',
+  pictograph = 'pictograph',
+  histogram = 'histogram',
+  heatmap = 'heatmap',
+}
 
 interface AdjustParametersProps {}
 
@@ -12,6 +24,8 @@ const AdjustParameters = ({}: AdjustParametersProps) => {
   const { mode } = useTheme()
   const { parameters, setParameters } = useGraphData()
   const { title, xlabel, ylabel, name } = parameters
+  const location = useLocation()
+  const graphType = location.pathname.replace('/dashboard/create/', '')
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newParam = {
@@ -20,7 +34,12 @@ const AdjustParameters = ({}: AdjustParametersProps) => {
     setParameters(prevParams => ({ ...prevParams, ...newParam }))
   }
 
-  console.log(parameters)
+  const ADJUSTABLE_PARAMETERS = [
+    { name: 'title', label: 'Graph Title', type: 'text', value: title, hide: [''] },
+    { name: 'xlabel', label: 'X-axis Title', type: 'text', value: xlabel, hide: [GRAPH_TYPES.heatmap] },
+    { name: 'ylabel', label: 'Y-axiss Title', type: 'text', value: ylabel, hide: [GRAPH_TYPES.heatmap] },
+    { name: 'name', label: 'Line Label', type: 'text', value: name, hide: [GRAPH_TYPES.heatmap, GRAPH_TYPES.dotplot] },
+  ]
 
   return (
     <>
@@ -35,46 +54,22 @@ const AdjustParameters = ({}: AdjustParametersProps) => {
         autoComplete='off'
       >
         <Typography variant='h6'>Titles</Typography>
-        <TextField
-          id='title'
-          name='title'
-          label='Graph Title'
-          variant='standard'
-          margin='normal'
-          type='text'
-          value={title}
-          onChange={handleChange}
-        />
-        <TextField
-          id='xlabel'
-          name='xlabel'
-          label='X-axis Title'
-          variant='standard'
-          margin='normal'
-          type='text'
-          value={xlabel}
-          onChange={handleChange}
-        />
-        <TextField
-          id='ylabel'
-          name='ylabel'
-          label='Y-axis Title'
-          variant='standard'
-          margin='normal'
-          type='text'
-          value={ylabel}
-          onChange={handleChange}
-        />
-        <TextField
-          id='name'
-          name='name'
-          label='Line Label'
-          variant='standard'
-          margin='normal'
-          type='text'
-          value={name}
-          onChange={handleChange}
-        />
+        {ADJUSTABLE_PARAMETERS.map((parameter, index) => {
+          if (parameter.hide.includes(graphType)) return null
+          return (
+            <TextField
+              key={index}
+              id={parameter.name}
+              name={parameter.name}
+              label={parameter.label}
+              variant='standard'
+              margin='normal'
+              type={parameter.type}
+              value={parameter.value}
+              onChange={handleChange}
+            />
+          )
+        })}
       </Box>
     </>
   )
