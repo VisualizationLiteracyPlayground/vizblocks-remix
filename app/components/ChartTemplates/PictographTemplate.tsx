@@ -19,25 +19,25 @@ interface PictographTemplateProps {
 
 const Icon: React.FC<any> = (props: any) => {
   // console.log(props) to see all the props related to <Bar />
-  const { x, y, value, height, width, category } = props
+  const { x, y, value, height, width, category, fill } = props
   // final position >> width = width * 2
   // each interval >> x - (width / value)
   const X_VALUES = new Array(value).fill(0).map((_, index) => x - (width / value) * index)
 
   return (
-    <svg>
+    <>
       {X_VALUES.map((xValue, index) => {
         return (
-          <>
-            {category === 'Apple' && <AppleIcon key={index} height={height} width={width * 2} x={xValue} y={y} />}
-            {category === 'Plane' && <FlightIcon key={index} height={height} width={width * 2} x={xValue} y={y} />}
-            {category === 'Boat' && <DirectionsBoatIcon key={index} height={height} width={width * 2} x={xValue} y={y} />}
-            {category === 'Car' && <DirectionsCarIcon key={index} height={height} width={width * 2} x={xValue} y={y} />}
-            {category === 'Rocket' && <RocketIcon key={index} height={height} width={width * 2} x={xValue} y={y} />}
-          </>
+          <svg key={`${category}-${index}`}>
+            {category === 'Apple' && <AppleIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: fill }} />}
+            {category === 'Plane' && <FlightIcon height={height} width={width * 2} x={xValue} y={y} />}
+            {category === 'Boat' && <DirectionsBoatIcon height={height} width={width * 2} x={xValue} y={y} />}
+            {category === 'Car' && <DirectionsCarIcon height={height} width={width * 2} x={xValue} y={y} />}
+            {category === 'Rocket' && <RocketIcon height={height} width={width * 2} x={xValue} y={y} />}
+          </svg>
         )
       })}
-    </svg>
+    </>
   )
 }
 

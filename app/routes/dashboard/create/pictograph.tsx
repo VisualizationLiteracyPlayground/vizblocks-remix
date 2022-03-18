@@ -3,10 +3,13 @@ import { PictographTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
 import { GridColumns, GridRowsProp } from '@mui/x-data-grid'
 
+// linked to icons displayed in PicotographTemplate
+const SELECT_OPTONS = ['Car', 'Boat', 'Rocket', 'Plane']
+
 // define template for column headers
 // https://mui.com/components/data-grid/columns/#column-definitions
 const columns: GridColumns = [
-  { field: 'category', headerName: 'Category', width: 180, editable: true },
+  { field: 'category', headerName: 'Category', width: 180, type: 'singleSelect', valueOptions: [...SELECT_OPTONS], editable: true },
   { field: 'value', headerName: 'Value', width: 180, type: 'number', editable: true },
 ]
 

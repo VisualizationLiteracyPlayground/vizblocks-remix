@@ -17,7 +17,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useGraphData } from '~/utils/graphDataContext'
 import toast from 'react-hot-toast'
-import { typography } from '@mui/system'
 
 interface InputDataProps {}
 
@@ -134,6 +133,7 @@ const InputData = ({}: InputDataProps) => {
           onCellEditCommit={handleCellEditCommit}
           hideFooter
           checkboxSelection
+          disableSelectionOnClick
           onSelectionModelChange={handleSelectionModel}
           components={{
             Toolbar: CustomToolBar,
