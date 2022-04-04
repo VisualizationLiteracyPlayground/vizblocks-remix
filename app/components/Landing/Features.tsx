@@ -33,7 +33,7 @@ export default function Features() {
     <Box>
       {FEATURES.map(({ title, subtitle, image }, index) => {
         return index % 2 === 0 ? (
-          <Container sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Container key={index} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Box sx={{ padding: '3rem', width: { md: '50%' } }}>
               <Typography variant='h4' fontWeight='700'>
                 {title}
@@ -56,7 +56,7 @@ export default function Features() {
             />
           </Container>
         ) : (
-          <Container sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Container key={index} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Box
               sx={{
                 display: { xs: 'none', md: 'block' },
