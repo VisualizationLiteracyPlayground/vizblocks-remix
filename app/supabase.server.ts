@@ -7,6 +7,7 @@ declare global {
       SUPABASE_URL: string
       SUPABASE_SERVICE_KEY: string
       PUBLIC_SUPABASE_ANON_KEY: string
+      SERVER_URL: string
     }
   }
 }
@@ -14,6 +15,8 @@ declare global {
 if (!process.env.SUPABASE_URL) throw new Error('ENV: SUPABASE_URL is required')
 
 if (!process.env.SUPABASE_SERVICE_KEY) throw new Error('ENV: SUPABASE_SERVICE_KEY is required')
+
+if (!process.env.SERVER_URL) throw new Error('ENV: SERVER_URL is required')
 
 // Supabase options example (build your own :))
 // https://supabase.com/docs/reference/javascript/initializing#with-additional-parameters
