@@ -17,6 +17,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useGraphData } from '~/utils/graphDataContext'
 import toast from 'react-hot-toast'
+import { objectToCsvString, handleDownloadCsv } from './utils'
 
 interface InputDataProps {}
 
@@ -60,7 +61,7 @@ const InputData = ({}: InputDataProps) => {
         const workbook = XLSX.read(data, { type: 'array' })
         const sheetName = workbook.SheetNames[0]
         const worksheet = workbook.Sheets[sheetName]
-        const json: { readonly [key: string]: any }[] = XLSX.utils.sheet_to_json(worksheet)
+        const json: { [key: string]: any }[] = XLSX.utils.sheet_to_json(worksheet)
 
         const isValid = checkFileValidity(json)
 
@@ -77,25 +78,29 @@ const InputData = ({}: InputDataProps) => {
     }
   }
 
-  const checkFileValidity = (data: { readonly [key: string]: any }[]) => {
+  const checkFileValidity = (data: { [key: string]: any }[]) => {
     if (data.length < 1) return true
 
-    const propertiesToCheck = ['id', 'xval', 'yval']
-    const isHeaderValid = (row: any) => propertiesToCheck.every(header => header in row)
+    // const propertiesToCheck = ['id', 'xval', 'yval']
+    // const isHeaderValid = (row: any) => propertiesToCheck.every(header => header in row)
 
-    for (let row of data) {
-      if (!isHeaderValid(row)) {
-        setErrorMessage(`Did you modify the headers (first row) OR some row values are missing?`)
-        return false
-      }
-      if (typeof row.yval !== 'number') {
-        setErrorMessage(`The column "yval" contains non-numeric values.`)
-        return false
-      }
-    }
+    // for (let row of data) {
+    //   if (!isHeaderValid(row)) {
+    //     setErrorMessage(`Did you modify the headers (first row) OR some row values are missing?`)
+    //     return false
+    //   }
+
+    //   if (typeof row.yval !== 'number') {
+    //     setErrorMessage(`The column "yval" contains non-numeric values.`)
+    //     return false
+    //   }
+    // }
 
     return true
   }
+
+  const csvString = objectToCsvString(rows)
+  const handleDownloadTemplate = () => handleDownloadCsv(csvString)
 
   const CustomToolBar = () => {
     return (
@@ -143,7 +148,7 @@ const InputData = ({}: InputDataProps) => {
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', m: 1 }}>
         <Typography variant='body2' sx={{ fontStyle: 'italic' }}>
-          Note: You can upload a file (.csv, .xls, .xlsx) by using our template instead.
+          Note: You can upload a .csv file instead. Get our csv template by clicking on download template below.
         </Typography>
 
         <div>
@@ -151,7 +156,7 @@ const InputData = ({}: InputDataProps) => {
             Upload File
             <input type='file' name='upload' id='upload' accept={acceptedFileTypes.join(',')} onChange={readUploadFile} hidden />
           </Button>
-          <Button>Download Template</Button>
+          <Button onClick={handleDownloadTemplate}>Download Template</Button>
         </div>
       </Box>
     </>

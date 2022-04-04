@@ -10,11 +10,19 @@ import AdjustParameters from './AdjustParameters'
 import SaveGraph from './SaveGraph'
 
 import { useTheme } from '~/utils/theme'
+import { useLocation } from 'remix'
 
 export default function BuildGraphStepper() {
   const [activeStep, setActiveStep] = React.useState(-1)
   const [completed, setCompleted] = React.useState<{ [key: number]: boolean }>({})
   const { mode } = useTheme()
+  const location = useLocation()
+
+  React.useEffect(() => {
+    // reset state based on location
+    setActiveStep(-1)
+    setCompleted({})
+  }, [location])
 
   const handleActive = (step: number) => () => {
     setActiveStep(step)
@@ -33,7 +41,7 @@ export default function BuildGraphStepper() {
       modalContent: <InputData />,
     },
     {
-      label: 'Adjust Parameters',
+      label: 'Edit Annotations',
       modalContent: <AdjustParameters />,
     },
     {

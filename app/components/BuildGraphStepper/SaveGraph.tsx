@@ -3,44 +3,28 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import RuleIcon from '@mui/icons-material/Rule'
+import domtoimage from 'dom-to-image'
+import fileDownload from 'js-file-download'
 import { useGraphData } from '~/utils/graphDataContext'
+import { objectToCsvString, handleDownloadCsv } from './utils'
 
 interface SaveGraphProps {}
 
-// TODO: abstract modal from content, e.g. DataGrid, Form, Save menu
+// TODO: options to save an image of the graph or csv
+
+// round 1 >> get feedback, without explaining how to use it. record the screen
+// collate feedback
+
 const SaveGraph = ({}: SaveGraphProps) => {
   const { data } = useGraphData()
 
-  const objectToCsvString = () => {
-    const csvPrefix = 'data:text/csv;charset=utf-8,'
-    const csvHeaders: string[] = Object.keys(data[0])
-    const csvArray: string[][] = [
-      csvHeaders,
-      ...data.map(row => {
-        const rowArray: string[] = []
-        for (let header of csvHeaders) {
-          rowArray.push(row[header])
-        }
-        return rowArray
-      }),
-    ]
-    return csvPrefix + csvArray.map(row => row.join(',')).join('\n')
-  }
-
-  // https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
-  const handleDownloadCsv = () => {
-    const csvString = objectToCsvString()
-    const encodedUri = encodeURI(csvString)
-
-    const downloadLink = document.createElement('a')
-    downloadLink.setAttribute('href', encodedUri)
-    downloadLink.setAttribute('download', 'my_graph.csv')
-    document.body.appendChild(downloadLink)
-
-    downloadLink.click() // This will download the data file named "my_data.csv".
-
-    document.body.removeChild(downloadLink)
-  }
+  const csvString = objectToCsvString(data)
+  const handleCsvDownload = React.useCallback(() => handleDownloadCsv(csvString), [csvString])
+  const handlePngDownload = React.useCallback(async () => {
+    const node = document.getElementById('chart-container')
+    const blob = await domtoimage.toBlob(node as Node, { bgcolor: '#fff' })
+    fileDownload(blob, 'chart.png')
+  }, [])
 
   return (
     <>
@@ -48,12 +32,17 @@ const SaveGraph = ({}: SaveGraphProps) => {
         {data.length > 0 ? (
           <>
             <Typography id='modal-modal-title' variant='h6' component='h2' sx={{ mb: 2 }}>
-              You can save and download the plot as a csv file!
+              You can save and download your chart!
             </Typography>
 
-            <Button variant='contained' disableElevation size='large' onClick={handleDownloadCsv}>
-              Click here to download
-            </Button>
+            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: '8px' }}>
+              <Button variant='contained' disableElevation size='large' onClick={handleCsvDownload}>
+                Download as CSV
+              </Button>
+              <Button variant='contained' disableElevation size='large' onClick={handlePngDownload}>
+                Download as Image
+              </Button>
+            </Box>
           </>
         ) : (
           <>

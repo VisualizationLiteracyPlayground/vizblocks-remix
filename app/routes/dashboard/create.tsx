@@ -18,6 +18,7 @@ function Create() {
           borderRadius: '10px',
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         }}
+        id='chart-container'
       >
         <Outlet />
       </Box>
