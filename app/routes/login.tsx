@@ -5,6 +5,7 @@ import { authenticator, magicLinkStrategy, sessionStorage } from '~/utils/auth.s
 
 import { supabaseAdmin } from '~/supabase.server'
 import type { ApiError } from '~/supabase.server'
+import { SERVER_URL } from '~/constants/serverUrl'
 
 import Footer from '~/components/Layout/Footer'
 
@@ -46,7 +47,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (!email) return json({ error: { message: 'Email is required' } }, 400)
   if (typeof email !== 'string') return json({ error: { message: 'Email must be a string' } }, 400)
 
-  const { error } = await supabaseAdmin.auth.api.sendMagicLinkEmail(email, { redirectTo: `${process.env.SERVER_URL}/login/callback` })
+  const { error } = await supabaseAdmin.auth.api.sendMagicLinkEmail(email, { redirectTo: `${SERVER_URL}/login/callback` })
 
   if (error) return json({ error: { message: error.message } }, error.status)
 

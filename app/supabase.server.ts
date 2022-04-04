@@ -1,16 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 import type { ApiError, Session } from '@supabase/supabase-js'
 
-export const SERVER_URL = !process.env.VERCEL_URL
-  ? process.env.LOCAL_SERVER_URL ?? 'http://localhost:3000'
-  : `https://${process.env.VERCEL_URL}`
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
       SUPABASE_URL: string
       SUPABASE_SERVICE_KEY: string
       PUBLIC_SUPABASE_ANON_KEY: string
-      SERVER_URL: string
     }
   }
 }
