@@ -1,16 +1,35 @@
 import * as React from 'react'
-import { Links, LiveReload, Meta, MetaFunction, Outlet, Scripts, ScrollRestoration, useCatch } from 'remix'
+import {
+  json,
+  Links,
+  LinksFunction,
+  LiveReload,
+  LoaderFunction,
+  Meta,
+  MetaFunction,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useCatch,
+  useLoaderData,
+} from 'remix'
 import { withEmotionCache } from '@emotion/react'
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material'
-import { useTheme, ThemeProvider } from './utils/theme'
-import { useClientStyle } from './utils/clientStyleContext'
+import { useTheme, ThemeProvider } from '~/utils/theme'
+import { useClientStyle } from '~/utils/clientStyleContext'
 import { GraphDataProvider } from '~/utils/graphDataContext'
+import { magicLinkStrategy } from '~/utils/auth.server'
+import { User } from '@supabase/supabase-js'
 import { Toaster } from 'react-hot-toast'
 import Layout from './components/Layout'
 
-interface DocumentProps {
-  children: React.ReactNode
-  title?: string
+export const handle: { id: string } = {
+  id: 'root',
+}
+
+export type LoaderData = {
+  user: User | null
+  env: Window
 }
 
 // https://remix.run/api/conventions#meta
@@ -18,8 +37,34 @@ export const meta: MetaFunction = () => {
   return { title: 'VizBlocks' }
 }
 
+export let links: LinksFunction = () => {
+  return [
+    { rel: 'preconnect', href: '//fonts.gstatic.com', crossOrigin: 'anonymous' },
+    { rel: 'stylesheet', href: '//fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap' },
+  ]
+}
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await magicLinkStrategy.checkSession(request)
+  const data = {
+    user: session?.user,
+    env: {
+      SUPABASE_URL: process.env.SUPABASE_URL,
+      PUBLIC_SUPABASE_ANON_KEY: process.env.PUBLIC_SUPABASE_ANON_KEY,
+    },
+  }
+
+  return json(data)
+}
+
+interface DocumentProps {
+  children: React.ReactNode
+  title?: string
+}
+
 const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCache) => {
   const clientStyleData = useClientStyle()
+  const data = useLoaderData<LoaderData>()
   const { theme } = useTheme()
 
   // Only executed on client
@@ -47,13 +92,17 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
         {title ? <title>{title}</title> : null}
         <Meta />
         <Links />
-        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' crossOrigin='anonymous' />
         <meta name='emotion-insertion-point' content='emotion-insertion-point' />
       </head>
       <body>
         {children}
         <ScrollRestoration />
         <Toaster />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.env = ${JSON.stringify(data?.env)}`,
+          }}
+        />
         <Scripts />
         {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
@@ -65,15 +114,15 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
 // https://remix.run/api/conventions#route-filenames
 export default function App() {
   return (
-    <ThemeProvider>
-      <Document>
+    <Document>
+      <ThemeProvider>
         <Layout>
           <GraphDataProvider>
             <Outlet />
           </GraphDataProvider>
         </Layout>
-      </Document>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Document>
   )
 }
 
