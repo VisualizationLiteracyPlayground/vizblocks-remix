@@ -18,7 +18,6 @@ import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material'
 import { useTheme, ThemeProvider } from '~/utils/theme'
 import { useClientStyle } from '~/utils/clientStyleContext'
 import { GraphDataProvider } from '~/utils/graphDataContext'
-import { magicLinkStrategy } from '~/utils/auth.server'
 import { User } from '@supabase/supabase-js'
 import { Toaster } from 'react-hot-toast'
 import Layout from './components/Layout'
@@ -42,19 +41,6 @@ export let links: LinksFunction = () => {
     { rel: 'preconnect', href: '//fonts.gstatic.com', crossOrigin: 'anonymous' },
     { rel: 'stylesheet', href: '//fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap' },
   ]
-}
-
-export const loader: LoaderFunction = async ({ request }) => {
-  const session = await magicLinkStrategy.checkSession(request)
-  const data = {
-    user: session?.user,
-    env: {
-      SUPABASE_URL: process.env.SUPABASE_URL,
-      PUBLIC_SUPABASE_ANON_KEY: process.env.PUBLIC_SUPABASE_ANON_KEY,
-    },
-  }
-
-  return json(data)
 }
 
 interface DocumentProps {
@@ -98,11 +84,6 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
         {children}
         <ScrollRestoration />
         <Toaster />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.env = ${JSON.stringify(data?.env)}`,
-          }}
-        />
         <Scripts />
         {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>

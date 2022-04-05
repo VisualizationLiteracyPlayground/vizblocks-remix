@@ -40,22 +40,6 @@ export default function CollapsibleMenu() {
         pb: open ? 2 : 0,
       }}
     >
-      <ListItem component='div' disablePadding>
-        <ListItemButton sx={{ height: 56 }} component={Link} to='/dashboard' prefetch='intent'>
-          <ListItemIcon>
-            <Home sx={{ color: theme => theme.palette.text.primary }} />
-          </ListItemIcon>
-          <ListItemText
-            primary='Home'
-            primaryTypographyProps={{
-              color: theme => theme.palette.text.primary,
-              fontWeight: 'medium',
-              variant: 'body2',
-            }}
-          />
-        </ListItemButton>
-      </ListItem>
-      <Divider />
       <ListItemButton
         alignItems='flex-start'
         onClick={() => setOpen(!open)}

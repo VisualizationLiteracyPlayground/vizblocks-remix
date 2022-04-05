@@ -24,7 +24,6 @@ import { useRootData } from '~/utils/hooks'
 
 const settings = [
   { name: 'Profile', to: '/dashboard/profile' },
-  { name: 'Account', to: '/dashboard/account' },
   { name: 'Logout', to: '/logout' },
 ]
 
@@ -44,8 +43,6 @@ function ElevationScroll({ children }: { children: React.ReactElement }) {
 export default function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
   const { mode, toggleColorMode } = useTheme()
-  const data = useRootData()
-  const isAuthenticated = data?.user?.aud === 'authenticated'
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -65,13 +62,7 @@ export default function Header() {
         >
           <Container maxWidth={false}>
             <Toolbar disableGutters sx={{ py: '0.25rem' }}>
-              <Button
-                color='inherit'
-                component={Link}
-                to={isAuthenticated ? '/dashboard' : '/'}
-                prefetch='intent'
-                sx={{ backgroundColor: 'transparent !important' }}
-              >
+              <Button color='inherit' component={Link} to={'/'} prefetch='intent' sx={{ backgroundColor: 'transparent !important' }}>
                 <VizBlocks />
               </Button>
 
@@ -82,53 +73,11 @@ export default function Header() {
               </IconButton>
 
               <Box sx={{ flexGrow: 0 }}>
-                {isAuthenticated && (
-                  <Tooltip title='Open settings'>
-                    <Box display='flex' alignItems='center'>
-                      <Typography variant='h6' sx={{ mx: 1 }}>
-                        Remy
-                      </Typography>
-                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt='Remy Sharp' sx={{ bgcolor: '#6cddaa' }} />
-                      </IconButton>
-                    </Box>
-                  </Tooltip>
-                )}
-                {!isAuthenticated && (
-                  <Button color='inherit' size='large' component={Link} to='/login' prefetch='intent'>
-                    <Typography variant='h6' component='div' fontWeight='bold'>
-                      Login
-                    </Typography>
-                  </Button>
-                )}
-
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id='menu-appbar'
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map(setting => {
-                    const { name, to } = setting
-                    return (
-                      <MenuItem key={name} onClick={handleCloseUserMenu} sx={{ mx: 1 }}>
-                        <Link prefetch='intent' to={to} style={{ textDecoration: 'none', color: 'inherit' }}>
-                          <Typography textAlign='center'>{name}</Typography>
-                        </Link>
-                      </MenuItem>
-                    )
-                  })}
-                </Menu>
+                <Button color='inherit' size='large' component={Link} to='/dashboard/create/linechart' prefetch='intent'>
+                  <Typography variant='h6' component='div' fontWeight='bold'>
+                    Dashboard
+                  </Typography>
+                </Button>
               </Box>
             </Toolbar>
           </Container>

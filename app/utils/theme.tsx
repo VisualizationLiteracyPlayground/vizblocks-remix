@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { createTheme } from '@mui/material/styles'
-import { CssBaseline, PaletteMode, Theme, useMediaQuery } from '@mui/material'
+import { CssBaseline, PaletteMode, Theme } from '@mui/material'
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react'
 
 enum ColorMode {
@@ -65,7 +65,7 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
       mode,
       theme,
     }),
-    [mode],
+    [mode, theme],
   )
 
   return (
