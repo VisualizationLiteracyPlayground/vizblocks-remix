@@ -26,7 +26,7 @@ function BarChart() {
   React.useEffect(() => {
     setColumnTemplate(columns)
     setData(initialData)
-  }, [])
+  }, [setColumnTemplate, setData])
 
   return (
     <>
