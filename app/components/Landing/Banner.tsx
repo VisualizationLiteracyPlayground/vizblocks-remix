@@ -29,7 +29,7 @@ export default function Banner() {
           <VizBlocks />
         </Box>
         <Box sx={{ paddingBottom: '1rem' }}>
-          <Button variant='contained' size='large' component={Link} to='/login' prefetch='intent' color='secondary'>
+          <Button variant='contained' size='large' component={Link} to='/dashboard/create/linechart' prefetch='intent' color='secondary'>
             <Typography variant='h6' fontWeight='700'>
               Get Started
             </Typography>

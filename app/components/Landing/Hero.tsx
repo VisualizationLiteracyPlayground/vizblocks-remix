@@ -31,7 +31,7 @@ export default function Hero() {
             What will you create?
           </Typography>
 
-          <Button variant='contained' size='large' component={Link} to='/login' prefetch='intent' color='primary'>
+          <Button variant='contained' size='large' component={Link} to='/dashboard/create/linechart' prefetch='intent' color='primary'>
             <Typography variant='h6' fontWeight='700'>
               Get Started
             </Typography>
