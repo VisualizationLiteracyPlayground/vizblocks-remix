@@ -1,12 +1,11 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import { useTheme } from '~/lib/theme'
-import { useGraphData } from '~/lib/graphDataContext'
+import { useTheme } from '~/utils/theme'
+import { useGraphData } from '~/utils/graphDataContext'
 import { useLocation } from 'remix'
-import { GRAPH_TYPES } from '~/lib/types'
+import { GRAPH_TYPES } from '~/utils/types'
 
 interface EditAnnocationsProps {}
 
@@ -27,7 +26,7 @@ const EditAnnocations = ({}: EditAnnocationsProps) => {
   const ADJUSTABLE_PARAMETERS = [
     { name: 'title', label: 'Graph Title', type: 'text', value: title, hide: [''] },
     { name: 'xlabel', label: 'X-axis Title', type: 'text', value: xlabel, hide: [GRAPH_TYPES.heatmap, GRAPH_TYPES.pictograph] },
-    { name: 'ylabel', label: 'Y-axiss Title', type: 'text', value: ylabel, hide: [GRAPH_TYPES.heatmap, GRAPH_TYPES.pictograph] },
+    { name: 'ylabel', label: 'Y-axis Title', type: 'text', value: ylabel, hide: [GRAPH_TYPES.heatmap, GRAPH_TYPES.pictograph] },
     {
       name: 'name',
       label: 'Line Label',
