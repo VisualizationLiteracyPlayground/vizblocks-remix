@@ -2,11 +2,10 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
-import Typography from '@mui/material/Typography'
 
 import InputModal from './InputModal'
 import InputData from './InputData'
-import AdjustParameters from './AdjustParameters'
+import EditAnnotations from './EditAnnotations'
 import SaveGraph from './SaveGraph'
 
 import { useTheme } from '~/utils/theme'
@@ -42,7 +41,7 @@ export default function BuildGraphStepper() {
     },
     {
       label: 'Edit Annotations',
-      modalContent: <AdjustParameters />,
+      modalContent: <EditAnnotations />,
     },
     {
       label: 'Save Graph',

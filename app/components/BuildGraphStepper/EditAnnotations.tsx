@@ -1,12 +1,11 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import { useTheme } from '~/lib/theme'
-import { useGraphData } from '~/lib/graphDataContext'
+import { useTheme } from '~/utils/theme'
+import { useGraphData } from '~/utils/graphDataContext'
 import { useLocation } from 'remix'
-import { GRAPH_TYPES } from '~/lib/types'
+import { GRAPH_TYPES } from '~/utils/types'
 
 interface EditAnnocationsProps {}
 
