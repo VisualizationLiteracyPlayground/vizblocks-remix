@@ -40,7 +40,7 @@ export function PieChartTemplate({ data, title, xlabel, ylabel, name }: PieChart
             data={data}
             cx={'50%'}
             cy={'50%'}
-            outerRadius={'100%'}
+            outerRadius={'80%'}
             // innerRadius={'50%'}
             fill='#82ca9d'
             label
