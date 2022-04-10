@@ -7,7 +7,7 @@ import { GridColumns, GridRowsProp } from '@mui/x-data-grid'
 // https://mui.com/components/data-grid/columns/#column-definitions
 const columns: GridColumns = [
   { field: 'name', headerName: 'Name', width: 180, editable: true },
-  { field: 'value', headerName: 'Value', width: 180, editable: true },
+  { field: 'value', headerName: 'Value', width: 180, type: 'number', editable: true },
 ]
 
 // initial values for rows based on column template defined above
