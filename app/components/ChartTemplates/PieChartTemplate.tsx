@@ -18,6 +18,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 export function PieChartTemplate({ data, title, xlabel, ylabel, name }: PieChartTemplateProps) {
   const { mode } = useTheme()
 
+  console.log(data)
   return (
     <>
       <Typography variant='h6' sx={{ textAlign: 'center' }}>

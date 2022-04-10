@@ -27,13 +27,13 @@ const EditAnnocations = ({}: EditAnnocationsProps) => {
     { name: 'title', label: 'Graph Title', type: 'text', value: title, hide: [''] },
     { name: 'xlabel', label: 'X-axis Title', type: 'text', value: xlabel, hide: [GRAPH_TYPES.heatmap, GRAPH_TYPES.pictograph] },
     { name: 'ylabel', label: 'Y-axiss Title', type: 'text', value: ylabel, hide: [GRAPH_TYPES.heatmap, GRAPH_TYPES.pictograph] },
-    {
-      name: 'name',
-      label: 'Line Label',
-      type: 'text',
-      value: name,
-      hide: [GRAPH_TYPES.heatmap, GRAPH_TYPES.dotplot, GRAPH_TYPES.pictograph],
-    },
+    // {
+    //   name: 'name',
+    //   label: 'Line Label',
+    //   type: 'text',
+    //   value: name,
+    //   hide: [GRAPH_TYPES.heatmap, GRAPH_TYPES.dotplot, GRAPH_TYPES.pictograph],
+    // },
   ]
 
   return (
