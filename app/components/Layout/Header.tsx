@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link } from 'remix'
+import { Link } from '@remix-run/react'
 
 import { useTheme } from '~/utils/theme'
 import { VizBlocks } from '../svg/VizBlocks'
@@ -24,7 +24,6 @@ import { useRootData } from '~/utils/hooks'
 
 const settings = [
   { name: 'Profile', to: '/dashboard/profile' },
-  { name: 'Account', to: '/dashboard/account' },
   { name: 'Logout', to: '/logout' },
 ]
 
@@ -46,6 +45,7 @@ export default function Header() {
   const { mode, toggleColorMode } = useTheme()
   const data = useRootData()
   const isAuthenticated = data?.user?.aud === 'authenticated'
+  const fullName = `${data?.profile.firstName} ${data?.profile.lastName}`
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -86,10 +86,10 @@ export default function Header() {
                   <Tooltip title='Open settings'>
                     <Box display='flex' alignItems='center'>
                       <Typography variant='h6' sx={{ mx: 1 }}>
-                        Remy
+                        {data?.profile.firstName ?? 'Welcome'}
                       </Typography>
                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt='Remy Sharp' sx={{ bgcolor: '#6cddaa' }} />
+                        <Avatar alt={fullName} sx={{ bgcolor: '#6cddaa' }} />
                       </IconButton>
                     </Box>
                   </Tooltip>

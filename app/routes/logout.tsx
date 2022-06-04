@@ -1,5 +1,7 @@
+import type { ActionFunction } from '@remix-run/node'
+import { useSubmit } from '@remix-run/react'
 import { useEffect } from 'react'
-import { ActionFunction, useSubmit } from 'remix'
+
 import { authenticator } from '~/utils/auth.server'
 
 export const action: ActionFunction = async ({ request }) => {

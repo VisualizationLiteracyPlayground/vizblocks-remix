@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Link } from 'remix'
+import { Link } from '@remix-run/react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 
-import heroImage from '~/../../public/images/hero.png'
-import heroDarkImage from '~/../../public/images/hero-dark.png'
+import heroImage from './images/hero.png'
+import heroDarkImage from './images/hero-dark.png'
 import { useTheme } from '~/utils/theme'
 
 export default function Hero() {

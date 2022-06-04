@@ -1,27 +1,19 @@
 import * as React from 'react'
-import {
-  json,
-  Links,
-  LinksFunction,
-  LiveReload,
-  LoaderFunction,
-  Meta,
-  MetaFunction,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useCatch,
-  useLoaderData,
-} from 'remix'
+
 import { withEmotionCache } from '@emotion/react'
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material'
 import { useTheme, ThemeProvider } from '~/utils/theme'
 import { useClientStyle } from '~/utils/clientStyleContext'
 import { GraphDataProvider } from '~/utils/graphDataContext'
 import { magicLinkStrategy } from '~/utils/auth.server'
-import { User } from '@supabase/supabase-js'
+import type { User } from '@supabase/supabase-js'
 import { Toaster } from 'react-hot-toast'
 import Layout from './components/Layout'
+import type { LinksFunction, LoaderFunction, MetaFunction } from '@remix-run/node'
+import { json } from '@remix-run/node'
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch, useLoaderData } from '@remix-run/react'
+import { supabaseAdmin } from './supabase.server'
+import type { Profile } from './utils/types'
 
 export const handle: { id: string } = {
   id: 'root',
@@ -29,6 +21,7 @@ export const handle: { id: string } = {
 
 export type LoaderData = {
   user: User | null
+  profile: Profile
   env: Window
 }
 
@@ -46,15 +39,21 @@ export let links: LinksFunction = () => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await magicLinkStrategy.checkSession(request)
-  const data = {
+  const { data } = await supabaseAdmin.from('profiles').select().eq('id', session?.user?.id)
+  const loaderData = {
     user: session?.user,
+    profile: {
+      firstName: data ? data[0].firstName : '',
+      lastName: data ? data[0].lastName : '',
+      email: session?.user?.email,
+    },
     env: {
       SUPABASE_URL: process.env.SUPABASE_URL,
       PUBLIC_SUPABASE_ANON_KEY: process.env.PUBLIC_SUPABASE_ANON_KEY,
     },
   }
 
-  return json(data)
+  return json(loaderData)
 }
 
 interface DocumentProps {

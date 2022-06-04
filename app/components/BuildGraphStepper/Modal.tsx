@@ -2,7 +2,7 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
-import { useTheme } from '~/lib/theme'
+import { useTheme } from '~/utils/theme'
 
 interface InputModalProps {
   label?: string

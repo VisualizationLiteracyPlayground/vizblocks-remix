@@ -10,7 +10,7 @@ import EditAnnotations from './EditAnnotations'
 import SaveGraph from './SaveGraph'
 
 import { useTheme } from '~/utils/theme'
-import { useLocation } from 'remix'
+import { useLocation } from '@remix-run/react'
 
 export default function BuildGraphStepper() {
   const [activeStep, setActiveStep] = React.useState(-1)

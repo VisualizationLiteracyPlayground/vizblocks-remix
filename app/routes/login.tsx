@@ -1,6 +1,5 @@
 import * as React from 'react'
-import type { ActionFunction, LoaderFunction } from 'remix'
-import { Form, json, redirect, useActionData, useTransition } from 'remix'
+
 import { authenticator, magicLinkStrategy, sessionStorage } from '~/utils/auth.server'
 
 import { supabaseAdmin } from '~/supabase.server'
@@ -13,6 +12,9 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
+import type { ActionFunction, LoaderFunction } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
+import { Form, useActionData, useTransition } from '@remix-run/react'
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   '& .MuiInputLabel-root': {
@@ -49,8 +51,6 @@ export const action: ActionFunction = async ({ request }) => {
   const { error } = await supabaseAdmin.auth.api.sendMagicLinkEmail(email, { redirectTo: `${process.env.SERVER_URL}/login/callback` })
 
   if (error) return json({ error: { message: error.message } }, error.status)
-
-  // TODO
   return redirect('/login')
 }
 

@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { ActionFunction, LoaderFunction, Outlet } from 'remix'
-import { json, useLoaderData } from 'remix'
+
 import { magicLinkStrategy } from '~/utils/auth.server'
 
 import Box from '@mui/material/Box'
@@ -8,7 +7,10 @@ import Drawer from '@mui/material/Drawer'
 import Toolbar from '@mui/material/Toolbar'
 
 import CollapsibleMenu from '~/components/CollapsibleMenu'
-import { User } from '@supabase/supabase-js'
+import type { User } from '@supabase/supabase-js'
+import type { LoaderFunction } from '@remix-run/node'
+import { json } from '@remix-run/node'
+import { Outlet, useLoaderData } from '@remix-run/react'
 
 type LoaderData = { user: User | null }
 
@@ -24,8 +26,6 @@ const drawerWidth = 240
 
 export default function Dashboard() {
   const { user } = useLoaderData<LoaderData>()
-
-  console.log(user)
 
   return (
     <>

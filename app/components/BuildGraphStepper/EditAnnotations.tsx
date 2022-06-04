@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '~/utils/theme'
 import { useGraphData } from '~/utils/graphDataContext'
-import { useLocation } from 'remix'
+import { useLocation } from '@remix-run/react'
 import { GRAPH_TYPES } from '~/utils/types'
 
 interface EditAnnocationsProps {}

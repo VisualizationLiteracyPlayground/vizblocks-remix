@@ -1,6 +1,8 @@
+import { useMatches } from '@remix-run/react'
 import * as React from 'react'
-import { useMatches } from 'remix'
-import { handle as rootHandle, LoaderData as RootLoaderData } from '../root'
+
+import type { LoaderData as RootLoaderData } from '../root'
+import { handle as rootHandle } from '../root'
 
 export function useMatchLoaderData<LoaderData>(handleId: string) {
   const matches = useMatches()

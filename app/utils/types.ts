@@ -8,3 +8,9 @@ export enum GRAPH_TYPES {
   histogram = 'histogram',
   heatmap = 'heatmap',
 }
+
+export interface Profile {
+  firstName?: string
+  lastName?: string
+  email?: string
+}

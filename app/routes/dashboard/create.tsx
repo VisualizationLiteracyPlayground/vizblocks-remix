@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Outlet } from 'remix'
+import { Outlet } from '@remix-run/react'
 import Box from '@mui/material/Box'
 import BuildGraphStepper from '~/components/BuildGraphStepper'
 import { useTheme } from '~/utils/theme'

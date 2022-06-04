@@ -4,9 +4,9 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 
-import feature1Image from '~/../../public/images/feature-1.png'
-import feature2Image from '~/../../public/images/feature-2.png'
-import feature3Image from '~/../../public/images/feature-3.png'
+import feature1Image from './images/feature-1.png'
+import feature2Image from './images/feature-2.png'
+import feature3Image from './images/feature-3.png'
 
 const FEATURES = [
   {

@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 
-import whyVizblocksImage from '~/../../public/images/why-vizblocks.png'
+import whyVizblocksImage from './images/why-vizblocks.png'
 
 const TEXT = [
   {

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link } from 'remix'
+import { Link } from '@remix-run/react'
 
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'

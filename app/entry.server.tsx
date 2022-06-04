@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { renderToString } from 'react-dom/server'
-import { RemixServer } from 'remix'
-import type { EntryContext } from 'remix'
+import { RemixServer } from '@remix-run/react'
+import type { EntryContext } from '@remix-run/node'
 
 import createEmotionCache from './utils/createEmotionCache'
 import { lightTheme } from './utils/theme'
@@ -11,12 +11,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { CacheProvider } from '@emotion/react'
 import createEmotionServer from '@emotion/server/create-instance'
 
-export default function handleRequest(
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  remixContext: EntryContext,
-) {
+export default function handleRequest(request: Request, responseStatusCode: number, responseHeaders: Headers, remixContext: EntryContext) {
   const cache = createEmotionCache()
   const { extractCriticalToChunks } = createEmotionServer(cache)
 
