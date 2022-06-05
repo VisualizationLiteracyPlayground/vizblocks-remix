@@ -34,7 +34,7 @@ export function BarChartTemplate({ data, title, xlabel, ylabel, name }: BarChart
           }}
         >
           <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='xval' label={{ value: xlabel, position: 'bottom', fill: mode === 'light' ? '#000' : '#fff' }} scale='band' />
+          <XAxis dataKey='xval' label={{ value: xlabel, position: 'bottom', fill: mode === 'light' ? '#000' : '#fff' }} />
           <YAxis label={{ value: ylabel, angle: -90, position: 'left', fill: mode === 'light' ? '#000' : '#fff' }} />
           <Tooltip labelStyle={{ color: 'black' }} />
           <Bar type='monotone' dataKey='yval' name={name} fill='#82ca9d' />

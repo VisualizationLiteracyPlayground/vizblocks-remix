@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { ScatterPlotTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
-import { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import type { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import { GRAPH_TYPES } from '~/utils/types'
 
 // define template for column headers
 // https://mui.com/components/data-grid/columns/#column-definitions
@@ -19,14 +20,15 @@ const initialData: GridRowsProp = [
   { id: 5, xval: 150, yval: 400 },
   { id: 6, xval: 110, yval: 280 },
 ]
-function BarChart() {
-  const { data, setData, setColumnTemplate, parameters } = useGraphData()
+function ScatterPlot() {
+  const { graphData, setSelectedGraph, setColumnTemplate, parameters } = useGraphData()
   const { title, xlabel, ylabel, name } = parameters
+  const data = graphData.scatterplot
 
   React.useEffect(() => {
     setColumnTemplate(columns)
-    setData(initialData)
-  }, [])
+    setSelectedGraph(GRAPH_TYPES.scatterplot)
+  }, [setColumnTemplate, setSelectedGraph])
 
   return (
     <>
@@ -35,4 +37,4 @@ function BarChart() {
   )
 }
 
-export default BarChart
+export default ScatterPlot

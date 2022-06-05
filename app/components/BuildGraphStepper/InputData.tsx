@@ -3,21 +3,14 @@ import * as XLSX from 'xlsx'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import {
-  DataGrid,
-  GridCellEditCommitParams,
-  GridSelectionModel,
-  GridToolbarContainer,
-  GridToolbarColumnsButton,
-  GridToolbarFilterButton,
-  GridToolbarExport,
-  GridToolbarDensitySelector,
-} from '@mui/x-data-grid'
+import type { GridCellEditCommitParams, GridRowsProp, GridSelectionModel } from '@mui/x-data-grid'
+import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport } from '@mui/x-data-grid'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useGraphData } from '~/utils/graphDataContext'
 import toast from 'react-hot-toast'
 import { objectToCsvString, handleDownloadCsv } from './utils'
+import { GRAPH_TYPES } from '~/utils/types'
 
 interface InputDataProps {}
 
@@ -26,17 +19,23 @@ const acceptedFileTypes = ['.csv', '.xls', '.xlsx']
 const InputData = ({}: InputDataProps) => {
   // Editable DataGrid
   // https://mui.com/components/data-grid/editing/
-  const { data: rows, setData: setRows, columnTemplate: columns } = useGraphData()
+  const { graphData, graphDispatch, selectedGraph, columnTemplate: columns } = useGraphData()
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([])
   const [errorMessage, setErrorMessage] = React.useState<string>('')
+  const rows = graphData['barchart']
+  const setRows = React.useCallback((data: GridRowsProp) => graphDispatch({ type: selectedGraph, data }), [graphDispatch, selectedGraph])
 
-  const handleCellEditCommit = React.useCallback((params: GridCellEditCommitParams) => {
-    const updatedRow = {
-      id: params.id,
-      [params.field]: params.value,
-    }
-    setRows(prevRows => prevRows.map(row => (row.id === params.id ? { ...row, ...updatedRow } : row)))
-  }, [])
+  const handleCellEditCommit = React.useCallback(
+    (params: GridCellEditCommitParams) => {
+      const updatedRow = {
+        id: params.id,
+        [params.field]: params.value,
+      }
+      const newRows = rows.map(row => (row.id === params.id ? { ...row, ...updatedRow } : row))
+      setRows(newRows)
+    },
+    [rows, setRows],
+  )
 
   const handleSelectionModel = (ids: GridSelectionModel) => {
     setSelectionModel(ids)
@@ -44,12 +43,14 @@ const InputData = ({}: InputDataProps) => {
 
   const handleAddRow = () => {
     const id = rows.length + 1
-    setRows(prevRows => [...prevRows, { id }])
+    const newRows = [...rows, { id }]
+    setRows(newRows)
   }
 
   const handleDeleteRow = () => {
     const selectedIDs = new Set(selectionModel)
-    setRows(prevRows => prevRows.filter(row => !selectedIDs.has(row.id)))
+    const newRows = rows.filter(row => !selectedIDs.has(row.id))
+    setRows(newRows)
   }
 
   const readUploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +79,7 @@ const InputData = ({}: InputDataProps) => {
     }
   }
 
+  // TODO
   const checkFileValidity = (data: { [key: string]: any }[]) => {
     if (data.length < 1) return true
 
@@ -113,7 +115,6 @@ const InputData = ({}: InputDataProps) => {
         </Button>
         <GridToolbarColumnsButton />
         <GridToolbarFilterButton />
-        <GridToolbarDensitySelector />
         {/* <GridToolbarExport /> */}
       </GridToolbarContainer>
     )

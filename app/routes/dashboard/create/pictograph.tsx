@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { PictographTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
-import { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import type { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import { GRAPH_TYPES } from '~/utils/types'
 
 // linked to icons displayed in PicotographTemplate
 const SELECT_OPTONS = ['Car', 'Boat', 'Rocket', 'Plane']
@@ -21,14 +22,15 @@ const initialRows: GridRowsProp = [
   { id: 4, category: 'Plane', value: 8 },
 ]
 
-function Picograph() {
-  const { data, setData, setColumnTemplate, parameters } = useGraphData()
+function Pictograph() {
+  const { graphData, setSelectedGraph, setColumnTemplate, parameters } = useGraphData()
   const { title, xlabel, ylabel, name } = parameters
+  const data = graphData.pictograph
 
   React.useEffect(() => {
     setColumnTemplate(columns)
-    setData(initialRows)
-  }, [])
+    setSelectedGraph(GRAPH_TYPES.pictograph)
+  }, [setColumnTemplate, setSelectedGraph])
 
   return (
     <>
@@ -37,4 +39,4 @@ function Picograph() {
   )
 }
 
-export default Picograph
+export default Pictograph

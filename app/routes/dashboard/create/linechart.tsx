@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { LineChartTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
-import { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import type { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import { GRAPH_TYPES } from '~/utils/types'
 
 // define template for column headers
 // https://mui.com/components/data-grid/columns/#column-definitions
@@ -22,13 +23,14 @@ const initialRows: GridRowsProp = [
 ]
 
 function LineChart() {
-  const { data, setData, setColumnTemplate, parameters } = useGraphData()
+  const { graphData, setSelectedGraph, setColumnTemplate, parameters } = useGraphData()
   const { title, xlabel, ylabel, name } = parameters
+  const data = graphData.linechart
 
   React.useEffect(() => {
     setColumnTemplate(columns)
-    setData(initialRows)
-  }, [])
+    setSelectedGraph(GRAPH_TYPES.linechart)
+  }, [setColumnTemplate, setSelectedGraph])
 
   return (
     <>

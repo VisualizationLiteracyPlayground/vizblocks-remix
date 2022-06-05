@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { PieChartTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
-import { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import type { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import { GRAPH_TYPES } from '~/utils/types'
 
 // define template for column headers
 // https://mui.com/components/data-grid/columns/#column-definitions
@@ -17,14 +18,15 @@ const initialData: GridRowsProp = [
   { id: 3, name: 'Group C', value: 300 },
   { id: 4, name: 'Group D', value: 200 },
 ]
-function BarChart() {
-  const { data, setData, setColumnTemplate, parameters } = useGraphData()
+function PieChart() {
+  const { graphData, setSelectedGraph, setColumnTemplate, parameters } = useGraphData()
   const { title, xlabel, ylabel, name } = parameters
+  const data = graphData.piechart
 
   React.useEffect(() => {
     setColumnTemplate(columns)
-    setData(initialData)
-  }, [])
+    setSelectedGraph(GRAPH_TYPES.piechart)
+  }, [setColumnTemplate, setSelectedGraph])
 
   return (
     <>
@@ -33,4 +35,4 @@ function BarChart() {
   )
 }
 
-export default BarChart
+export default PieChart

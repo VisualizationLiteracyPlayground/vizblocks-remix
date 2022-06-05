@@ -77,7 +77,7 @@ export default function Header() {
 
               <Box sx={{ flexGrow: 1 }} />
 
-              <IconButton sx={{ mx: 1 }} onClick={toggleColorMode} color='inherit'>
+              <IconButton onClick={toggleColorMode} color='inherit'>
                 {mode === 'dark' ? <ModeNightIcon /> : <WbSunnyIcon />}
               </IconButton>
 
@@ -85,7 +85,7 @@ export default function Header() {
                 {isAuthenticated && (
                   <Tooltip title='Open settings'>
                     <Box display='flex' alignItems='center'>
-                      <Typography variant='h6' sx={{ mx: 1 }}>
+                      <Typography variant='h6' sx={{ mx: 2 }}>
                         {data?.profile.firstName ?? 'Welcome'}
                       </Typography>
                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
