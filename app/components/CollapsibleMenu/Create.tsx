@@ -3,13 +3,11 @@ import { Link } from '@remix-run/react'
 
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
-import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 
-import Home from '@mui/icons-material/Home'
 import ShowChartIcon from '@mui/icons-material/ShowChart'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import PieChartIcon from '@mui/icons-material/PieChart'
@@ -30,7 +28,7 @@ const data = [
   { icon: <GradientIcon />, label: 'Heat Map', to: '/dashboard/create/heatmap' },
 ]
 
-export default function CollapsibleMenu() {
+export default function Create() {
   const [open, setOpen] = React.useState(true)
 
   return (
@@ -40,22 +38,6 @@ export default function CollapsibleMenu() {
         pb: open ? 2 : 0,
       }}
     >
-      <ListItem component='div' disablePadding>
-        <ListItemButton sx={{ height: 56 }} component={Link} to='/dashboard' prefetch='intent'>
-          <ListItemIcon>
-            <Home sx={{ color: theme => theme.palette.text.primary }} />
-          </ListItemIcon>
-          <ListItemText
-            primary='Home'
-            primaryTypographyProps={{
-              color: theme => theme.palette.text.primary,
-              fontWeight: 'medium',
-              variant: 'body2',
-            }}
-          />
-        </ListItemButton>
-      </ListItem>
-      <Divider />
       <ListItemButton
         alignItems='flex-start'
         onClick={() => setOpen(!open)}

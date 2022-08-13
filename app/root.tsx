@@ -14,6 +14,7 @@ import { json } from '@remix-run/node'
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch, useLoaderData } from '@remix-run/react'
 import { supabaseAdmin } from './supabase.server'
 import type { Profile } from './utils/types'
+import carouselStyles from 'pure-react-carousel/dist/react-carousel.es.css'
 
 export const handle: { id: string } = {
   id: 'root',
@@ -34,6 +35,7 @@ export let links: LinksFunction = () => {
   return [
     { rel: 'preconnect', href: '//fonts.gstatic.com', crossOrigin: 'anonymous' },
     { rel: 'stylesheet', href: '//fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap' },
+    { rel: 'stylesheet', href: carouselStyles },
   ]
 }
 
