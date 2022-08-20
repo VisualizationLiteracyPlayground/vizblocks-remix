@@ -43,22 +43,37 @@ export default function MyGraphs({ graphData }: Props) {
         boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
       }}
     >
-      <Typography variant='h5' sx={{ mb: 2 }}>
+      <Typography variant='h4' sx={{ mb: 4 }}>
         Projects
       </Typography>
       <SearchBar />
 
-      <CarouselProvider naturalSlideWidth={345} naturalSlideHeight={345} visibleSlides={visibleSlides} totalSlides={totalSlides}>
+      <CarouselProvider
+        naturalSlideWidth={345}
+        naturalSlideHeight={690}
+        step={2}
+        dragStep={2}
+        visibleSlides={visibleSlides}
+        totalSlides={totalSlides}
+      >
         <div style={{ display: 'grid', gridTemplateColumns: '30px 1fr 30px' }}>
           <ButtonBack style={{ all: 'unset', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <ArrowBackIosIcon />
           </ButtonBack>
-          <Slider style={{ maxHeight: 360 }}>
-            {graphData.map((data, index) => (
-              <Slide key={index} index={index}>
-                <GraphCard />
-              </Slide>
-            ))}
+          <Slider style={{ maxHeight: 900 }}>
+            {graphData.map((data, index) => {
+              const data1 = data[0]
+              const data2 = data?.[1]
+
+              return (
+                <Slide key={index} index={index}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <GraphCard data={data1} />
+                    {data2 && <GraphCard data={data2} />}
+                  </Box>
+                </Slide>
+              )
+            })}
           </Slider>
           <ButtonNext style={{ all: 'unset', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <ArrowForwardIosIcon />

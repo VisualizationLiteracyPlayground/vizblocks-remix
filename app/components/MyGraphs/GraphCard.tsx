@@ -9,16 +9,27 @@ import Typography from '@mui/material/Typography'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import useToggle from '~/hooks/useToggle'
 
-export default function GraphCard() {
+interface Props {
+  data: any
+  // name: string
+  // desc: string
+  // liked: boolean
+  // numLikes: number
+}
+
+export default function GraphCard({ data }: Props) {
+  const liked = data?.likes.includes(2) // 2 === userId
   const [shadow, setShadow] = React.useState(2)
-  const [liked, toggleLike] = useToggle()
+  const [like, toggleLike] = useToggle(liked)
+
+  const numLikes = data?.likes.length + Number(like)
 
   return (
     <Card
       sx={{
         width: 345,
         height: 345,
-        margin: 1,
+        margin: 4,
         boxShadow: shadow,
         bgcolor: theme => theme.palette.primary.light,
       }}
@@ -32,13 +43,14 @@ export default function GraphCard() {
         alt='Paella dish'
       />
       <CardContent>
-        <Typography variant='subtitle1'>By XXX</Typography>
-        <Typography variant='body2'>Some description</Typography>
+        <Typography variant='subtitle1'>By {data?.name}</Typography>
+        <Typography variant='body2'>{data?.desc}</Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='add to favorites' onClick={toggleLike}>
-          <FavoriteIcon color={liked ? 'error' : undefined} />
+          <FavoriteIcon color={like ? 'error' : undefined} />
         </IconButton>
+        <Typography>{numLikes ?? 0}</Typography>
         {/* <IconButton aria-label='share'>
           <ShareIcon />
         </IconButton> */}

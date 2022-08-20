@@ -41,7 +41,7 @@ export default function SearchBar() {
           sx={{ width: 500 }}
         />
       )}
-      sx={{ mb: 2 }}
+      sx={{ mb: 4 }}
     />
   )
 }
