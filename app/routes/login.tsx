@@ -65,7 +65,6 @@ export default function Login() {
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-        height: '100vh',
         justifyContent: 'space-between',
         alignItems: 'center',
         background: '#224957d8',

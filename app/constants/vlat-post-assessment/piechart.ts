@@ -80,3 +80,5 @@ export const pieChartPostQuestion3 = [
     point: 1,
   },
 ]
+
+export const pieChartPostQuestions = [pieChartPostQuestion1, pieChartPostQuestion2, pieChartPostQuestion3]

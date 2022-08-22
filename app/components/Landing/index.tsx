@@ -14,7 +14,6 @@ export default function Landing() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        height: '100vh',
         width: '100%',
         flexGrow: 1,
         paddingTop: '60px',

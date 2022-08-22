@@ -7,32 +7,34 @@ import Grid from '@mui/material/Grid'
 import { useTheme } from '~/utils/theme'
 import { IconButton } from '@mui/material'
 
-import { Link } from '@remix-run/react'
+import { Link, useLoaderData } from '@remix-run/react'
 
 import Tooltip from '@mui/material/Tooltip'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import ShowChartIcon from '@mui/icons-material/ShowChart'
-import BarChartIcon from '@mui/icons-material/BarChart'
-import PieChartIcon from '@mui/icons-material/PieChart'
-import ScatterPlotIcon from '@mui/icons-material/ScatterPlot'
-import BlurLinearIcon from '@mui/icons-material/BlurLinear'
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
-import StackedBarChartIcon from '@mui/icons-material/StackedBarChart'
-import GradientIcon from '@mui/icons-material/Gradient'
 
-const data = [
-  { icon: <ShowChartIcon />, label: 'Line Chart', to: '/dashboard/vlat/pre-assessment/linechart', disabled: true },
-  { icon: <BarChartIcon />, label: 'Bar Chart', to: '/dashboard/vlat/pre-assessment/barchart', disabled: false },
-  { icon: <PieChartIcon />, label: 'Pie Chart', to: '/dashboard/vlat/pre-assessment/piechart', disabled: false },
-  { icon: <ScatterPlotIcon />, label: 'Scatter Plot', to: '/dashboard/vlat/pre-assessment/scatterplot', disabled: true },
-  { icon: <BlurLinearIcon />, label: 'Dot Plot', to: '/dashboard/vlat/pre-assessment/dotplot', disabled: true },
-  { icon: <InsertPhotoIcon />, label: 'Pictograph', to: '/dashboard/vlat/pre-assessment/pictograph', disabled: true },
-  { icon: <StackedBarChartIcon />, label: 'Histogram', to: '/dashboard/vlat/pre-assessment/histogram', disabled: true },
-  { icon: <GradientIcon />, label: 'Heat Map', to: '/dashboard/vlat/pre-assessment/heatmap', disabled: true },
-]
+import { graphData } from './constants'
+import { json, LoaderFunction } from '@remix-run/node'
+import { GRAPH_TYPES } from '~/utils/types'
+import { magicLinkStrategy } from '~/utils/auth.server'
+import { supabaseAdmin } from '~/supabase.server'
+
+type Score = {
+  graph_type: GRAPH_TYPES
+  score: number
+}
+
+type LoaderData = Score[] | null
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await magicLinkStrategy.checkSession(request)
+  const { data, error } = await supabaseAdmin.from('vlat').select().eq('uid', session?.user?.id).eq('test_type', 'pre')
+
+  return json<LoaderData>(data)
+}
 
 export default function PreAssessment() {
   const { mode } = useTheme()
+  const scores = useLoaderData<LoaderData>()
 
   return (
     <div style={{ padding: 16 }}>
@@ -56,8 +58,11 @@ export default function PreAssessment() {
           <img src='/assets/vlat-2.png' alt='test' height={200} />
         </Box>
         <Grid container sx={{ my: 2 }} rowSpacing={4} columnSpacing={2}>
-          {data.map((chart, index) => {
-            const { label, icon, to, disabled } = chart
+          {graphData.map((chart, index) => {
+            const { label, icon, to, disabled, graphType } = chart
+            const graphScores = scores?.filter(score => score.graph_type === graphType) ?? []
+            const highestScore = graphScores.length > 0 ? Math.max(...graphScores.map(s => s?.score)) : 0
+
             return (
               <Grid item xs={4} key={index}>
                 <Tooltip title={disabled ? 'Coming Soon' : ''} arrow placement='top'>
@@ -75,7 +80,7 @@ export default function PreAssessment() {
                       {label}
                     </Button>
                     <Typography variant='subtitle1' sx={{ mt: 2 }}>
-                      Top Score: 0
+                      Top Score: {highestScore}
                     </Typography>
                   </Box>
                 </Tooltip>

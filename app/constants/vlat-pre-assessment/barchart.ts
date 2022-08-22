@@ -73,3 +73,5 @@ export const barChartPreQuestion2 = [
     point: 1,
   },
 ]
+
+export const barChartPreQuestions = [barChartPreQuestion1, barChartPreQuestion2]

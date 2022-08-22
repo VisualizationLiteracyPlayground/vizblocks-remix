@@ -80,3 +80,5 @@ export const pieChartPreQuestion3 = [
     point: 1,
   },
 ]
+
+export const pieChartPreQuestions = [pieChartPreQuestion1, pieChartPreQuestion2, pieChartPreQuestion3]

@@ -73,3 +73,5 @@ export const barChartPostQuestion2 = [
     point: 1,
   },
 ]
+
+export const barChartPostQuestions = [barChartPostQuestion1, barChartPostQuestion2]
