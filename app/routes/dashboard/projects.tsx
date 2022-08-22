@@ -1,70 +1,23 @@
 import * as React from 'react'
+import { json, LoaderFunction } from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
 import MyGraphs from '~/components/MyGraphs'
+import { supabaseAdmin } from '~/supabase.server'
+import { SavedGraphData } from '~/utils/types'
 
-const mock = [
-  {
-    userId: 1,
-    name: 'test123',
-    desc: 'hello everyone',
-    likes: [1],
-  },
-  {
-    userId: 2,
-    name: 'test123',
-    desc: 'hello everyone',
-    likes: [1],
-  },
-  {
-    userId: 3,
-    name: 'test123',
-    desc: 'hello everyone',
-    likes: [1],
-  },
-  {
-    userId: 4,
-    name: 'test123',
-    desc: 'hello everyone',
-    likes: [1],
-  },
-  {
-    userId: 5,
-    name: 'test123',
-    desc: 'hello everyone',
-    likes: [1],
-  },
-  {
-    userId: 6,
-    name: 'test123',
-    desc: 'hello everyone',
-    likes: [1],
-  },
-  {
-    userId: 7,
-    name: 'test123',
-    desc: 'hello everyone',
-    likes: [1],
-  },
-]
+type LoaderData = SavedGraphData[] | null
 
-//TODO: any type
-
-const groupBy2 = (items: any[]) => {
-  const result: any[] = []
-
-  items.forEach((item, index) => {
-    if ((index + 1) % 2 === 0) return
-    const group = [item, items?.[index + 1]]
-    result.push(group)
-  })
-
-  return result
+export const loader: LoaderFunction = async ({ request }) => {
+  const { data, error } = await supabaseAdmin.from('graphs').select()
+  return json<LoaderData>(data)
 }
 
 export default function Projects() {
-  const groupedData = groupBy2(mock)
+  const data = useLoaderData<LoaderData>() ?? []
+
   return (
     <div style={{ padding: 16 }}>
-      <MyGraphs graphData={groupedData} />
+      <MyGraphs graphData={data} />
     </div>
   )
 }

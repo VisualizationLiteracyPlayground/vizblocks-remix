@@ -14,3 +14,16 @@ export interface Profile {
   lastName?: string
   email?: string
 }
+
+export interface SavedGraphData {
+  graph_type: GRAPH_TYPES
+  graph_data: {
+    data: Record<string, any>
+    image: string
+    profile: Profile
+    desc: string
+  }
+  uid: string
+  id: number
+  likes: string[] // stores uid of who liked
+}

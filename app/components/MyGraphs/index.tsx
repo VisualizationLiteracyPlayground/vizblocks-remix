@@ -10,15 +10,18 @@ import useWindowSize from '~/hooks/useWindowSize'
 import Box from '@mui/material/Box'
 import { useTheme } from '~/utils/theme'
 import SearchBar from './SearchBar'
+import { SavedGraphData } from '~/utils/types'
 
 interface Props {
-  graphData: any[]
+  graphData: SavedGraphData[]
 }
 
 export default function MyGraphs({ graphData }: Props) {
   // const [currentPage, setCurrentPage] = React.useState(1)
+  const [value, setValue] = React.useState<string | undefined>('')
   const { width = 0 } = useWindowSize()
   const { mode } = useTheme()
+  const filteredData = value ? graphData.filter(data => data.graph_type === value) : graphData
 
   const getVisibleSlides = () => {
     if (width > 2400) return 5
@@ -30,7 +33,6 @@ export default function MyGraphs({ graphData }: Props) {
 
   const totalSlides = graphData.length
   const visibleSlides = getVisibleSlides()
-  // const numberOfPages = Math.ceil(totalSlides / visibleSlides)
 
   return (
     <Box
@@ -46,11 +48,11 @@ export default function MyGraphs({ graphData }: Props) {
       <Typography variant='h4' sx={{ mb: 4 }}>
         Projects
       </Typography>
-      <SearchBar />
+      <SearchBar value={value} setValue={setValue} data={graphData} />
 
       <CarouselProvider
-        naturalSlideWidth={345}
-        naturalSlideHeight={690}
+        naturalSlideWidth={400}
+        naturalSlideHeight={320}
         step={visibleSlides}
         dragStep={visibleSlides}
         visibleSlides={visibleSlides}
@@ -60,17 +62,11 @@ export default function MyGraphs({ graphData }: Props) {
           <ButtonBack style={{ all: 'unset', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <ArrowBackIosIcon />
           </ButtonBack>
-          <Slider style={{ maxHeight: 900 }}>
-            {graphData.map((data, index) => {
-              const data1 = data[0]
-              const data2 = data?.[1]
-
+          <Slider style={{ maxHeight: 375 }}>
+            {filteredData.map((data, index) => {
               return (
                 <Slide key={index} index={index}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <GraphCard data={data1} />
-                    {data2 && <GraphCard data={data2} />}
-                  </Box>
+                  <GraphCard data={data} />
                 </Slide>
               )
             })}

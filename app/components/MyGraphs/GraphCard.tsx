@@ -8,9 +8,17 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import useToggle from '~/hooks/useToggle'
+import { SavedGraphData } from '~/utils/types'
+import { useRootData } from '~/utils/hooks'
+import { supabaseClient } from '~/supabase.client'
+import { useNavigate } from '@remix-run/react'
+import { useGraphData } from '~/utils/graphDataContext'
+import { GridRowsProp } from '@mui/x-data-grid'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 
 interface Props {
-  data: any
+  data: SavedGraphData
   // name: string
   // desc: string
   // liked: boolean
@@ -18,17 +26,38 @@ interface Props {
 }
 
 export default function GraphCard({ data }: Props) {
-  const liked = data?.likes.includes(2) // 2 === userId
+  const { user } = useRootData()
+  const navigate = useNavigate()
+  const { graphDispatch } = useGraphData()
+  const uid = user?.id ?? ''
+  const liked = data.likes.includes(uid)
   const [shadow, setShadow] = React.useState(2)
   const [like, toggleLike] = useToggle(liked)
+  const [numLikes, setNumLikes] = React.useState(data.likes.length)
 
-  const numLikes = data?.likes.length + Number(like)
+  const handleLike = async () => {
+    let newLikes = [...data.likes]
+    if (like) {
+      setNumLikes(prev => prev - 1)
+      newLikes = newLikes.filter(like => like !== uid)
+    } else {
+      setNumLikes(prev => prev + 1)
+      newLikes.push(uid)
+    }
+    await supabaseClient.from('graphs').upsert({ ...data, likes: newLikes })
+    toggleLike()
+  }
+
+  const handleClick = () => {
+    graphDispatch({ type: data.graph_type, data: data.graph_data.data as GridRowsProp })
+    navigate(`../create/${data.graph_type}`, { replace: true })
+  }
 
   return (
     <Card
       sx={{
-        width: 345,
-        height: 345,
+        width: 400,
+        height: 320,
         margin: 4,
         boxShadow: shadow,
         bgcolor: theme => theme.palette.primary.light,
@@ -36,21 +65,21 @@ export default function GraphCard({ data }: Props) {
       onMouseOver={() => setShadow(5)}
       onMouseOut={() => setShadow(2)}
     >
-      <CardMedia
-        component='img'
-        height='200'
-        image='https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60'
-        alt='Paella dish'
-      />
+      <CardMedia component='img' height='175' image={data.graph_data.image} alt='Graph Image' sx={{ objectFit: 'fill' }} />
       <CardContent>
-        <Typography variant='subtitle1'>By {data?.name}</Typography>
-        <Typography variant='body2'>{data?.desc}</Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant='subtitle1'>By {data.graph_data.profile.firstName}</Typography>
+          <Button variant='text' color='secondary' onClick={handleClick}>
+            Go to {data.graph_type.toLocaleUpperCase()}
+          </Button>
+        </Box>
+        <Typography variant='body2'>{data.graph_data.desc}</Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label='add to favorites' onClick={toggleLike}>
+        <IconButton aria-label='add to favorites' onClick={handleLike}>
           <FavoriteIcon color={like ? 'error' : undefined} />
         </IconButton>
-        <Typography>{numLikes ?? 0}</Typography>
+        <Typography sx={{ mx: 1 }}>{numLikes ?? 0}</Typography>
         {/* <IconButton aria-label='share'>
           <ShareIcon />
         </IconButton> */}

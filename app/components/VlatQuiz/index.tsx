@@ -10,9 +10,6 @@ import { Form, Link, useTransition } from '@remix-run/react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 import QuestionTemplate from './QuestionTemplate'
-import { ActionFunction, json, redirect } from '@remix-run/node'
-import { supabaseAdmin } from '~/supabase.server'
-import { magicLinkStrategy } from '~/utils/auth.server'
 import { Question } from '~/constants'
 import { GRAPH_TYPES } from '~/utils/types'
 

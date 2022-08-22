@@ -2,20 +2,9 @@ import * as React from 'react'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import { styled } from '@mui/material/styles'
+import { SavedGraphData } from '~/utils/types'
 
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  {
-    title: 'The Lord of the Rings: The Return of the King',
-    year: 2003,
-  },
-]
+import { useLoaderData } from '@remix-run/react'
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   '& .MuiInputLabel-root': {
@@ -23,17 +12,27 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }))
 
-export default function SearchBar() {
+interface Props {
+  value?: string
+  setValue: React.Dispatch<React.SetStateAction<string | undefined>>
+  data: SavedGraphData[]
+}
+
+export default function SearchBar({ value, setValue, data }: Props) {
   return (
     <Autocomplete
       freeSolo
       id='free-solo-2-demo'
+      value={value}
+      onChange={(event: any, newValue: string | undefined) => {
+        setValue(newValue)
+      }}
       disableClearable
-      options={top100Films.map(option => option.title)}
+      options={data.map(option => option.graph_type)}
       renderInput={params => (
         <StyledTextField
           {...params}
-          label='Search here'
+          label='Search by graph types here'
           InputProps={{
             ...params.InputProps,
             type: 'search',
