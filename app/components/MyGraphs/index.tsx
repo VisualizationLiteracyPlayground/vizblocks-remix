@@ -51,8 +51,8 @@ export default function MyGraphs({ graphData }: Props) {
       <CarouselProvider
         naturalSlideWidth={345}
         naturalSlideHeight={690}
-        step={2}
-        dragStep={2}
+        step={visibleSlides}
+        dragStep={visibleSlides}
         visibleSlides={visibleSlides}
         totalSlides={totalSlides}
       >

@@ -12,11 +12,9 @@ interface SaveGraphProps {}
 
 // TODO: options to save an image of the graph or csv
 
-// round 1 >> get feedback, without explaining how to use it. record the screen
-// collate feedback
-
 const SaveGraph = ({}: SaveGraphProps) => {
-  const { data } = useGraphData()
+  const { graphData, selectedGraph } = useGraphData()
+  const data = graphData[selectedGraph]
 
   const csvString = objectToCsvString(data)
   const handleCsvDownload = React.useCallback(() => handleDownloadCsv(csvString), [csvString])
