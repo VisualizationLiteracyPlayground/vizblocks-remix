@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '~/utils/theme'
 
-export default function Classrooms() {
+export default function CommingSoon() {
   const { mode } = useTheme()
 
   return (

@@ -24,6 +24,17 @@ export interface SavedGraphData {
     desc: string
   }
   uid: string
-  id: number
+  id: string
   likes: string[] // stores uid of who liked
+}
+
+export interface Classroom {
+  id: string
+  uid: string
+  likes: string[]
+  image: string
+  members: string[] // uid of members
+  graphs: string[] // id of graphs
+  title: string
+  created_by: string
 }

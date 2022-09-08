@@ -4,8 +4,6 @@ import Autocomplete from '@mui/material/Autocomplete'
 import { styled } from '@mui/material/styles'
 import { SavedGraphData } from '~/utils/types'
 
-import { useLoaderData } from '@remix-run/react'
-
 const StyledTextField = styled(TextField)(({ theme }) => ({
   '& .MuiInputLabel-root': {
     color: theme.palette.text.primary,
@@ -13,29 +11,30 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 }))
 
 interface Props {
-  value?: string
-  setValue: React.Dispatch<React.SetStateAction<string | undefined>>
+  value: string | null | undefined
+  setValue: React.Dispatch<React.SetStateAction<string | null | undefined>>
   data: SavedGraphData[]
 }
 
 export default function SearchBar({ value, setValue, data }: Props) {
+  const options = data.map(option => option.graph_data.profile.firstName)
+  const uniqueOptions = [...new Set(options)]
+
   return (
     <Autocomplete
       freeSolo
       id='free-solo-2-demo'
       value={value}
-      onChange={(event: any, newValue: string | undefined) => {
+      onChange={(event: any, newValue?: string | null) => {
         setValue(newValue)
       }}
-      disableClearable
-      options={data.map(option => option.graph_type)}
+      options={uniqueOptions}
       renderInput={params => (
         <StyledTextField
           {...params}
-          label='Search by graph types here'
+          label='Search by name'
           InputProps={{
             ...params.InputProps,
-            type: 'search',
           }}
           sx={{ width: 500 }}
         />

@@ -40,6 +40,27 @@ function dataReducer(state: State, action: Action) {
     case GRAPH_TYPES.barchart: {
       return { ...state, barchart: action.data }
     }
+    case GRAPH_TYPES.linechart: {
+      return { ...state, linechart: action.data }
+    }
+    case GRAPH_TYPES.piechart: {
+      return { ...state, piechart: action.data }
+    }
+    case GRAPH_TYPES.scatterplot: {
+      return { ...state, scatterplot: action.data }
+    }
+    case GRAPH_TYPES.dotplot: {
+      return { ...state, dotplot: action.data }
+    }
+    case GRAPH_TYPES.pictograph: {
+      return { ...state, pictograph: action.data }
+    }
+    case GRAPH_TYPES.histogram: {
+      return { ...state, histogram: action.data }
+    }
+    case GRAPH_TYPES.heatmap: {
+      return { ...state, heatmap: action.data }
+    }
     default: {
       throw new Error(`Unhandled action types: ${action.type}`)
     }

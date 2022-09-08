@@ -12,7 +12,7 @@ export default function VLAT() {
   const { mode } = useTheme()
 
   return (
-    <div style={{ padding: 16 }}>
+    <div style={{ padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Box
         sx={{
           width: '100%',
@@ -22,6 +22,7 @@ export default function VLAT() {
           bgcolor: mode === 'light' ? 'white' : 'black',
           borderRadius: '10px',
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+          maxWidth: 1200,
         }}
       >
         <Typography variant='h4' sx={{ mb: 4 }}>
@@ -63,6 +64,7 @@ export default function VLAT() {
           bgcolor: mode === 'light' ? 'rgb(181, 234, 215)' : 'rgb(125, 160, 147)',
           borderRadius: '10px',
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+          maxWidth: 1200,
         }}
       >
         <Typography variant='h4' sx={{ mb: 4 }}>
@@ -96,6 +98,7 @@ export default function VLAT() {
           bgcolor: mode === 'light' ? 'rgb(199, 206, 234)' : 'rgb(124, 129, 147)',
           borderRadius: '10px',
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+          maxWidth: 1200,
         }}
       >
         <Typography variant='h4' sx={{ mb: 4 }}>
@@ -116,3 +119,5 @@ export default function VLAT() {
     </div>
   )
 }
+
+// show progress bar

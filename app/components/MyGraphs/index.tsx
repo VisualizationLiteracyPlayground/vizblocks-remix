@@ -4,24 +4,27 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel'
-import Typography from '@mui/material/Typography'
+
 import GraphCard from './GraphCard'
 import useWindowSize from '~/hooks/useWindowSize'
 import Box from '@mui/material/Box'
-import { useTheme } from '~/utils/theme'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+
 import SearchBar from './SearchBar'
-import { SavedGraphData } from '~/utils/types'
+import { GRAPH_TYPES, SavedGraphData } from '~/utils/types'
+import FilterDropDown from './FilterDropDown'
 
 interface Props {
   graphData: SavedGraphData[]
 }
 
 export default function MyGraphs({ graphData }: Props) {
-  // const [currentPage, setCurrentPage] = React.useState(1)
-  const [value, setValue] = React.useState<string | undefined>('')
+  const [name, setName] = React.useState<string | null | undefined>(null)
+  const [graphType, setGraphType] = React.useState<GRAPH_TYPES>()
   const { width = 0 } = useWindowSize()
-  const { mode } = useTheme()
-  const filteredData = value ? graphData.filter(data => data.graph_type === value) : graphData
 
   const getVisibleSlides = () => {
     if (width > 2400) return 5
@@ -31,28 +34,35 @@ export default function MyGraphs({ graphData }: Props) {
     return 1
   }
 
+  const getFilteredData = () => {
+    return graphData.filter(data => {
+      if (name && graphType) {
+        return data.graph_data.profile.firstName === name && data.graph_type === graphType
+      } else if (name) {
+        return data.graph_data.profile.firstName === name
+      } else if (graphType) {
+        return data.graph_type === graphType
+      } else {
+        return true
+      }
+    })
+  }
+
   const totalSlides = graphData.length
   const visibleSlides = getVisibleSlides()
+  const filteredData = getFilteredData()
+  const availableGraphTypes: GRAPH_TYPES[] = [...new Set(graphData.map(data => data.graph_type))]
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        p: 4,
-        my: 2,
-        bgcolor: mode === 'light' ? 'white' : 'black',
-        borderRadius: '10px',
-        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-      }}
-    >
-      <Typography variant='h4' sx={{ mb: 4 }}>
-        Projects
-      </Typography>
-      <SearchBar value={value} setValue={setValue} data={graphData} />
+    <Box>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <SearchBar value={name} setValue={setName} data={graphData} />
+        <FilterDropDown availableGraphTypes={availableGraphTypes} graphType={graphType} setGraphType={setGraphType} />
+      </Box>
 
       <CarouselProvider
-        naturalSlideWidth={400}
-        naturalSlideHeight={320}
+        naturalSlideWidth={350}
+        naturalSlideHeight={350}
         step={visibleSlides}
         dragStep={visibleSlides}
         visibleSlides={visibleSlides}
@@ -62,10 +72,10 @@ export default function MyGraphs({ graphData }: Props) {
           <ButtonBack style={{ all: 'unset', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <ArrowBackIosIcon />
           </ButtonBack>
-          <Slider style={{ maxHeight: 375 }}>
+          <Slider style={{ maxHeight: 400 }}>
             {filteredData.map((data, index) => {
               return (
-                <Slide key={index} index={index}>
+                <Slide key={data.id} index={index}>
                   <GraphCard data={data} />
                 </Slide>
               )

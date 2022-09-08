@@ -44,7 +44,10 @@ export default function GraphCard({ data }: Props) {
       setNumLikes(prev => prev + 1)
       newLikes.push(uid)
     }
-    await supabaseClient.from('graphs').upsert({ ...data, likes: newLikes })
+    await supabaseClient
+      .from('graphs')
+      .update({ ...data, likes: newLikes })
+      .match({ id: data.id })
     toggleLike()
   }
 
@@ -53,11 +56,14 @@ export default function GraphCard({ data }: Props) {
     navigate(`../create/${data.graph_type}`, { replace: true })
   }
 
+  const isMyGraph = data.uid === uid
+  const goToGraphText = isMyGraph ? `View my ${data.graph_type}` : `View ${data.graph_data.profile.firstName}'s ${data.graph_type}`
+
   return (
     <Card
       sx={{
-        width: 400,
-        height: 320,
+        width: 350,
+        height: 350,
         margin: 4,
         boxShadow: shadow,
         bgcolor: theme => theme.palette.primary.light,
@@ -65,24 +71,26 @@ export default function GraphCard({ data }: Props) {
       onMouseOver={() => setShadow(5)}
       onMouseOut={() => setShadow(2)}
     >
-      <CardMedia component='img' height='175' image={data.graph_data.image} alt='Graph Image' sx={{ objectFit: 'fill' }} />
+      <CardMedia component='img' height='200' image={data.graph_data.image} alt='Graph Image' sx={{ objectFit: 'fill' }} />
       <CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant='subtitle1'>By {data.graph_data.profile.firstName}</Typography>
-          <Button variant='text' color='secondary' onClick={handleClick}>
-            Go to {data.graph_type.toLocaleUpperCase()}
-          </Button>
         </Box>
         <Typography variant='body2'>{data.graph_data.desc}</Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label='add to favorites' onClick={handleLike}>
-          <FavoriteIcon color={like ? 'error' : undefined} />
-        </IconButton>
-        <Typography sx={{ mx: 1 }}>{numLikes ?? 0}</Typography>
+      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton aria-label='add to favorites' onClick={handleLike}>
+            <FavoriteIcon color={like ? 'error' : undefined} />
+          </IconButton>
+          <Typography sx={{ mx: 1 }}>{numLikes ?? 0}</Typography>
+        </Box>
         {/* <IconButton aria-label='share'>
           <ShareIcon />
         </IconButton> */}
+        <Button variant='text' color='secondary' onClick={handleClick} sx={{ maxWidth: 200, overflowX: 'hidden' }}>
+          {goToGraphText}
+        </Button>
       </CardActions>
     </Card>
   )
