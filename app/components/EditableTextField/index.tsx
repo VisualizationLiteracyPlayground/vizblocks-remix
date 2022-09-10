@@ -11,8 +11,8 @@ import Tooltip from '@mui/material/Tooltip'
 
 interface Props {
   value: string
-  fontSize: number | string
-  onSave: () => void
+  fontSize?: number | string
+  onSave: (value: string) => Promise<void>
   editable?: boolean
 }
 
@@ -21,9 +21,9 @@ export default function EditableTextField({ value = 'My Classroom', onSave, font
   const [isEditing, setIsEditing] = React.useState(false)
 
   const handleEdit = () => setIsEditing(true)
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsEditing(false)
-    onSave()
+    onSave(text)
   }
 
   return (

@@ -12,7 +12,7 @@ export default function VLAT() {
   const { mode } = useTheme()
 
   return (
-    <div style={{ padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Box
         sx={{
           width: '100%',
@@ -119,5 +119,3 @@ export default function VLAT() {
     </div>
   )
 }
-
-// show progress bar

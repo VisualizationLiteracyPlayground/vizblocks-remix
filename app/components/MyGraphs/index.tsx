@@ -8,14 +8,11 @@ import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-re
 import GraphCard from './GraphCard'
 import useWindowSize from '~/hooks/useWindowSize'
 import Box from '@mui/material/Box'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
 
 import SearchBar from './SearchBar'
 import { GRAPH_TYPES, SavedGraphData } from '~/utils/types'
 import FilterDropDown from './FilterDropDown'
+import { Typography } from '@mui/material'
 
 interface Props {
   graphData: SavedGraphData[]
@@ -55,37 +52,42 @@ export default function MyGraphs({ graphData }: Props) {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <SearchBar value={name} setValue={setName} data={graphData} />
-        <FilterDropDown availableGraphTypes={availableGraphTypes} graphType={graphType} setGraphType={setGraphType} />
-      </Box>
-
-      <CarouselProvider
-        naturalSlideWidth={350}
-        naturalSlideHeight={350}
-        step={visibleSlides}
-        dragStep={visibleSlides}
-        visibleSlides={visibleSlides}
-        totalSlides={totalSlides}
-      >
-        <div style={{ display: 'grid', gridTemplateColumns: '30px 1fr 30px' }}>
-          <ButtonBack style={{ all: 'unset', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <ArrowBackIosIcon />
-          </ButtonBack>
-          <Slider style={{ maxHeight: 400 }}>
-            {filteredData.map((data, index) => {
-              return (
-                <Slide key={data.id} index={index}>
-                  <GraphCard data={data} />
-                </Slide>
-              )
-            })}
-          </Slider>
-          <ButtonNext style={{ all: 'unset', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <ArrowForwardIosIcon />
-          </ButtonNext>
-        </div>
-      </CarouselProvider>
+      {filteredData.length === 0 ? (
+        <Typography textAlign={'center'}>No works added yet</Typography>
+      ) : (
+        <>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <SearchBar value={name} setValue={setName} data={graphData} />
+            <FilterDropDown availableGraphTypes={availableGraphTypes} graphType={graphType} setGraphType={setGraphType} />
+          </Box>
+          <CarouselProvider
+            naturalSlideWidth={350}
+            naturalSlideHeight={350}
+            step={visibleSlides}
+            dragStep={visibleSlides}
+            visibleSlides={visibleSlides}
+            totalSlides={totalSlides}
+          >
+            <div style={{ display: 'grid', gridTemplateColumns: '30px 1fr 30px' }}>
+              <ButtonBack style={{ all: 'unset', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <ArrowBackIosIcon />
+              </ButtonBack>
+              <Slider style={{ maxHeight: 400 }}>
+                {filteredData.map((data, index) => {
+                  return (
+                    <Slide key={data.id} index={index}>
+                      <GraphCard data={data} />
+                    </Slide>
+                  )
+                })}
+              </Slider>
+              <ButtonNext style={{ all: 'unset', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <ArrowForwardIosIcon />
+              </ButtonNext>
+            </div>
+          </CarouselProvider>
+        </>
+      )}
     </Box>
   )
 }
