@@ -19,9 +19,11 @@ interface Props {
   handleDelete: (id: string) => Promise<void>
 }
 
+type FilterGraphTypes = GRAPH_TYPES | 'all'
+
 export default function MyGraphs({ graphData, handleDelete }: Props) {
   const [name, setName] = React.useState<string | null | undefined>(null)
-  const [graphType, setGraphType] = React.useState<GRAPH_TYPES>(GRAPH_TYPES.all)
+  const [graphType, setGraphType] = React.useState<FilterGraphTypes>('all')
   const { width = 0 } = useWindowSize()
 
   const getVisibleSlides = () => {
@@ -49,7 +51,7 @@ export default function MyGraphs({ graphData, handleDelete }: Props) {
   const totalSlides = graphData.length
   const visibleSlides = getVisibleSlides()
   const filteredData = getFilteredData()
-  const availableGraphTypes: GRAPH_TYPES[] = [GRAPH_TYPES.all, ...new Set(graphData.map(data => data.graph_type))]
+  const availableGraphTypes: FilterGraphTypes[] = ['all', ...new Set(graphData.map(data => data.graph_type))]
 
   return (
     <Box>

@@ -10,7 +10,6 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { useGraphData } from '~/utils/graphDataContext'
 import toast from 'react-hot-toast'
 import { objectToCsvString, handleDownloadCsv } from './utils'
-import { GRAPH_TYPES } from '~/utils/types'
 
 interface InputDataProps {}
 

@@ -7,10 +7,11 @@ import Select from '@mui/material/Select'
 import { GRAPH_TYPES } from '~/utils/types'
 import { styled } from '@mui/material/styles'
 
+type FilterGraphTypes = GRAPH_TYPES | 'all'
 interface Props {
-  availableGraphTypes: GRAPH_TYPES[]
-  graphType: GRAPH_TYPES | undefined
-  setGraphType: React.Dispatch<React.SetStateAction<GRAPH_TYPES | undefined>>
+  availableGraphTypes: FilterGraphTypes[]
+  graphType: FilterGraphTypes | undefined
+  setGraphType: React.Dispatch<React.SetStateAction<FilterGraphTypes>>
 }
 
 const StyledInputLabel = styled(InputLabel)(({ theme }) => ({
@@ -27,7 +28,7 @@ export default function FilterDropDown({ availableGraphTypes, graphType, setGrap
         value={graphType}
         label='Filter by Graph Types'
         onChange={e => {
-          setGraphType(e.target.value as GRAPH_TYPES)
+          setGraphType(e.target.value as FilterGraphTypes)
         }}
       >
         {availableGraphTypes.map((graphType, index) => {

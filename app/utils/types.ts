@@ -7,7 +7,6 @@ export enum GRAPH_TYPES {
   pictograph = 'pictograph',
   histogram = 'histogram',
   heatmap = 'heatmap',
-  all = 'all',
 }
 
 export interface Profile {
