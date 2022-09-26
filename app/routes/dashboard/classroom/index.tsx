@@ -15,6 +15,8 @@ export default function Classrooms() {
   const { mode } = useTheme()
   const navigate = useNavigate()
 
+  const isEducator = profile.role === 'educator'
+
   const handleCreateClassroom = async () => {
     const uid = user?.id
     const created_by = `${profile.firstName} ${profile.lastName}`
@@ -29,7 +31,7 @@ export default function Classrooms() {
         width: '100%',
         p: 4,
         my: 2,
-        bgcolor: mode === 'light' ? 'white' : 'black',
+        bgcolor: mode === 'light' ? 'white' : '#121212',
         borderRadius: '10px',
         boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         maxWidth: 1200,
@@ -40,19 +42,21 @@ export default function Classrooms() {
         Classroom
       </Typography>
 
-      <Box sx={{ display: 'flex' }}>
-        <img src='/assets/classroom.jpeg' alt='classroom' width={300} />
-        <Box component={Form} sx={{ mx: 4 }}>
-          <Typography sx={{ mb: 4 }}>
-            Classroom help educators create a convenient space to interact with students and check their progress on data visualization. Get
-            together in a classroom to share your visualizations each other!
-          </Typography>
+      {isEducator && (
+        <Box sx={{ display: 'flex' }}>
+          <img src='/assets/classroom.jpeg' alt='classroom' width={300} />
+          <Box component={Form} sx={{ mx: 4 }}>
+            <Typography sx={{ mb: 4 }}>
+              Classroom help educators create a convenient space to interact with students and check their progress on data visualization.
+              Get together in a classroom to share your visualizations each other!
+            </Typography>
 
-          <Button type='submit' variant='contained' onClick={handleCreateClassroom}>
-            Create a classroom
-          </Button>
+            <Button type='submit' variant='contained' onClick={handleCreateClassroom}>
+              Create a classroom
+            </Button>
+          </Box>
         </Box>
-      </Box>
+      )}
 
       <Typography variant='h5' sx={{ my: 4 }}>
         My Classrooms

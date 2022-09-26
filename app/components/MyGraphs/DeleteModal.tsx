@@ -26,7 +26,13 @@ interface Props {
 export default function DeleteModal({ visible, handleClose, graphDesc, handleConfirm }: Props) {
   return (
     <>
-      <Modal open={visible} onClose={handleClose} aria-labelledby='modal-modal-title' aria-describedby='modal-modal-description'>
+      <Modal
+        open={visible}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+        disableAutoFocus={true}
+      >
         <Box sx={style}>
           <Typography variant='h6' textAlign='center'>
             Are you sure you want to delete this saved graph?

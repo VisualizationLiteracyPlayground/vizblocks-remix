@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
 import { useTheme } from '~/utils/theme'
 import { useLoaderData, useParams } from '@remix-run/react'
 import EditableTextField from '~/components/EditableTextField'
@@ -16,7 +17,6 @@ import TabPanel from '~/components/TabPanel'
 import Button from '@mui/material/Button'
 
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import GraphCard from '~/components/MyGraphs/GraphCard'
 
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -61,6 +61,7 @@ type LoaderData = {
   members: Profile[] | null
   myGraphs: SavedGraphData[] | null
   classroomMetaData: {
+    id: string
     createdBy?: string
     title: string
     desc: string
@@ -80,6 +81,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const { data: myGraphs } = await supabaseAdmin.from('graphs').select().eq('uid', uid)
   const { data: membersProfile } = await supabaseAdmin.from('profiles').select().or(`id.in.(${members})`)
   const classroomMetaData = {
+    id: classroomData?.[0].id,
     createdBy: classroomData?.[0].created_by,
     title: classroomData?.[0].title,
     desc: classroomData?.[0].desc,
@@ -101,8 +103,8 @@ export default function MyClassroom() {
   const linkedGraphIds = graphsLinkedToClassroom?.map(graph => graph.id) ?? []
   const myUnlinkedGraphs = myGraphs?.filter(graph => !linkedGraphIds.includes(graph.id))
 
-  const { user } = useRootData()
-  const editable = user?.id === classroomMetaData?.creatorUid
+  const { user, profile } = useRootData()
+  const editable = user?.id === classroomMetaData?.creatorUid && profile.role === 'educator'
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue)
@@ -132,7 +134,16 @@ export default function MyClassroom() {
     }
   }
 
-  const handleDeleteGraphFromWorks = () => {}
+  const handleDeleteGraphFromWorks = async (id: string) => {
+    const newLinkedGraphs = linkedGraphIds.filter(graphId => graphId !== id)
+    const { error } = await supabaseClient.from('classroom').update({ graphs: newLinkedGraphs }).match({ id: params.classroomId })
+    if (error) {
+      toast.error(error.message)
+    } else {
+      toast.success('Deleted!')
+    }
+    window.location.reload()
+  }
 
   return (
     <Box
@@ -140,7 +151,7 @@ export default function MyClassroom() {
         width: '100%',
         p: 4,
         my: 2,
-        bgcolor: mode === 'light' ? 'white' : 'black',
+        bgcolor: mode === 'light' ? 'white' : '#121212',
         borderRadius: '10px',
         boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         maxWidth: 1200,
@@ -161,6 +172,8 @@ export default function MyClassroom() {
           onSave={(value: string) => handleSaveText('desc', value)}
         />
       </Box>
+
+      <Divider sx={{ mt: 4 }} />
 
       <Typography variant='h6' sx={{ my: 2 }}>
         Add your work
@@ -190,15 +203,15 @@ export default function MyClassroom() {
         </Button>
       </div>
 
+      <Divider sx={{ mt: 4 }} />
       <Tabs value={tabValue} onChange={handleTabChange} sx={{ mt: 2 }}>
         <StyledTab label='Works' />
         <StyledTab label='Members' />
-        <StyledTab label='VLAT' />
       </Tabs>
 
       <TabPanel index={0} value={tabValue}>
         <div>
-          <MyGraphs graphData={graphsLinkedToClassroom ?? []} />
+          <MyGraphs graphData={graphsLinkedToClassroom ?? []} handleDelete={handleDeleteGraphFromWorks} />
         </div>
       </TabPanel>
 
@@ -211,11 +224,7 @@ export default function MyClassroom() {
   )
 }
 
-// vlat
-// unlocking post-only after taking pre
-
-// add vlat tab in classroom
-// add role - students and teachers
+// todo: add vlat tab in classroom, reset by deleting entry
 
 // signin by invite only
 // focus on the demo

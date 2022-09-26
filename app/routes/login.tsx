@@ -49,8 +49,8 @@ export const action: ActionFunction = async ({ request }) => {
   if (typeof email !== 'string') return json({ error: { message: 'Email must be a string' } }, 400)
 
   const { error } = await supabaseAdmin.auth.api.sendMagicLinkEmail(email, { redirectTo: `${process.env.SERVER_URL}/login/callback` })
-
-  if (error) return json({ error: { message: error.message } }, error.status)
+  console.log(error)
+  if (error) return json({ error: { message: 'Login failed, please try again' } }, error.status)
   return redirect('/login')
 }
 
@@ -68,6 +68,7 @@ export default function Login() {
         justifyContent: 'space-between',
         alignItems: 'center',
         background: '#224957d8',
+        minHeight: '100vh',
       }}
     >
       {/* dummy div for layout */}

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
 
 import IconButton from '@mui/material/IconButton'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -46,7 +45,7 @@ export default function ListItem({ title = 'title', creator, image, buttonText =
 
   return (
     <>
-      <Box sx={{ p: 2 }}>
+      <Box sx={{ p: 2, border: 1, borderRadius: 4, mt: 2 }}>
         <Box sx={{ display: 'flex' }}>
           <img src={imageSrc} alt='graph or classroom' width={200} />
           <Box sx={{ mx: 4, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '100%' }}>
@@ -66,8 +65,6 @@ export default function ListItem({ title = 'title', creator, image, buttonText =
           </Box>
         </Box>
       </Box>
-
-      <Divider sx={{ mt: 2 }} />
     </>
   )
 }

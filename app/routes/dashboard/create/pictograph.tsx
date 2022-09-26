@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { PictographTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
-import type { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import type { GridColumns } from '@mui/x-data-grid'
 import { GRAPH_TYPES } from '~/utils/types'
 
 // linked to icons displayed in PicotographTemplate
-const SELECT_OPTONS = ['Car', 'Boat', 'Rocket', 'Plane']
+const SELECT_OPTONS = ['Car', 'Boat', 'Rocket', 'Plane', 'Apple', 'Basketball']
 
 // define template for column headers
 // https://mui.com/components/data-grid/columns/#column-definitions
@@ -14,13 +14,7 @@ const columns: GridColumns = [
   { field: 'value', headerName: 'Value', width: 180, type: 'number', editable: true },
 ]
 
-// initial values for rows based on column template defined above
-const initialRows: GridRowsProp = [
-  { id: 1, category: 'Car', value: 2 },
-  { id: 2, category: 'Boat', value: 5 },
-  { id: 3, category: 'Rocket', value: 3 },
-  { id: 4, category: 'Plane', value: 8 },
-]
+// initial values for rows based on column template defined in app/utils/graphInitialData.ts
 
 function Pictograph() {
   const { graphData, setSelectedGraph, setColumnTemplate, parameters } = useGraphData()

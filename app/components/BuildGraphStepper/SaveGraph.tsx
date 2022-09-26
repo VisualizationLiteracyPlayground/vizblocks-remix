@@ -38,11 +38,18 @@ const SaveGraph = ({}: SaveGraphProps) => {
   const handleSaveOnline = async () => {
     const node = document.getElementById('chart-container')
     const image = await domtoimage.toPng(node as Node, { bgcolor: '#fff' })
+    if (description.length === 0) {
+      toast.error('Please write a short description to save your chart online')
+      return
+    }
 
     const graph_data = { data: selectedGraphData, image, profile, desc: description }
     const { data, error } = await supabaseClient.from('graphs').insert({ graph_type: selectedGraph, graph_data, uid: user?.id, likes: [] })
     if (error) toast.error(`${error?.message}`)
-    else toast.success(`Saved!`)
+    else {
+      toast.success(`Saved!`)
+      setDescription('')
+    }
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,6 +84,7 @@ const SaveGraph = ({}: SaveGraphProps) => {
               rows={4}
               placeholder='Describe your visualization'
               margin='normal'
+              required
               value={description}
               onChange={handleChange}
               sx={{ width: 400 }}

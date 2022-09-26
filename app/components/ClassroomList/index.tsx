@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Pagination from '@mui/material/Pagination'
+import CircularProgress from '@mui/material/CircularProgress'
 import { useNavigate } from '@remix-run/react'
 import * as React from 'react'
 import { supabaseClient } from '~/supabase.client'
@@ -25,6 +26,7 @@ export default function List({ showJoinedClassrooms = false }: Props) {
   const [page, setPage] = React.useState(1)
   const [showData, setShowData] = React.useState<Classroom[]>([])
   const [totalClassrooms, setTotalClassrooms] = React.useState(0)
+  const [loading, setLoading] = React.useState(true)
 
   const navigate = useNavigate()
   const { user } = useRootData()
@@ -48,6 +50,7 @@ export default function List({ showJoinedClassrooms = false }: Props) {
         .range(from, to)
       setShowData(data ?? [])
       setTotalClassrooms(count ?? 0)
+      setLoading(false)
     }
     const getClassrooms = async () => {
       const { from, to } = getPagination(page, pageSize)
@@ -59,9 +62,18 @@ export default function List({ showJoinedClassrooms = false }: Props) {
         .range(from, to)
       setShowData(data ?? [])
       setTotalClassrooms(count ?? 0)
+      setLoading(false)
     }
     showJoinedClassrooms ? getMyClassrooms() : getClassrooms()
   }, [page, pageSize, showJoinedClassrooms, uid])
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
 
   return (
     <>

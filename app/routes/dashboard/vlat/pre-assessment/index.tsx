@@ -43,7 +43,7 @@ export default function PreAssessment() {
           width: '100%',
           p: 4,
           my: 2,
-          bgcolor: mode === 'light' ? 'white' : 'black',
+          bgcolor: mode === 'light' ? 'white' : '#121212',
           borderRadius: '10px',
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         }}
@@ -59,13 +59,20 @@ export default function PreAssessment() {
         </Box>
         <Grid container sx={{ my: 2 }} rowSpacing={4} columnSpacing={2}>
           {graphData.map((chart, index) => {
-            const { label, icon, to, disabled, graphType } = chart
-            const graphScores = scores?.filter(score => score.graph_type === graphType) ?? []
-            const highestScore = graphScores.length > 0 ? Math.max(...graphScores.map(s => s?.score)) : 0
+            const { label, icon, to, hidden, graphType } = chart
+            if (hidden) return null
+
+            const preTestScores = scores?.filter(score => score.graph_type === graphType) ?? []
+            const highestScore = preTestScores.length > 0 ? Math.max(...preTestScores.map(s => s?.score)) : 0
+            const disabled = preTestScores.length > 0
 
             return (
               <Grid item xs={4} key={index}>
-                <Tooltip title={disabled ? 'Coming Soon' : ''} arrow placement='top'>
+                <Tooltip
+                  title={disabled ? 'You have already attempted it once. Please proceed to the post assessment when ready.' : ''}
+                  arrow
+                  placement='top'
+                >
                   <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <Button
                       sx={{ width: 200 }}

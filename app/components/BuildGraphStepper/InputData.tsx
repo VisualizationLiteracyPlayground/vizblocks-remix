@@ -22,7 +22,7 @@ const InputData = ({}: InputDataProps) => {
   const { graphData, graphDispatch, selectedGraph, columnTemplate: columns } = useGraphData()
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([])
   const [errorMessage, setErrorMessage] = React.useState<string>('')
-  const rows = graphData['barchart']
+  const rows = graphData[selectedGraph]
   const setRows = React.useCallback((data: GridRowsProp) => graphDispatch({ type: selectedGraph, data }), [graphDispatch, selectedGraph])
 
   const handleCellEditCommit = React.useCallback(

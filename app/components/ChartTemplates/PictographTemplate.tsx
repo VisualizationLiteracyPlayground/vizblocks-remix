@@ -8,6 +8,7 @@ import FlightIcon from '@mui/icons-material/Flight'
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
 import RocketIcon from '@mui/icons-material/Rocket'
 import DirectionsBoatIcon from '@mui/icons-material/DirectionsBoat'
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball'
 
 interface PictographTemplateProps {
   data: any
@@ -29,11 +30,14 @@ const Icon: React.FC<any> = (props: any) => {
       {X_VALUES.map((xValue, index) => {
         return (
           <svg key={`${category}-${index}`}>
-            {category === 'Apple' && <AppleIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: fill }} />}
-            {category === 'Plane' && <FlightIcon height={height} width={width * 2} x={xValue} y={y} />}
-            {category === 'Boat' && <DirectionsBoatIcon height={height} width={width * 2} x={xValue} y={y} />}
-            {category === 'Car' && <DirectionsCarIcon height={height} width={width * 2} x={xValue} y={y} />}
-            {category === 'Rocket' && <RocketIcon height={height} width={width * 2} x={xValue} y={y} />}
+            {category === 'Apple' && <AppleIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'red' }} />}
+            {category === 'Plane' && <FlightIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'turquoise' }} />}
+            {category === 'Boat' && <DirectionsBoatIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'blue' }} />}
+            {category === 'Car' && <DirectionsCarIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'green' }} />}
+            {category === 'Rocket' && <RocketIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'brown' }} />}
+            {category === 'Basketball' && (
+              <SportsBasketballIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'orange' }} />
+            )}
           </svg>
         )
       })}
@@ -59,7 +63,7 @@ export function PictographTemplate({ data, title, xlabel, ylabel, name }: Pictog
           margin={{
             top: 20,
             right: 20,
-            left: 20,
+            left: 40,
             bottom: 60,
           }}
           layout='vertical'

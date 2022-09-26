@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ScatterPlotTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
-import type { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import type { GridColumns } from '@mui/x-data-grid'
 import { GRAPH_TYPES } from '~/utils/types'
 
 // define template for column headers
@@ -11,15 +11,8 @@ const columns: GridColumns = [
   { field: 'yval', headerName: 'Y Value', width: 180, type: 'number', editable: true },
 ]
 
-// initial values for rows based on column template defined above
-const initialData: GridRowsProp = [
-  { id: 1, xval: 100, yval: 200 },
-  { id: 2, xval: 120, yval: 100 },
-  { id: 3, xval: 170, yval: 300 },
-  { id: 4, xval: 140, yval: 250 },
-  { id: 5, xval: 150, yval: 400 },
-  { id: 6, xval: 110, yval: 280 },
-]
+// initial values for rows based on column template defined in app/utils/graphInitialData.ts
+
 function ScatterPlot() {
   const { graphData, setSelectedGraph, setColumnTemplate, parameters } = useGraphData()
   const { title, xlabel, ylabel, name } = parameters

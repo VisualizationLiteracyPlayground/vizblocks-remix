@@ -7,13 +7,14 @@ export enum GRAPH_TYPES {
   pictograph = 'pictograph',
   histogram = 'histogram',
   heatmap = 'heatmap',
+  all = 'all',
 }
 
 export interface Profile {
   firstName?: string
   lastName?: string
   email?: string
-  role?: string
+  role?: 'educator' | 'student'
 }
 
 export interface SavedGraphData {

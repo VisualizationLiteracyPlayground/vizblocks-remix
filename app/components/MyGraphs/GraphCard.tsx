@@ -21,9 +21,10 @@ import DeleteModal from './DeleteModal'
 
 interface Props {
   data: SavedGraphData
+  handleDelete: (id: string) => Promise<void>
 }
 
-export default function GraphCard({ data }: Props) {
+export default function GraphCard({ data, handleDelete }: Props) {
   const { user } = useRootData()
   const navigate = useNavigate()
   const { graphDispatch } = useGraphData()
@@ -36,7 +37,7 @@ export default function GraphCard({ data }: Props) {
   const [showDeleteModal, setShowDeleteModal] = React.useState(false)
 
   const handleLike = async () => {
-    let newLikes = [...data.likes]
+    let newLikes = [...new Set(data.likes)]
     if (like) {
       setNumLikes(prev => prev - 1)
       newLikes = newLikes.filter(like => like !== uid)
@@ -53,8 +54,9 @@ export default function GraphCard({ data }: Props) {
     navigate(`../create/${data.graph_type}`)
   }
 
-  const handleDelete = async () => {
-    await supabaseClient.from('graphs').delete().match({ id: data.id })
+  const handleModalConfirm = async () => {
+    await handleDelete(data.id)
+    setShowDeleteModal(false)
   }
 
   const isMyGraph = data.uid === uid
@@ -62,7 +64,7 @@ export default function GraphCard({ data }: Props) {
 
   return (
     <>
-      <DeleteModal visible={showDeleteModal} handleClose={() => setShowDeleteModal(false)} handleConfirm={handleDelete} />
+      <DeleteModal visible={showDeleteModal} handleClose={() => setShowDeleteModal(false)} handleConfirm={handleModalConfirm} />
       <Card
         sx={{
           width: 350,
@@ -74,7 +76,13 @@ export default function GraphCard({ data }: Props) {
         onMouseOver={() => setShadow(5)}
         onMouseOut={() => setShadow(2)}
       >
-        <CardMedia component='img' height='200' image={data.graph_data.image} alt='Graph Image' sx={{ objectFit: 'fill' }} />
+        <CardMedia
+          component='img'
+          height='200'
+          image={data.graph_data.image}
+          alt='Graph Image'
+          sx={{ objectFit: 'contain', bgcolor: 'white' }}
+        />
         <CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography variant='subtitle1'>By {data.graph_data.profile.firstName}</Typography>
@@ -87,9 +95,9 @@ export default function GraphCard({ data }: Props) {
               <FavoriteIcon color={like ? 'error' : undefined} />
             </IconButton>
             <Typography sx={{ mx: 1 }}>{numLikes ?? 0}</Typography>
-            {/* <IconButton aria-label='delete your graph' onClick={() => setShowDeleteModal(true)}>
+            <IconButton aria-label='delete your graph' onClick={() => setShowDeleteModal(true)}>
               <DeleteIcon />
-            </IconButton> */}
+            </IconButton>
           </Box>
 
           <Button variant='text' color='secondary' onClick={handleClick} sx={{ maxWidth: 200, overflowX: 'hidden' }}>

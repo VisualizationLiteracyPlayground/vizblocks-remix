@@ -16,11 +16,12 @@ import { Typography } from '@mui/material'
 
 interface Props {
   graphData: SavedGraphData[]
+  handleDelete: (id: string) => Promise<void>
 }
 
-export default function MyGraphs({ graphData }: Props) {
+export default function MyGraphs({ graphData, handleDelete }: Props) {
   const [name, setName] = React.useState<string | null | undefined>(null)
-  const [graphType, setGraphType] = React.useState<GRAPH_TYPES>()
+  const [graphType, setGraphType] = React.useState<GRAPH_TYPES>(GRAPH_TYPES.all)
   const { width = 0 } = useWindowSize()
 
   const getVisibleSlides = () => {
@@ -33,11 +34,11 @@ export default function MyGraphs({ graphData }: Props) {
 
   const getFilteredData = () => {
     return graphData.filter(data => {
-      if (name && graphType) {
+      if (name && graphType !== 'all') {
         return data.graph_data.profile.firstName === name && data.graph_type === graphType
       } else if (name) {
         return data.graph_data.profile.firstName === name
-      } else if (graphType) {
+      } else if (graphType !== 'all') {
         return data.graph_type === graphType
       } else {
         return true
@@ -48,7 +49,7 @@ export default function MyGraphs({ graphData }: Props) {
   const totalSlides = graphData.length
   const visibleSlides = getVisibleSlides()
   const filteredData = getFilteredData()
-  const availableGraphTypes: GRAPH_TYPES[] = [...new Set(graphData.map(data => data.graph_type))]
+  const availableGraphTypes: GRAPH_TYPES[] = [GRAPH_TYPES.all, ...new Set(graphData.map(data => data.graph_type))]
 
   return (
     <Box>
@@ -76,7 +77,7 @@ export default function MyGraphs({ graphData }: Props) {
                 {filteredData.map((data, index) => {
                   return (
                     <Slide key={data.id} index={index}>
-                      <GraphCard data={data} />
+                      <GraphCard data={data} handleDelete={handleDelete} />
                     </Slide>
                   )
                 })}

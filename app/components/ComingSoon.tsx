@@ -13,7 +13,7 @@ export default function CommingSoon() {
           width: '100%',
           p: 4,
           my: 2,
-          bgcolor: mode === 'light' ? 'white' : 'black',
+          bgcolor: mode === 'light' ? 'white' : '#121212',
           borderRadius: '10px',
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         }}

@@ -13,7 +13,7 @@ export default function Hero() {
   const { mode } = useTheme()
 
   return (
-    <Box sx={{ backgroundColor: `${mode === 'dark' ? 'white' : 'black'}` }}>
+    <Box sx={{ backgroundColor: `${mode === 'dark' ? 'white' : '#121212'}` }}>
       <Container sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box sx={{ padding: '3rem', width: { md: '50%' } }}>
           <Box>

@@ -13,7 +13,7 @@ function Create() {
       <Box
         sx={{
           height: '75vh',
-          backgroundColor: mode === 'light' ? '#fff' : '#000',
+          backgroundColor: mode === 'light' ? '#fff' : '#121212',
           padding: '48px',
           borderRadius: '10px',
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',

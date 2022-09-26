@@ -23,18 +23,19 @@ type Score = {
   score: number
 }
 
-type LoaderData = Score[] | null
+type LoaderData = { preData: Score[] | null; postData: Score[] | null }
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await magicLinkStrategy.checkSession(request)
-  const { data, error } = await supabaseAdmin.from('vlat').select().eq('uid', session?.user?.id).eq('test_type', 'pre')
+  const { data: preData } = await supabaseAdmin.from('vlat').select().eq('uid', session?.user?.id).eq('test_type', 'pre')
+  const { data: postData } = await supabaseAdmin.from('vlat').select().eq('uid', session?.user?.id).eq('test_type', 'post')
 
-  return json<LoaderData>(data)
+  return json<LoaderData>({ preData, postData })
 }
 
 export default function PreAssessment() {
   const { mode } = useTheme()
-  const scores = useLoaderData<LoaderData>()
+  const { preData, postData } = useLoaderData<LoaderData>()
 
   return (
     <div style={{ padding: 16 }}>
@@ -43,7 +44,7 @@ export default function PreAssessment() {
           width: '100%',
           p: 4,
           my: 2,
-          bgcolor: mode === 'light' ? 'white' : 'black',
+          bgcolor: mode === 'light' ? 'white' : '#121212',
           borderRadius: '10px',
           boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
         }}
@@ -59,13 +60,17 @@ export default function PreAssessment() {
         </Box>
         <Grid container sx={{ my: 2 }} rowSpacing={4} columnSpacing={2}>
           {graphData.map((chart, index) => {
-            const { label, icon, to, disabled, graphType } = chart
-            const graphScores = scores?.filter(score => score.graph_type === graphType) ?? []
-            const highestScore = graphScores.length > 0 ? Math.max(...graphScores.map(s => s?.score)) : 0
+            const { label, icon, to, hidden, graphType } = chart
+            if (hidden) return null
+            const postTestScores = postData?.filter(score => score.graph_type === graphType) ?? []
+            const highestScore = postTestScores.length > 0 ? Math.max(...postTestScores.map(s => s?.score)) : 0
+
+            const preTestScore = preData?.filter(score => score.graph_type === graphType) ?? []
+            const disabled = preTestScore.length === 0
 
             return (
               <Grid item xs={4} key={index}>
-                <Tooltip title={disabled ? 'Coming Soon' : ''} arrow placement='top'>
+                <Tooltip title={disabled ? 'You have not attempted the pre-assessment' : ''} arrow placement='top'>
                   <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <Button
                       sx={{ width: 200 }}

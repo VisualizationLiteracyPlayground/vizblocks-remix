@@ -12,23 +12,7 @@ const columns: GridColumns = [
   { field: 'value', headerName: 'Value', width: 120, type: 'number', editable: true },
 ]
 
-// initial values for rows based on column template defined above
-const initialRows: GridRowsProp = generateData()
-
-function generateData(): { id: number; xval: string | number; yval: string | number; value: number }[] {
-  const yval = ['A', 'B', 'C', 'D']
-  const xval = [0, 1, 2, 3, 4]
-  let id = 1
-  const array = []
-
-  for (const y of yval) {
-    for (const x of xval) {
-      array.push({ id, xval: x, yval: y, value: Math.floor(Math.random() * 10) })
-      id += 1
-    }
-  }
-  return array
-}
+// initial values for rows based on column template defined in app/utils/graphInitialData.ts
 
 function Heatmap() {
   const { graphData, setSelectedGraph, setColumnTemplate, parameters } = useGraphData()

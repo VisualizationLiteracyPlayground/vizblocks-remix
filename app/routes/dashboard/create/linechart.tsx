@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { LineChartTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
-import type { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import type { GridColumns } from '@mui/x-data-grid'
 import { GRAPH_TYPES } from '~/utils/types'
 
 // define template for column headers
@@ -11,16 +11,7 @@ const columns: GridColumns = [
   { field: 'yval', headerName: 'Y Values', width: 180, type: 'number', editable: true },
 ]
 
-// initial values for rows based on column template defined above
-const initialRows: GridRowsProp = [
-  { id: 1, xval: 'Page A', yval: 4000 },
-  { id: 2, xval: 'Page B', yval: 3000 },
-  { id: 3, xval: 'Page C', yval: 2000 },
-  { id: 4, xval: 'Page D', yval: 2780 },
-  { id: 5, xval: 'Page E', yval: 1890 },
-  { id: 6, xval: 'Page F', yval: 2390 },
-  { id: 7, xval: 'Page G', yval: 3490 },
-]
+// initial values for rows based on column template defined in app/utils/graphInitialData.ts
 
 function LineChart() {
   const { graphData, setSelectedGraph, setColumnTemplate, parameters } = useGraphData()

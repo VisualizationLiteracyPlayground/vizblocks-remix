@@ -19,7 +19,6 @@ const initialParam: Parameters = {
 
 type Action = { type: GRAPH_TYPES; data: GridRowsProp }
 type Dispatch = (action: Action) => void
-// type State = { [key in GRAPH_TYPES]: GridRowsProp } | {}
 type State = typeof graphInitialData
 
 interface GraphContextType {

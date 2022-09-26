@@ -32,7 +32,7 @@ export default function SearchBar({ value, setValue, data }: Props) {
       renderInput={params => (
         <StyledTextField
           {...params}
-          label='Search by name'
+          label='Search by user name'
           InputProps={{
             ...params.InputProps,
           }}

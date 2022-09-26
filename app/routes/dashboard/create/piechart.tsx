@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { PieChartTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
-import type { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import type { GridColumns } from '@mui/x-data-grid'
 import { GRAPH_TYPES } from '~/utils/types'
 
 // define template for column headers
@@ -11,13 +11,8 @@ const columns: GridColumns = [
   { field: 'value', headerName: 'Value', width: 180, type: 'number', editable: true },
 ]
 
-// initial values for rows based on column template defined above
-const initialData: GridRowsProp = [
-  { id: 1, name: 'Group A', value: 400 },
-  { id: 2, name: 'Group B', value: 300 },
-  { id: 3, name: 'Group C', value: 300 },
-  { id: 4, name: 'Group D', value: 200 },
-]
+// initial values for rows based on column template defined in app/utils/graphInitialData.ts
+
 function PieChart() {
   const { graphData, setSelectedGraph, setColumnTemplate, parameters } = useGraphData()
   const { title, xlabel, ylabel, name } = parameters
