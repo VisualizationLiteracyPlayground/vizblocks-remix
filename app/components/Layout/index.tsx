@@ -2,10 +2,17 @@ import * as React from 'react'
 import Header from './Header'
 import Box from '@mui/material/Box'
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+interface Props {
+  isAuthenticated?: boolean
+  firstName?: string
+  lastName?: string
+  children: React.ReactNode
+}
+
+export default function Layout({ children, ...others }: Props) {
   return (
     <Box style={{ display: 'flex' }}>
-      <Header />
+      <Header {...others} />
       {children}
     </Box>
   )

@@ -1,15 +1,9 @@
 import * as React from 'react'
 import { BarChartTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
-import type { GridColumns, GridRowsProp } from '@mui/x-data-grid'
+import type { GridColumns, GridPreProcessEditCellProps } from '@mui/x-data-grid'
 import { GRAPH_TYPES } from '~/utils/types'
-
-// define template for column headers
-// https://mui.com/components/data-grid/columns/#column-definitions
-const columns: GridColumns = [
-  { field: 'xval', headerName: 'X Values', width: 180, editable: true },
-  { field: 'yval', headerName: 'Y Values', width: 180, type: 'number', editable: true },
-]
+import { checkDuplicates } from '~/utils/graphUtils'
 
 // initial values for rows based on column template defined in app/utils/graphInitialData.ts
 
@@ -18,24 +12,30 @@ function BarChart() {
   const { title, xlabel, ylabel, name } = parameters
   const data = graphData.barchart
 
+  // define template for column headers
+  // https://mui.com/components/data-grid/columns/#column-definitions
+  const columns: GridColumns = React.useMemo(
+    () => [
+      {
+        field: 'xval',
+        headerName: 'X Values',
+        width: 180,
+        editable: true,
+        preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+          const hasError = checkDuplicates(data, params, 'xval')
+          return { ...params.props, error: hasError }
+        },
+      },
+      { field: 'yval', headerName: 'Y Values', width: 180, type: 'number', editable: true },
+    ],
+    [data],
+  )
+
   React.useEffect(() => {
     setSelectedGraph(GRAPH_TYPES.barchart)
     setColumnTemplate(columns)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setColumnTemplate, setSelectedGraph])
-
-  // const updateSupabaseGraph = async (userId: string) => {
-  //   const { data: supaData, error } = await supabaseClient.from('graphs').insert({
-  //     userId,
-  //     graph_data: {
-  //       data,
-  //       columnTemplate: columns,
-  //       parameters,
-  //     },
-  //     graph_type: GRAPH_TYPES.barchart,
-  //   })
-
-  //   console.log(error, supaData)
-  // }
 
   return (
     <>

@@ -28,7 +28,7 @@ const SaveGraph = ({}: SaveGraphProps) => {
   const [description, setDescription] = React.useState('')
 
   const csvString = objectToCsvString(selectedGraphData)
-  const handleCsvDownload = () => handleDownloadCsv(csvString)
+  const handleCsvDownload = () => handleDownloadCsv(csvString, selectedGraph)
   const handlePngDownload = async () => {
     const node = document.getElementById('chart-container')
     const blob = await domtoimage.toBlob(node as Node, { bgcolor: '#fff' })

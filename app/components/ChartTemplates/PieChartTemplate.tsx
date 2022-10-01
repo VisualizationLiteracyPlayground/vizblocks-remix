@@ -49,6 +49,7 @@ export function PieChartTemplate({ data, title, xlabel, ylabel, name }: PieChart
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
+          <Legend verticalAlign='top' height={36} />
           <Tooltip labelStyle={{ color: 'black' }} />
         </PieChart>
       </ResponsiveContainer>

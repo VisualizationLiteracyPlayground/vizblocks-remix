@@ -7,13 +7,6 @@ import { GRAPH_TYPES } from '~/utils/types'
 // linked to icons displayed in PicotographTemplate
 const SELECT_OPTONS = ['Car', 'Boat', 'Rocket', 'Plane', 'Apple', 'Basketball']
 
-// define template for column headers
-// https://mui.com/components/data-grid/columns/#column-definitions
-const columns: GridColumns = [
-  { field: 'category', headerName: 'Category', width: 180, type: 'singleSelect', valueOptions: [...SELECT_OPTONS], editable: true },
-  { field: 'value', headerName: 'Value', width: 180, type: 'number', editable: true },
-]
-
 // initial values for rows based on column template defined in app/utils/graphInitialData.ts
 
 function Pictograph() {
@@ -21,10 +14,27 @@ function Pictograph() {
   const { title, xlabel, ylabel, name } = parameters
   const data = graphData.pictograph
 
+  // define template for column headers
+  // https://mui.com/components/data-grid/columns/#column-definitions
+  const columns: GridColumns = React.useMemo(
+    () => [
+      {
+        field: 'category',
+        headerName: 'Category',
+        width: 180,
+        type: 'singleSelect',
+        valueOptions: [...SELECT_OPTONS],
+        editable: true,
+      },
+      { field: 'value', headerName: 'Value', width: 180, type: 'number', editable: true },
+    ],
+    [],
+  )
+
   React.useEffect(() => {
     setColumnTemplate(columns)
     setSelectedGraph(GRAPH_TYPES.pictograph)
-  }, [setColumnTemplate, setSelectedGraph])
+  }, [columns, setColumnTemplate, setSelectedGraph])
 
   return (
     <>

@@ -54,7 +54,10 @@ export function DotPlotTemplate({ data, title, xlabel, ylabel, name }: DotPlotTe
         >
           <CartesianGrid strokeDasharray='3 3' />
           <XAxis dataKey='xval' label={{ value: xlabel, position: 'bottom', fill: mode === 'light' ? '#000' : '#fff' }} scale='band' />
-          <YAxis label={{ value: ylabel, angle: -90, position: 'left', fill: mode === 'light' ? '#000' : '#fff' }} />
+          <YAxis
+            label={{ value: ylabel, angle: -90, position: 'left', fill: mode === 'light' ? '#000' : '#fff' }}
+            domain={[0, 'dataMax']}
+          />
           {/* <Tooltip labelStyle={{ color: 'black' }} /> */}
           <Bar dataKey='yval' name={name} fill='#82ca9d' shape={<Dots />} />
         </BarChart>

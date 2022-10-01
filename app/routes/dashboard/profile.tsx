@@ -55,10 +55,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { data, error } = await supabaseAdmin.from('profiles').select().eq('id', session?.user?.id)
   const profile = {
     userId: session?.user?.id,
-    firstName: data?.[0].firstName ?? '',
-    lastName: data?.[0].lastName ?? '',
+    firstName: data?.[0]?.firstName ?? '',
+    lastName: data?.[0]?.lastName ?? '',
     email: session?.user?.email,
-    role: data?.[0].role,
+    role: data?.[0]?.role,
   }
 
   return json<LoaderData>(profile)

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { LoaderFunction, redirect } from '@remix-run/node'
 
 export const loader: LoaderFunction = async ({ request }) => {
-  return redirect('/dashboard/projects')
+  return redirect('/dashboard/create/barchart')
 }
 
 export default function DashBoardIndexRoute() {

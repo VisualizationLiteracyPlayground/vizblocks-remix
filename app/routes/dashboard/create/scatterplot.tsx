@@ -4,13 +4,6 @@ import { useGraphData } from '~/utils/graphDataContext'
 import type { GridColumns } from '@mui/x-data-grid'
 import { GRAPH_TYPES } from '~/utils/types'
 
-// define template for column headers
-// https://mui.com/components/data-grid/columns/#column-definitions
-const columns: GridColumns = [
-  { field: 'xval', headerName: 'X Value', width: 180, type: 'number', editable: true },
-  { field: 'yval', headerName: 'Y Value', width: 180, type: 'number', editable: true },
-]
-
 // initial values for rows based on column template defined in app/utils/graphInitialData.ts
 
 function ScatterPlot() {
@@ -18,10 +11,20 @@ function ScatterPlot() {
   const { title, xlabel, ylabel, name } = parameters
   const data = graphData.scatterplot
 
+  // define template for column headers
+  // https://mui.com/components/data-grid/columns/#column-definitions
+  const columns: GridColumns = React.useMemo(
+    () => [
+      { field: 'xval', headerName: 'X Value', width: 180, type: 'number', editable: true },
+      { field: 'yval', headerName: 'Y Value', width: 180, type: 'number', editable: true },
+    ],
+    [],
+  )
+
   React.useEffect(() => {
     setColumnTemplate(columns)
     setSelectedGraph(GRAPH_TYPES.scatterplot)
-  }, [setColumnTemplate, setSelectedGraph])
+  }, [columns, setColumnTemplate, setSelectedGraph])
 
   return (
     <>

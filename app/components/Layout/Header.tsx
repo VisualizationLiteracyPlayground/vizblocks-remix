@@ -20,7 +20,6 @@ import useScrollTrigger from '@mui/material/useScrollTrigger'
 
 import WbSunnyIcon from '@mui/icons-material/WbSunny'
 import ModeNightIcon from '@mui/icons-material/ModeNight'
-import { useRootData } from '~/utils/hooks'
 
 const settings = [
   { name: 'Profile', to: '/dashboard/profile' },
@@ -40,12 +39,16 @@ function ElevationScroll({ children }: { children: React.ReactElement }) {
   })
 }
 
-export default function Header() {
+interface Props {
+  isAuthenticated?: boolean
+  firstName?: string
+  lastName?: string
+}
+
+export default function Header({ isAuthenticated = false, firstName, lastName }: Props) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
   const { mode, toggleColorMode } = useTheme()
-  const data = useRootData()
-  const isAuthenticated = data?.user?.aud === 'authenticated'
-  const fullName = `${data?.profile.firstName} ${data?.profile.lastName}`
+  const fullName = firstName + ' ' + lastName
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -82,19 +85,18 @@ export default function Header() {
               </IconButton>
 
               <Box sx={{ flexGrow: 0 }}>
-                {isAuthenticated && (
+                {isAuthenticated ? (
                   <Tooltip title='Open settings'>
                     <Box display='flex' alignItems='center'>
                       <Typography variant='h6' sx={{ mx: 2 }}>
-                        {data?.profile.firstName ?? 'Welcome'}
+                        {firstName ?? 'Welcome'}
                       </Typography>
                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt={fullName} sx={{ bgcolor: '#6cddaa' }} />
                       </IconButton>
                     </Box>
                   </Tooltip>
-                )}
-                {!isAuthenticated && (
+                ) : (
                   <Button color='inherit' size='large' component={Link} to='/login' prefetch='intent'>
                     <Typography variant='h6' component='div' fontWeight='bold'>
                       Login

@@ -18,12 +18,12 @@ export const objectToCsvString = (
   return csvPrefix + csvArray.map(row => row.join(',')).join('\n')
 }
 
-export const handleDownloadCsv = (csvString: string) => {
+export const handleDownloadCsv = (csvString: string, graphType: string) => {
   const encodedUri = encodeURI(csvString)
 
   const downloadLink = document.createElement('a')
   downloadLink.setAttribute('href', encodedUri)
-  downloadLink.setAttribute('download', 'my_graph.csv')
+  downloadLink.setAttribute('download', `my_graph_${graphType}.csv`)
   document.body.appendChild(downloadLink)
 
   downloadLink.click() // This will download the data file named "my_data.csv".

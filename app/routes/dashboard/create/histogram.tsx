@@ -1,15 +1,9 @@
 import * as React from 'react'
 import { HistogramTemplate } from '~/components/ChartTemplates'
 import { useGraphData } from '~/utils/graphDataContext'
-import type { GridColumns } from '@mui/x-data-grid'
+import type { GridColumns, GridPreProcessEditCellProps } from '@mui/x-data-grid'
 import { GRAPH_TYPES } from '~/utils/types'
-
-// define template for column headers
-// https://mui.com/components/data-grid/columns/#column-definitions
-const columns: GridColumns = [
-  { field: 'xval', headerName: 'Bins', width: 180, editable: true },
-  { field: 'yval', headerName: 'Y Values', width: 180, type: 'number', editable: true },
-]
+import { checkDuplicates } from '~/utils/graphUtils'
 
 // initial values for rows based on column template defined in app/utils/graphInitialData.ts
 
@@ -18,12 +12,29 @@ function Histogram() {
   const { title, xlabel, ylabel, name } = parameters
   const data = graphData.histogram
 
-  console.log(data)
+  // define template for column headers
+  // https://mui.com/components/data-grid/columns/#column-definitions
+  const columns: GridColumns = React.useMemo(
+    () => [
+      {
+        field: 'xval',
+        headerName: 'Bins',
+        width: 180,
+        editable: true,
+        preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+          const hasError = checkDuplicates(data, params, 'xval')
+          return { ...params.props, error: hasError }
+        },
+      },
+      { field: 'yval', headerName: 'Y Values', width: 180, type: 'number', editable: true },
+    ],
+    [data],
+  )
 
   React.useEffect(() => {
     setColumnTemplate(columns)
     setSelectedGraph(GRAPH_TYPES.histogram)
-  }, [setColumnTemplate, setSelectedGraph])
+  }, [columns, setColumnTemplate, setSelectedGraph])
 
   return (
     <>

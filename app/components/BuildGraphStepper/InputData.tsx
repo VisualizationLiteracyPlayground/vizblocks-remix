@@ -3,7 +3,7 @@ import * as XLSX from 'xlsx'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import type { GridCellEditCommitParams, GridRowsProp, GridSelectionModel } from '@mui/x-data-grid'
+import type { GridCellEditCommitParams, GridCellValue, GridRowsProp, GridSelectionModel } from '@mui/x-data-grid'
 import { DataGrid, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarExport } from '@mui/x-data-grid'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -30,6 +30,7 @@ const InputData = ({}: InputDataProps) => {
         id: params.id,
         [params.field]: params.value,
       }
+
       const newRows = rows.map(row => (row.id === params.id ? { ...row, ...updatedRow } : row))
       setRows(newRows)
     },
@@ -101,7 +102,7 @@ const InputData = ({}: InputDataProps) => {
   }
 
   const csvString = objectToCsvString(rows)
-  const handleDownloadTemplate = () => handleDownloadCsv(csvString)
+  const handleDownloadTemplate = () => handleDownloadCsv(csvString, selectedGraph)
 
   const CustomToolBar = () => {
     return (

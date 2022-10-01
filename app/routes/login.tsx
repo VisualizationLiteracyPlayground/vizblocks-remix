@@ -15,6 +15,7 @@ import TextField from '@mui/material/TextField'
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { Form, useActionData, useTransition } from '@remix-run/react'
+import Layout from '~/components/Layout'
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   '& .MuiInputLabel-root': {
@@ -58,55 +59,56 @@ export default function Login() {
   const transition = useTransition()
   const loading = transition.state === 'submitting'
   const { error } = useActionData<ActionData>() || {}
-
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        background: '#224957d8',
-        minHeight: '100vh',
-      }}
-    >
-      {/* dummy div for layout */}
-      <Box />
-      <Form method='post' style={{ width: 450, background: 'white', borderRadius: 8, padding: 32 }}>
-        <Typography variant='h4' component='h1' gutterBottom textAlign={'center'}>
-          Login
-        </Typography>
-        {error && (
-          <Typography variant='subtitle1' color={'#ff7300'} textAlign='center'>
-            {error.message}
+    <Layout isAuthenticated={false}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          background: '#224957d8',
+          minHeight: '100vh',
+        }}
+      >
+        {/* dummy div for layout */}
+        <Box />
+        <Form method='post' style={{ width: 450, background: 'white', borderRadius: 8, padding: 32 }}>
+          <Typography variant='h4' component='h1' gutterBottom textAlign={'center'}>
+            Login
           </Typography>
-        )}
-        <StyledTextField
-          id='email'
-          label='Email'
-          type='email'
-          name='email'
-          required
-          placeholder='Your email'
-          fullWidth
-          margin='normal'
-          defaultValue={'lionel.ongtzemin@gmail.com'}
-        />
-        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          <Button
-            type='submit'
-            size='large'
-            variant='contained'
-            className='button'
-            sx={{ mt: 2, height: 45, width: '70%' }}
-            disabled={loading}
-          >
-            {transition.submission ? 'Sending you a magic link' : 'Send Magic Link'}
-          </Button>
-        </Box>
-      </Form>
-      <Footer />
-    </Box>
+          {error && (
+            <Typography variant='subtitle1' color={'#ff7300'} textAlign='center'>
+              {error.message}
+            </Typography>
+          )}
+          <StyledTextField
+            id='email'
+            label='Email'
+            type='email'
+            name='email'
+            required
+            placeholder='Your email'
+            fullWidth
+            margin='normal'
+            defaultValue={'lionel.ongtzemin@gmail.com'}
+          />
+          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <Button
+              type='submit'
+              size='large'
+              variant='contained'
+              className='button'
+              sx={{ mt: 2, height: 45, width: '70%' }}
+              disabled={loading}
+            >
+              {transition.submission ? 'Sending you a magic link' : 'Send Magic Link'}
+            </Button>
+          </Box>
+        </Form>
+        <Footer />
+      </Box>
+    </Layout>
   )
 }

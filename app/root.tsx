@@ -45,8 +45,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   const loaderData = {
     user: session?.user,
     profile: {
-      firstName: data ? data[0].firstName : '',
-      lastName: data ? data[0].lastName : '',
+      firstName: data?.[0]?.firstName,
+      lastName: data?.[0]?.lastName,
       email: session?.user?.email,
     },
     env: {
@@ -117,11 +117,9 @@ export default function App() {
   return (
     <Document>
       <ThemeProvider>
-        <Layout>
-          <GraphDataProvider>
-            <Outlet />
-          </GraphDataProvider>
-        </Layout>
+        <GraphDataProvider>
+          <Outlet />
+        </GraphDataProvider>
       </ThemeProvider>
     </Document>
   )
@@ -165,10 +163,12 @@ export function CatchBoundary() {
   return (
     <Document title={`${caught.status} ${caught.statusText}`}>
       <Layout>
-        <h1>
-          {caught.status}: {caught.statusText}
-        </h1>
-        {message}
+        <div style={{ margin: 'auto', marginTop: 100 }}>
+          <h1>
+            {caught.status}: {caught.statusText}
+          </h1>
+          {message}
+        </div>
       </Layout>
     </Document>
   )
