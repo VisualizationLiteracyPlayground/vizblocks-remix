@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import ClassroomList from '~/components/ClassroomList'
 import { useRootData } from '~/utils/hooks'
 
-import { Form, useNavigate } from '@remix-run/react'
+import { Form, Link, useNavigate } from '@remix-run/react'
 import { supabaseClient } from '~/supabase.client'
 
 export default function Classrooms() {
@@ -38,8 +38,13 @@ export default function Classrooms() {
         minHeight: '100vh',
       }}
     >
-      <Typography variant='h4' sx={{ mb: 4 }}>
-        Classroom
+      <Typography variant='h4'>Classroom</Typography>
+      <Typography variant='subtitle1' sx={{ mb: 4, color: 'GrayText' }}>
+        If you would like to create your own classroom, please head over to{' '}
+        <Link to='/dashboard/profile' style={{ textDecoration: 'none', fontWeight: 'bold', color: 'inherit' }}>
+          profile
+        </Link>{' '}
+        and update your role to 'Educator'.
       </Typography>
 
       {isEducator && (

@@ -48,6 +48,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       firstName: data?.[0]?.firstName,
       lastName: data?.[0]?.lastName,
       email: session?.user?.email,
+      role: data?.[0]?.role,
     },
     env: {
       SUPABASE_URL: process.env.SUPABASE_URL,

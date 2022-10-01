@@ -17,7 +17,7 @@ import { GridRowsProp } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import DeleteIcon from '@mui/icons-material/Delete'
-import DeleteModal from './DeleteModal'
+import DeleteModal from '../DeleteModal'
 
 interface Props {
   data: SavedGraphData

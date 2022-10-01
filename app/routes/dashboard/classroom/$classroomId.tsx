@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import { useTheme } from '~/utils/theme'
-import { useLoaderData, useParams } from '@remix-run/react'
+import { useLoaderData, useNavigate, useParams } from '@remix-run/react'
 import EditableTextField from '~/components/EditableTextField'
 
 import { json, LoaderFunction } from '@remix-run/node'
@@ -28,6 +28,9 @@ import { supabaseClient } from '~/supabase.client'
 import toast from 'react-hot-toast'
 import MyGraphs from '~/components/MyGraphs'
 import { useRootData } from '~/utils/hooks'
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+import DeleteModal from '~/components/DeleteModal'
 
 const columns: GridColDef[] = [
   { field: 'firstName', headerName: 'First name', width: 130 },
@@ -96,9 +99,11 @@ export default function MyClassroom() {
   const { graphsLinkedToClassroom, members, myGraphs, classroomMetaData } = useLoaderData<LoaderData>() ?? []
   const { mode } = useTheme()
   const params = useParams()
+  const navigate = useNavigate()
 
   const [tabValue, setTabValue] = React.useState(0)
   const [graphId, setGraphId] = React.useState('')
+  const [deleteModalVisible, setDeleteModalVisible] = React.useState(false)
 
   const linkedGraphIds = graphsLinkedToClassroom?.map(graph => graph.id) ?? []
   const myUnlinkedGraphs = myGraphs?.filter(graph => !linkedGraphIds.includes(graph.id))
@@ -145,82 +150,108 @@ export default function MyClassroom() {
     window.location.reload()
   }
 
+  const handleDeleteClassroom = async () => {
+    const { error } = await supabaseClient.from('classroom').delete().match({ id: params.classroomId })
+    if (error) {
+      toast.error(error.message)
+    } else {
+      toast.success('Deleted!')
+    }
+    navigate('/dashboard/classroom')
+  }
+
   return (
-    <Box
-      sx={{
-        width: '100%',
-        p: 4,
-        my: 2,
-        bgcolor: mode === 'light' ? 'white' : '#121212',
-        borderRadius: '10px',
-        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-        maxWidth: 1200,
-        minHeight: '100vh',
-      }}
-    >
-      <EditableTextField value={classroomMetaData.title} editable={editable} onSave={(value: string) => handleSaveText('title', value)} />
-      <Typography variant='body1' sx={{ mb: 2 }}>
-        By: {classroomMetaData.createdBy}
-      </Typography>
+    <>
+      <DeleteModal
+        visible={deleteModalVisible}
+        text='Are you sure you want to delete this classroom?'
+        handleClose={() => setDeleteModalVisible(false)}
+        handleConfirm={handleDeleteClassroom}
+      />
+      <Box
+        sx={{
+          width: '100%',
+          p: 4,
+          my: 2,
+          bgcolor: mode === 'light' ? 'white' : '#121212',
+          borderRadius: '10px',
+          boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+          maxWidth: 1200,
+          minHeight: '100vh',
+        }}
+      >
+        <EditableTextField value={classroomMetaData.title} editable={editable} onSave={(value: string) => handleSaveText('title', value)} />
+        <Typography variant='body1' sx={{ mb: 2 }}>
+          By: {classroomMetaData.createdBy}
+        </Typography>
 
-      <Box sx={{ display: 'flex' }}>
-        <img src='/assets/classroom.jpeg' alt='classroom' width={300} style={{ marginRight: 24 }} />
-        <EditableTextField
-          value={classroomMetaData.desc}
-          fontSize={'1rem'}
-          editable={editable}
-          onSave={(value: string) => handleSaveText('desc', value)}
-        />
+        <Box sx={{ display: 'flex' }}>
+          <img src='/assets/classroom.jpeg' alt='classroom' width={300} style={{ marginRight: 24 }} />
+          <EditableTextField
+            value={classroomMetaData.desc}
+            fontSize={'1rem'}
+            editable={editable}
+            onSave={(value: string) => handleSaveText('desc', value)}
+          />
+        </Box>
+
+        <Divider sx={{ mt: 4 }} />
+
+        <Typography variant='h6' sx={{ my: 2 }}>
+          Add your work
+        </Typography>
+        <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <FormControl sx={{ width: 600 }}>
+            <StyledInputLabel sx={{ color: 'black' }}>Select a saved graph </StyledInputLabel>
+            <Select
+              value={graphId}
+              label='Select a saved graph'
+              onChange={e => {
+                setGraphId(e.target.value)
+              }}
+            >
+              {myUnlinkedGraphs?.map((graph, index) => {
+                return (
+                  <MenuItem key={index} value={graph.id}>
+                    {graph.graph_type} - {graph.graph_data.desc}
+                  </MenuItem>
+                )
+              })}
+            </Select>
+          </FormControl>
+
+          <Button size='large' variant='contained' onClick={handleAddGraphToWorks} disabled={myUnlinkedGraphs?.length === 0}>
+            Add my work
+          </Button>
+        </div>
+
+        <Divider sx={{ mt: 4 }} />
+        <Tabs value={tabValue} onChange={handleTabChange} sx={{ mt: 2 }}>
+          <StyledTab label='Works' />
+          <StyledTab label='Members' />
+        </Tabs>
+
+        <TabPanel index={0} value={tabValue}>
+          <div>
+            <MyGraphs graphData={graphsLinkedToClassroom ?? []} handleDelete={handleDeleteGraphFromWorks} />
+          </div>
+        </TabPanel>
+
+        <TabPanel index={1} value={tabValue}>
+          <div style={{ height: 500, width: '100%' }}>
+            <DataGrid rows={members ?? []} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
+          </div>
+        </TabPanel>
+
+        {editable && (
+          <Box sx={{ display: 'flex' }}>
+            <Button color='error' sx={{ ml: 'auto' }} onClick={() => setDeleteModalVisible(true)}>
+              Delete Classroom
+            </Button>
+          </Box>
+        )}
       </Box>
-
-      <Divider sx={{ mt: 4 }} />
-
-      <Typography variant='h6' sx={{ my: 2 }}>
-        Add your work
-      </Typography>
-      <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <FormControl sx={{ width: 600 }}>
-          <StyledInputLabel sx={{ color: 'black' }}>Select a saved graph </StyledInputLabel>
-          <Select
-            value={graphId}
-            label='Select a saved graph'
-            onChange={e => {
-              setGraphId(e.target.value)
-            }}
-          >
-            {myUnlinkedGraphs?.map((graph, index) => {
-              return (
-                <MenuItem key={index} value={graph.id}>
-                  {graph.graph_type} - {graph.graph_data.desc}
-                </MenuItem>
-              )
-            })}
-          </Select>
-        </FormControl>
-
-        <Button size='large' variant='contained' onClick={handleAddGraphToWorks} disabled={myUnlinkedGraphs?.length === 0}>
-          Add my work
-        </Button>
-      </div>
-
-      <Divider sx={{ mt: 4 }} />
-      <Tabs value={tabValue} onChange={handleTabChange} sx={{ mt: 2 }}>
-        <StyledTab label='Works' />
-        <StyledTab label='Members' />
-      </Tabs>
-
-      <TabPanel index={0} value={tabValue}>
-        <div>
-          <MyGraphs graphData={graphsLinkedToClassroom ?? []} handleDelete={handleDeleteGraphFromWorks} />
-        </div>
-      </TabPanel>
-
-      <TabPanel index={1} value={tabValue}>
-        <div style={{ height: 500, width: '100%' }}>
-          <DataGrid rows={members ?? []} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
-        </div>
-      </TabPanel>
-    </Box>
+    </>
   )
 }
 

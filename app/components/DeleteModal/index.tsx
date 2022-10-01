@@ -18,12 +18,19 @@ const style = {
 
 interface Props {
   visible: boolean
+  text?: string
   graphDesc?: string
   handleClose: () => void
   handleConfirm: () => void
 }
 
-export default function DeleteModal({ visible, handleClose, graphDesc, handleConfirm }: Props) {
+export default function DeleteModal({
+  visible,
+  handleClose,
+  text = 'Are you sure you want to delete this saved graph?',
+  graphDesc,
+  handleConfirm,
+}: Props) {
   return (
     <>
       <Modal
@@ -35,7 +42,7 @@ export default function DeleteModal({ visible, handleClose, graphDesc, handleCon
       >
         <Box sx={style}>
           <Typography variant='h6' textAlign='center'>
-            Are you sure you want to delete this saved graph?
+            {text}
           </Typography>
           <Typography textAlign='center'>{graphDesc}</Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 4 }}>
