@@ -1,8 +1,5 @@
 import * as React from 'react'
-import { json, LoaderFunction } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
 import MyGraphs from '~/components/MyGraphs'
-import { supabaseAdmin } from '~/supabase.server'
 import { SavedGraphData } from '~/utils/types'
 import Box from '@mui/material/Box'
 import { useTheme } from '~/utils/theme'
@@ -10,16 +7,18 @@ import Typography from '@mui/material/Typography'
 import { supabaseClient } from '~/supabase.client'
 import toast from 'react-hot-toast'
 
-type LoaderData = SavedGraphData[] | null
-
-export const loader: LoaderFunction = async ({ request }) => {
-  const { data, error } = await supabaseAdmin.from('graphs').select()
-  return json<LoaderData>(data)
-}
-
 export default function Projects() {
   const { mode } = useTheme()
-  const data = useLoaderData<LoaderData>() ?? []
+  const [data, setData] = React.useState<SavedGraphData[] | undefined>()
+
+  React.useEffect(() => {
+    const fetchAllGraphs = async () => {
+      const { data, error } = await supabaseClient.from('graphs').select()
+      if (data) setData(data)
+    }
+    fetchAllGraphs()
+  }, [])
+  // const data = useLoaderData<LoaderData>() ?? []
 
   const handleDeleteFromProjects = async (id: string) => {
     const { error } = await supabaseClient.from('graphs').delete().match({ id })
@@ -41,6 +40,7 @@ export default function Projects() {
         bgcolor: mode === 'light' ? 'white' : '#121212;',
         borderRadius: '10px',
         boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+        minHeight: '50vh',
       }}
     >
       <Typography variant='h4' sx={{ mb: 4 }}>

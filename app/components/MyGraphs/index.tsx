@@ -12,10 +12,10 @@ import Box from '@mui/material/Box'
 import SearchBar from './SearchBar'
 import { GRAPH_TYPES, SavedGraphData } from '~/utils/types'
 import FilterDropDown from './FilterDropDown'
-import { Typography } from '@mui/material'
+import { CircularProgress, Typography } from '@mui/material'
 
 interface Props {
-  graphData: SavedGraphData[]
+  graphData?: SavedGraphData[]
   handleDelete: (id: string) => Promise<void>
 }
 
@@ -35,7 +35,7 @@ export default function MyGraphs({ graphData, handleDelete }: Props) {
   }
 
   const getFilteredData = () => {
-    return graphData.filter(data => {
+    return graphData?.filter(data => {
       if (name && graphType !== 'all') {
         return data.graph_data.profile.firstName === name && data.graph_type === graphType
       } else if (name) {
@@ -48,14 +48,22 @@ export default function MyGraphs({ graphData, handleDelete }: Props) {
     })
   }
 
-  const totalSlides = graphData.length
+  const totalSlides = graphData?.length
   const visibleSlides = getVisibleSlides()
   const filteredData = getFilteredData()
-  const availableGraphTypes: FilterGraphTypes[] = ['all', ...new Set(graphData.map(data => data.graph_type))]
+  const availableGraphTypes: FilterGraphTypes[] = ['all', ...new Set(graphData?.map(data => data.graph_type))]
+
+  if (!graphData) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
 
   return (
     <Box>
-      {filteredData.length === 0 ? (
+      {filteredData?.length === 0 ? (
         <Typography textAlign={'center'}>No works added yet</Typography>
       ) : (
         <>
@@ -63,20 +71,21 @@ export default function MyGraphs({ graphData, handleDelete }: Props) {
             <SearchBar value={name} setValue={setName} data={graphData} />
             <FilterDropDown availableGraphTypes={availableGraphTypes} graphType={graphType} setGraphType={setGraphType} />
           </Box>
+
           <CarouselProvider
             naturalSlideWidth={350}
             naturalSlideHeight={350}
             step={visibleSlides}
             dragStep={visibleSlides}
             visibleSlides={visibleSlides}
-            totalSlides={totalSlides}
+            totalSlides={totalSlides ?? 0}
           >
             <div style={{ display: 'grid', gridTemplateColumns: '30px 1fr 30px' }}>
               <ButtonBack style={{ all: 'unset', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <ArrowBackIosIcon />
               </ButtonBack>
               <Slider style={{ maxHeight: 400 }}>
-                {filteredData.map((data, index) => {
+                {filteredData?.map((data, index) => {
                   return (
                     <Slide key={data.id} index={index}>
                       <GraphCard data={data} handleDelete={handleDelete} />
