@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({ preData, postData })
 }
 
-export default function PreAssessment() {
+export default function PostAssessment() {
   const { mode } = useTheme()
   const { preData, postData } = useLoaderData<LoaderData>()
 

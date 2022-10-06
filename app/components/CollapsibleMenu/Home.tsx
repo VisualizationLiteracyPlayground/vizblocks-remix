@@ -66,7 +66,7 @@ export default function Home() {
       </ListItemButton>
       {open &&
         data.map(item => (
-          <ListItemButton key={item.label} sx={{ py: 1, minHeight: 32 }} component={Link} to={item.to}>
+          <ListItemButton key={item.label} sx={{ py: 1, minHeight: 32 }} component={Link} to={item.to} prefetch='intent'>
             <ListItemIcon sx={{ color: 'inherit' }}>{item.icon}</ListItemIcon>
             <ListItemText primary={item.label} primaryTypographyProps={{ fontSize: 14, fontWeight: 'medium' }} />
           </ListItemButton>

@@ -16,6 +16,7 @@ import { GRAPH_TYPES } from '~/utils/types'
 interface Props {
   questions: Question[][]
   type: GRAPH_TYPES
+  isPostAssessment?: boolean
 }
 
 const getInitialScore = (question: any[]) => {
@@ -34,7 +35,7 @@ const getInitialCompletionStatus = (question: any[]) => {
   return completed
 }
 
-export default function VlatQuiz({ questions, type }: Props) {
+export default function VlatQuiz({ questions, type, isPostAssessment }: Props) {
   const transition = useTransition()
   const loading = transition.state === 'submitting'
   const { mode } = useTheme()
@@ -68,12 +69,12 @@ export default function VlatQuiz({ questions, type }: Props) {
         }}
       >
         <Box sx={{ position: 'sticky', top: 0 }}>
-          <IconButton component={Link} to='/dashboard/vlat/pre-assessment'>
+          <IconButton component={Link} to={isPostAssessment ? '/dashboard/vlat/post-assessment' : '/dashboard/vlat/pre-assessment'}>
             <ArrowBackIcon />
           </IconButton>
         </Box>
         <Typography variant='h4' sx={{ mb: 4 }} textAlign='center'>
-          VLAT Pre-Assessment: {type}
+          VLAT {isPostAssessment ? 'Post-Assessment ' : 'Pre-Assessment'}: {type.toLocaleUpperCase()}
         </Typography>
 
         <Box sx={{ pl: 8 }}>

@@ -23,7 +23,7 @@ export default function Landing() {
       <WhyVizBlocks />
       <Features />
       <Banner />
-      <Credits />
+      {/* <Credits /> */}
       <Footer />
     </Box>
   )

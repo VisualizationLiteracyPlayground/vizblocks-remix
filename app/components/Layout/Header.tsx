@@ -86,16 +86,16 @@ export default function Header({ isAuthenticated = false, firstName, lastName }:
 
               <Box sx={{ flexGrow: 0 }}>
                 {isAuthenticated ? (
-                  <Tooltip title='Open settings'>
-                    <Box display='flex' alignItems='center'>
-                      <Typography variant='h6' sx={{ mx: 2 }}>
-                        {firstName ?? 'Welcome'}
-                      </Typography>
+                  <Box display='flex' alignItems='center'>
+                    <Typography variant='h6' sx={{ mx: 2 }}>
+                      {firstName ?? 'Welcome'}
+                    </Typography>
+                    <Tooltip title='Open settings'>
                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt={fullName} sx={{ bgcolor: '#6cddaa' }} />
                       </IconButton>
-                    </Box>
-                  </Tooltip>
+                    </Tooltip>
+                  </Box>
                 ) : (
                   <Button color='inherit' size='large' component={Link} to='/login' prefetch='intent'>
                     <Typography variant='h6' component='div' fontWeight='bold'>

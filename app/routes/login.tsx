@@ -16,6 +16,7 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { Form, useActionData, useTransition } from '@remix-run/react'
 import Layout from '~/components/Layout'
+import { useTheme } from '~/utils/theme'
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   '& .MuiInputLabel-root': {
@@ -29,6 +30,7 @@ type LoaderData = {
 
 type ActionData = {
   error: ApiError | null
+  success?: string
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -52,13 +54,15 @@ export const action: ActionFunction = async ({ request }) => {
   const { error } = await supabaseAdmin.auth.api.sendMagicLinkEmail(email, { redirectTo: `${process.env.SERVER_URL}/login/callback` })
   console.log(error)
   if (error) return json({ error: { message: 'Login failed, please try again' } }, error.status)
-  return redirect('/login')
+  else return { success: 'Please check your email!' }
 }
 
 export default function Login() {
   const transition = useTransition()
+  const { mode } = useTheme()
   const loading = transition.state === 'submitting'
-  const { error } = useActionData<ActionData>() || {}
+  const { error, success } = useActionData<ActionData>() || {}
+
   return (
     <Layout isAuthenticated={false}>
       <Box
@@ -74,13 +78,18 @@ export default function Login() {
       >
         {/* dummy div for layout */}
         <Box />
-        <Form method='post' style={{ width: 450, background: 'white', borderRadius: 8, padding: 32 }}>
+        <Form method='post' style={{ width: 450, background: mode === 'light' ? 'white' : '#121212', borderRadius: 8, padding: 32 }}>
           <Typography variant='h4' component='h1' gutterBottom textAlign={'center'}>
             Login
           </Typography>
           {error && (
             <Typography variant='subtitle1' color={'#ff7300'} textAlign='center'>
               {error.message}
+            </Typography>
+          )}
+          {success && (
+            <Typography variant='subtitle1' textAlign='center'>
+              {success}
             </Typography>
           )}
           <StyledTextField
@@ -92,7 +101,7 @@ export default function Login() {
             placeholder='Your email'
             fullWidth
             margin='normal'
-            defaultValue={'lionel.ongtzemin@gmail.com'}
+            // defaultValue={'lionel.ongtzemin@gmail.com'}
           />
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <Button

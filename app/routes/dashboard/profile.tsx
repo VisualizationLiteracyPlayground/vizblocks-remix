@@ -114,8 +114,26 @@ export default function Profile() {
       </FormGroup>
       <input type='hidden' name='userId' value={userId} />
       <input type='hidden' name='role' value={role} />
-      <StyledTextField label='First Name' type='text' name='firstName' fullWidth margin='normal' defaultValue={firstName} required />
-      <StyledTextField label='Last Name' type='text' name='lastName' fullWidth margin='normal' defaultValue={lastName} required />
+      <StyledTextField
+        label='First Name'
+        type='text'
+        name='firstName'
+        fullWidth
+        margin='normal'
+        defaultValue={firstName}
+        required
+        inputProps={{ maxLength: 50 }}
+      />
+      <StyledTextField
+        label='Last Name'
+        type='text'
+        name='lastName'
+        fullWidth
+        margin='normal'
+        defaultValue={lastName}
+        required
+        inputProps={{ maxLength: 50 }}
+      />
       <StyledTextField
         label='Email'
         type='email'

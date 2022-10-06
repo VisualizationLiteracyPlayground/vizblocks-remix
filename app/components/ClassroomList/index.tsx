@@ -57,7 +57,7 @@ export default function List({ showJoinedClassrooms = false }: Props) {
       const { data, count } = await supabaseClient
         .from('classroom')
         .select('*', { count: 'exact' })
-        .not('members', 'cs', [uid])
+        .not('members', 'cs', `{${uid}}`)
         .order('created_by', { ascending: false })
         .range(from, to)
       setShowData(data ?? [])

@@ -22,5 +22,5 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function BarChart() {
-  return <VlatQuiz questions={barChartPostQuestions} type={GRAPH_TYPES.barchart} />
+  return <VlatQuiz questions={barChartPostQuestions} type={GRAPH_TYPES.barchart} isPostAssessment />
 }

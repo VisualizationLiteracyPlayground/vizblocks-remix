@@ -22,5 +22,5 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function PieChart() {
-  return <VlatQuiz questions={pieChartPostQuestions} type={GRAPH_TYPES.piechart} />
+  return <VlatQuiz questions={pieChartPostQuestions} type={GRAPH_TYPES.piechart} isPostAssessment />
 }
