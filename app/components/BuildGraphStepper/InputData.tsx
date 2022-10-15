@@ -79,7 +79,7 @@ const InputData = ({}: InputDataProps) => {
     }
   }
 
-  // TODO
+  // TODO: check csv template
   const checkFileValidity = (data: { [key: string]: any }[]) => {
     if (data.length < 1) return true
 
@@ -115,7 +115,6 @@ const InputData = ({}: InputDataProps) => {
         </Button>
         <GridToolbarColumnsButton />
         <GridToolbarFilterButton />
-        {/* <GridToolbarExport /> */}
       </GridToolbarContainer>
     )
   }

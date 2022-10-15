@@ -34,6 +34,7 @@ export const meta: MetaFunction = () => {
 export let links: LinksFunction = () => {
   return [
     { rel: 'preconnect', href: '//fonts.gstatic.com', crossOrigin: 'anonymous' },
+    { rel: 'preload', href: '//fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap', as: 'style' },
     { rel: 'stylesheet', href: '//fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap', crossOrigin: 'anonymous' },
     { rel: 'stylesheet', href: carouselStyles },
   ]

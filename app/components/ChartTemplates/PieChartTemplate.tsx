@@ -11,7 +11,7 @@ interface PieChartTemplateProps {
   name?: string
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#651378', '#cee000', '#e10007']
 
 // set ResponsiveContainer width=99% to respond to window size changes
 // see https://github.com/recharts/recharts/issues/172#issuecomment-307858843

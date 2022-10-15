@@ -2,11 +2,8 @@ import { styled, TextField } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import FormLabel from '@mui/material/FormLabel'
-import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import FormHelperText from '@mui/material/FormHelperText'
 import Switch from '@mui/material/Switch'
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
@@ -38,11 +35,12 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!firstName) return json({ error: { message: 'First name is required' } }, 400)
   if (typeof firstName !== 'string') return json({ error: { message: 'First name must be a string' } }, 400)
+  if (firstName.length < 3) return json({ error: { message: 'First name should be 3 or more characters long' } })
 
   if (!lastName) return json({ error: { message: 'Last name is required' } }, 400)
   if (typeof lastName !== 'string') return json({ error: { message: 'Last name must be a string' } }, 400)
 
-  const { data, error } = await supabaseAdmin.from('profiles').upsert({ id, firstName, lastName, email, role })
+  const { data, error } = await supabaseAdmin.from('profiles').update({ firstName, lastName, email, role }).eq('id', id)
   console.log('>>>', data, error)
   if (error) return json({ error: { message: error.message } }, 400)
   return json({ success: { message: 'Successfully updated!' } })
