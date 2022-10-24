@@ -14,7 +14,7 @@ const initialParam: Parameters = {
   title: 'Title',
   xlabel: 'X-Axis',
   ylabel: 'Y-Axis',
-  name: 'My Line',
+  name: '',
 }
 
 type Action = { type: GRAPH_TYPES; data: GridRowsProp }
