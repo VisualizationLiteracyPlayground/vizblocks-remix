@@ -41,8 +41,6 @@ const EditAnnocations = ({}: EditAnnocationsProps) => {
     },
   ]
 
-  console.log(ADJUSTABLE_PARAMETERS)
-
   return (
     <>
       <Box

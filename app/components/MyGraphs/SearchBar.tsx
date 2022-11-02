@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function SearchBar({ value, setValue, data }: Props) {
-  const options = data.map(option => option.graph_data.profile.firstName)
+  const options = data.map(option => option.graph_data.profile.firstName ?? '')
   const uniqueOptions = [...new Set(options)]
 
   return (
