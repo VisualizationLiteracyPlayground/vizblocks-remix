@@ -51,6 +51,7 @@ export default function EditableTextField({ value = 'My Classroom', onSave, font
             onChange={event => setText(event.target.value)}
             InputProps={{ sx: { fontSize } }}
             inputProps={{ maxLength: 500 }}
+            placeholder={'Enter something'}
             // onBlur={event => setIsEditing(false)}
           />
           <Tooltip title='Save' placement='left'>

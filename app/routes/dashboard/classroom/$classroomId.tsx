@@ -36,11 +36,6 @@ const columns: GridColDef[] = [
   { field: 'firstName', headerName: 'First name', width: 130 },
   { field: 'lastName', headerName: 'Last name', width: 130 },
   {
-    field: 'email',
-    headerName: 'Email',
-    width: 300,
-  },
-  {
     field: 'role',
     headerName: 'Role',
     width: 130,
