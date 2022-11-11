@@ -23,13 +23,10 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-import { magicLinkStrategy } from '~/utils/auth.server'
 import { supabaseClient } from '~/supabase.client'
 import toast from 'react-hot-toast'
 import MyGraphs from '~/components/MyGraphs'
 import { useRootData } from '~/utils/hooks'
-import IconButton from '@mui/material/IconButton'
-import DeleteIcon from '@mui/icons-material/Delete'
 import DeleteModal from '~/components/DeleteModal'
 
 const columns: GridColDef[] = [
@@ -56,8 +53,7 @@ const StyledInputLabel = styled(InputLabel)(({ theme }) => ({
 
 type LoaderData = {
   graphsLinkedToClassroom: SavedGraphData[] | null
-  members: Profile[] | null
-  myGraphs: SavedGraphData[] | null
+  members: string[] | null
   classroomMetaData: {
     id: string
     createdBy?: string
@@ -67,17 +63,19 @@ type LoaderData = {
   }
 }
 
+type CsrLoadedData = {
+  membersProfile: Profile[] | null
+  myGraphs: SavedGraphData[] | null
+}
+
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const session = await magicLinkStrategy.checkSession(request)
-  const uid = session?.user?.id ?? ''
   const classroomId = params.classroomId
   const { data: classroomData } = await supabaseAdmin.from('classroom').select().eq('id', classroomId)
   const members: string[] = classroomData?.[0].members
   const graphs: string[] = classroomData?.[0].graphs
 
   const { data: graphsLinkedToClassroom } = await supabaseAdmin.from('graphs').select().or(`id.in.(${graphs})`)
-  const { data: myGraphs } = await supabaseAdmin.from('graphs').select().eq('uid', uid)
-  const { data: membersProfile } = await supabaseAdmin.from('profiles').select().or(`id.in.(${members})`)
+
   const classroomMetaData = {
     id: classroomData?.[0].id,
     createdBy: classroomData?.[0].created_by,
@@ -86,25 +84,39 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     creatorUid: classroomData?.[0].uid,
   }
 
-  return json<LoaderData>({ graphsLinkedToClassroom, members: membersProfile, myGraphs, classroomMetaData })
+  return json<LoaderData>({ graphsLinkedToClassroom, members, classroomMetaData })
 }
 
 // https://remix.run/docs/en/v1/guides/routing#dynamic-segments
 export default function MyClassroom() {
-  const { graphsLinkedToClassroom, members, myGraphs, classroomMetaData } = useLoaderData<LoaderData>() ?? []
+  const { graphsLinkedToClassroom, members, classroomMetaData } = useLoaderData<LoaderData>() ?? []
   const { mode } = useTheme()
   const params = useParams()
   const navigate = useNavigate()
 
+  const [csrLoadedData, setCsrLoadedData] = React.useState<CsrLoadedData>()
   const [tabValue, setTabValue] = React.useState(0)
   const [graphId, setGraphId] = React.useState('')
   const [deleteModalVisible, setDeleteModalVisible] = React.useState(false)
 
   const linkedGraphIds = graphsLinkedToClassroom?.map(graph => graph.id) ?? []
-  const myUnlinkedGraphs = myGraphs?.filter(graph => !linkedGraphIds.includes(graph.id))
+  const myUnlinkedGraphs = csrLoadedData?.myGraphs?.filter(graph => !linkedGraphIds.includes(graph.id))
 
   const { user, profile } = useRootData()
   const editable = user?.id === classroomMetaData?.creatorUid && profile.role === 'educator'
+
+  React.useEffect(() => {
+    // NOTE: move non-essential data to CSR render to improve first page load
+    const fetchData = async () => {
+      const { data: myGraphs } = await supabaseClient.from('graphs').select().eq('uid', user?.id)
+      const { data: membersProfile } = await supabaseClient.from('profiles').select().or(`id.in.(${members})`)
+      setCsrLoadedData({
+        myGraphs,
+        membersProfile,
+      })
+    }
+    fetchData()
+  }, [members, user?.id])
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue)
@@ -234,7 +246,7 @@ export default function MyClassroom() {
 
         <TabPanel index={1} value={tabValue}>
           <div style={{ height: 500, width: '100%' }}>
-            <DataGrid rows={members ?? []} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
+            <DataGrid rows={csrLoadedData?.membersProfile ?? []} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
           </div>
         </TabPanel>
 

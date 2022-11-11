@@ -21,6 +21,7 @@ interface PictographTemplateProps {
 const Icon: React.FC<any> = (props: any) => {
   // console.log(props) to see all the props related to <Bar />
   const { x, y, value, height, width, category, fill } = props
+  const lowerCaseCat = category.toLowerCase()
   // final position >> width = width * 2
   // each interval >> x - (width / value)
   const X_VALUES = new Array(value).fill(0).map((_, index) => x - (width / value) * index)
@@ -30,12 +31,12 @@ const Icon: React.FC<any> = (props: any) => {
       {X_VALUES.map((xValue, index) => {
         return (
           <svg key={`${category}-${index}`}>
-            {category === 'Apple' && <AppleIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'red' }} />}
-            {category === 'Plane' && <FlightIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'turquoise' }} />}
-            {category === 'Boat' && <DirectionsBoatIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'blue' }} />}
-            {category === 'Car' && <DirectionsCarIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'green' }} />}
-            {category === 'Rocket' && <RocketIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'brown' }} />}
-            {category === 'Basketball' && (
+            {lowerCaseCat === 'apple' && <AppleIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'red' }} />}
+            {lowerCaseCat === 'plane' && <FlightIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'turquoise' }} />}
+            {lowerCaseCat === 'boat' && <DirectionsBoatIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'blue' }} />}
+            {lowerCaseCat === 'car' && <DirectionsCarIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'green' }} />}
+            {lowerCaseCat === 'rocket' && <RocketIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'brown' }} />}
+            {lowerCaseCat === 'basketball' && (
               <SportsBasketballIcon height={height} width={width * 2} x={xValue} y={y} sx={{ color: 'orange' }} />
             )}
           </svg>

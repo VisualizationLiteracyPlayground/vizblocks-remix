@@ -48,9 +48,9 @@ export default function MyGraphs({ graphData, handleDelete }: Props) {
     })
   }
 
-  const totalSlides = graphData?.length
   const visibleSlides = getVisibleSlides()
   const filteredData = getFilteredData()
+  const totalSlides = filteredData?.length
   const availableGraphTypes: FilterGraphTypes[] = ['all', ...new Set(graphData?.map(data => data.graph_type))]
 
   if (!graphData) {
