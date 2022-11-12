@@ -7,34 +7,34 @@ import Grid from '@mui/material/Grid'
 import { useTheme } from '~/utils/theme'
 import { IconButton } from '@mui/material'
 
-import { Link, useLoaderData } from '@remix-run/react'
+import { Link } from '@remix-run/react'
 
 import Tooltip from '@mui/material/Tooltip'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
-import { json, LoaderFunction } from '@remix-run/node'
-import { magicLinkStrategy } from '~/utils/auth.server'
-import { supabaseAdmin } from '~/supabase.server'
 import { GRAPH_TYPES } from '~/utils/types'
 import { graphData } from './constants'
+import { supabaseClient } from '~/supabase.client'
+import { useRootData } from '~/utils/hooks'
 
 type Score = {
   graph_type: GRAPH_TYPES
   score: number
 }
 
-type LoaderData = Score[] | null
-
-export const loader: LoaderFunction = async ({ request }) => {
-  const session = await magicLinkStrategy.checkSession(request)
-  const { data, error } = await supabaseAdmin.from('vlat').select().eq('uid', session?.user?.id).eq('test_type', 'pre')
-
-  return json<LoaderData>(data)
-}
-
 export default function PreAssessment() {
   const { mode } = useTheme()
-  const scores = useLoaderData<LoaderData>()
+  const { user } = useRootData()
+  const [scores, setScores] = React.useState<Score[] | null>()
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const uid = user?.id
+      const { data } = await supabaseClient.from('vlat').select().eq('uid', uid).eq('test_type', 'pre')
+      setScores(data)
+    }
+    fetchData()
+  }, [user?.id])
 
   return (
     <div style={{ padding: 16 }}>
