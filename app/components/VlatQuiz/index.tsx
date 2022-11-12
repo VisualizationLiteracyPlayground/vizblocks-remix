@@ -95,7 +95,7 @@ export default function VlatQuiz({ questions, type, isPostAssessment }: Props) {
         <Box component={Form} method='post' sx={{ pl: 8, mb: 4, display: 'flex', justifyContent: 'center' }}>
           <input type='hidden' name='totalScore' value={totalScore} />
           <Button variant='contained' type='submit' size='large' sx={{ width: 200 }} disabled={!completed || loading}>
-            Submit
+            {loading ? 'Submitting...' : 'Submit'}
           </Button>
         </Box>
       </Box>
