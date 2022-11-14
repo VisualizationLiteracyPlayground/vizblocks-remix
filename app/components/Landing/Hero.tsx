@@ -31,10 +31,6 @@ export default function Hero() {
             What will you create?
           </Typography>
 
-          <Typography variant='h3' sx={{ color: '#ff0000', pb: 4 }}>
-            DELETE ME
-          </Typography>
-
           <Button variant='contained' size='large' component={Link} to='/login' prefetch='intent' color='primary'>
             <Typography variant='h6' fontWeight='700'>
               Get Started
