@@ -24,3 +24,6 @@ It includes `@mui/material` and its peer dependencies, including `emotion`, the 
 - [Survey 1 Results](https://docs.google.com/spreadsheets/d/16k9V9wS6_c9JXr0EEFjutfhDhG-lqMnJWZp9AoIRN6U/edit?resourcekey#gid=396126995)
 - [Survey 2](https://docs.google.com/forms/d/1bX2N6X8Ra4hA0HHxM7AJeMljGixfW1DP-m2QL0UviZg/edit#responses)
 - [Survey 2 Results](https://docs.google.com/spreadsheets/d/1mwTpuEHYKyQ5yRoOxVOwzaa8DY9-PNTm2mAs2foTyX0/edit?resourcekey=undefined#gid=472620055)
+
+## Notes
+The deployment uses vercel which provides a hobby tier for personal projects. As this repo has been migrated to the VisualizationLiteracy organisation, vercel requires us to use a Team account which requires $$$. A work around is to move this folder to a personal repo again to set up the CI/CD.
